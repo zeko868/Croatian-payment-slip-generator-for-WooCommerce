@@ -17,7 +17,7 @@ By installing, activating and enabling this payment gateway users are able to se
 
 
 ## Requirements
-The following PHP modules have to be installed and enabled:
+This plugin requires at least PHP version 5.6. Also the following PHP modules have to be installed and enabled:
 * bcmath
 * fileinfo
 * gd
@@ -29,7 +29,7 @@ The following PHP modules have to be installed and enabled:
 This section describes how to install the plugin and get it working.
 
 
-1. Upload [code](https://github.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/releases/latest) of this plugin to the `/wp-content/plugins/` directory or install it under WordPress admin area
+1. Upload [code](https://github.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/releases/latest) of this plugin (or source code of this repo along with all required dependencies fetched by calling `composer install`) to the `/wp-content/plugins/` directory or install it under WordPress admin area
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 
