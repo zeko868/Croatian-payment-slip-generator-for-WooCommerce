@@ -1,4 +1,4 @@
-<p align="center"><a href="https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/"><img src="https://github.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/master/images/banner-1544x500.png" alt="Banner of croatian payment slip generator for WooCommerce"></a></p>
+<p align="center"><a href="https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/"><img src="https://raw.githubusercontent.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/master/images/banner-1544x500.png" alt="Banner of croatian payment slip generator for WooCommerce"></a></p>
 
 ## Description
 
@@ -49,7 +49,7 @@ All fields (along with various other properties) can be set through settings pag
 **Q:** Where can I report bugs or contribute to the project?
 
 **A:** You can report bugs on [issue section of this repo](https://github.com/marlevak/croatian-payment-slip-generator-for-woocommerce/issues) or in [WordPress plugin support forum](https://wordpress.org/support/plugin/croatian-payment-slip-generator-for-woocommerce).
----
+___
 **Q:** How to handle order prices in different currency, so they could be converted to the prices corresponding to the currency on the payment slip?
 
 **A:** In your `functions.php` file you should add function to the filter 'wooplatnica-croatia_order' that would perform conversion of the order price (which could be extracted from the object of class WC_Order passed as a first/only function argument) and would return instance of WC_Order class with updated field values.
@@ -60,5 +60,5 @@ All fields (along with various other properties) can be set through settings pag
 * [Ivan Habunek](https://github.com/ihabunek) - author of [PDF 417 barcode generator for PHP](https://github.com/ihabunek/pdf417-php)
 
 ## External links
-[Plugin page on WordPress](https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/)
-[Plugin page on WordPress with croatian translation of documentation](https://hr.wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/)
+* [Plugin page on WordPress](https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/)
+* [Plugin page on WordPress with croatian translation of documentation](https://hr.wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/)
