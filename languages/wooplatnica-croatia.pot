@@ -1,0 +1,175 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Croatian payment slip generator for WooCommerce 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-28 16:57+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.3.0; wp-5.1.2"
+
+#. Name of the plugin
+msgid "Croatian payment slip generator for WooCommerce"
+msgstr ""
+
+#. Description of the plugin
+msgid "Make it easy for your customers from Croatia to perform direct bank transfer with generated payment slip, along with barcode for mBanking."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:16
+msgid "[CRO] Payment slip or mobile banking"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:17
+msgid "Make it easy for your customers from Croatia to perform direct bank transfer with generated and pre-filled payment slip, along with mobile banking by simple barcode scanning."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:32
+msgid "Enable/Disable"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:34
+msgid "Enable payment slip generator for Croatia"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:38
+msgid "Title"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:39
+msgid "Payment gateway title on checkout."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:41
+msgid "Pay using payment slip or mobile banking"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:45
+msgid "Order Status"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:48
+msgid "Choose whether status you wish after checkout."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:54
+msgid "Description"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:55
+msgid "Payment gateway description on checkout."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:57
+msgid ""
+"Pay using generated and pre-filled payment slip or by scanning a barcode "
+"through your mobile banking app"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:61
+msgid "Instructions"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:63
+msgid "Instructions that will be added to the thank you page and emails."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:64
+msgid "Below you can find instructions required to make a payment:"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:68
+msgid "Currency code"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:70
+msgid "If none specified, the one from the order information will be used"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:74
+msgid "Recipient name"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:79
+msgid "Recipient address"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:84
+msgid "Recipient postal code"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:89
+msgid "Recipient city"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:94
+msgid "Recipient's IBAN"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:99
+msgid "Recipient's call-out number"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:100
+msgid ""
+"Variables such as %order%, %date%, %year%, %month% and %day% can be used."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:105
+msgid "Intent code"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:110 src/WC_Gateway_Wooplatnica.php:283
+msgid "(undefined)"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:278
+msgid "Payment model"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:333
+msgid "Payment description"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:338
+msgid "Barcode for mobile banking"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:340
+msgid "Generate barcode in PDF417 format"
+msgstr ""
+
+#: src/Wooplatnica.php:137
+msgid "payment-slip"
+msgstr ""
+
+#: src/Wooplatnica.php:146
+msgid "Payment slip image"
+msgstr ""
+
+#: src/Wooplatnica.php:147
+msgid "Download payment slip"
+msgstr ""
+
+#: src/Wooplatnica.php:260
+msgid "Problem loading image of payment slip"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://wordpress.org/plugins/wooplatnica-croatia/"
+msgstr ""
+
+#. Author of the plugin
+msgid "Marinela Levak"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/marlevak"
+msgstr ""
