@@ -224,10 +224,10 @@ EOS;
             '%day%',
         ], [
             $order->get_id(),
-            date('Y-m-d'),
-            date('Y'),
-            date('m'),
-            date('d'),
+            date('Y-m-d', $order->get_date_created()->getTimestamp()),
+            date('Y', $order->get_date_created()->getTimestamp()),
+            date('m', $order->get_date_created()->getTimestamp()),
+            date('d', $order->get_date_created()->getTimestamp()),
         ], $string);
     }
 
