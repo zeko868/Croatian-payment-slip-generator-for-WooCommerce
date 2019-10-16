@@ -33,6 +33,8 @@ class Wooplatnica
         if ($this->options['enabled'] === 'yes') {
             add_action("woocommerce_thankyou_{$this->domain}", array($this, 'thankyou_page'));
             add_action('woocommerce_email_after_order_table', array($this, 'email_instructions'), 10, 3);
+	    // add to my account page
+            add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'), 10, 3);
         }
 
     }
@@ -151,7 +153,7 @@ class Wooplatnica
             echo base64_encode($payment_slip_blob);
             echo "\" alt=\"$img_element_alt\"/><br/>";
             echo <<< EOS
-            <button type="button" id="download-payment-slip">$download_button_text</button>
+            <button type="button" id="download-payment-slip" style="margin-bottom:10px;">$download_button_text</button>
             <script type="text/javascript">
                 var fileName = '$file_name';
                 const clearUrl = url => url.replace(/^data:image\/\w+?;base64,/, '');
@@ -276,5 +278,20 @@ EOS;
         }
         $order = wc_get_order( $order_id );
         $this->generate_payment_slip(null, $order, false);
+    }
+     /**
+     * Output for the My account -> View order page.
+     */
+    public function view_order_instructions($order_id) {
+	// Get an instance of the WC_Order object
+        $order = wc_get_order( $order_id );
+		
+		if( $order->get_payment_method() === 'wooplatnica-croatia' && $order->has_status('on-hold')){
+			if ($this->options['description']) {
+				echo wpautop(wptexturize(wp_kses_post($this->options['description'])));
+			}
+			$order = wc_get_order( $order_id );
+			$this->generate_payment_slip(null, $order, false);
+		 }
     }
 }
