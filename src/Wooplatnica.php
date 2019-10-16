@@ -280,7 +280,7 @@ EOS;
      * Output for the My account -> View order page.
      */
     public function view_order_instructions($order_id) {
-		// Get an instance of the WC_Order object
+	// Get an instance of the WC_Order object
         $order = wc_get_order( $order_id );
 		
 		if( $order->get_payment_method() === 'wooplatnica-croatia' && $order->has_status('on-hold')){
