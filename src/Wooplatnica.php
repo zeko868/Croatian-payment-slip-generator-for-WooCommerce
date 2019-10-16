@@ -33,6 +33,7 @@ class Wooplatnica
         if ($this->options['enabled'] === 'yes') {
             add_action("woocommerce_thankyou_{$this->domain}", array($this, 'thankyou_page'));
             add_action('woocommerce_email_after_order_table', array($this, 'email_instructions'), 10, 3);
+	    // add to my account page
             add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'), 10, 3);
         }
 
