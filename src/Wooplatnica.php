@@ -156,9 +156,9 @@ class Wooplatnica
 
                 const downloadImage = (name, content, type) => {
                     var link = document.createElement('a');
-                    link.style = 'position: fixed; left -10000px;';
+                    link.style = 'position: fixed; left: -10000px;';
                     link.href = `data:application/octet-stream;base64,\${encodeURIComponent(content)}`;
-                    link.download = /\.\w+/.test(name) ? name : `\${name}.\${type}`;
+                    link.download = `\${name}.\${type}`;
 
                     document.body.appendChild(link);
                     link.click();
