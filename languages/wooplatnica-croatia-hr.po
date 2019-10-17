@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Croatian payment slip generator for WooCommerce 1.0\n"
+"Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-28 16:57+0000\n"
-"PO-Revision-Date: 2019-09-28 16:59+0000\n"
+"PO-Revision-Date: 2019-10-17 21:01+0000\n"
 "Last-Translator: klinchanica <info.klinchanica@gmail.com>\n"
 "Language-Team: Hrvatski\n"
 "Language: hr\n"
@@ -13,23 +13,33 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.0; wp-5.1.2"
+"X-Loco-Version: 2.3.0; wp-5.1.3"
 
 #. Name of the plugin
 msgid "Croatian payment slip generator for WooCommerce"
-msgstr "WooCommerce modul za plaćanje putem opće uplatnice ili mobilnim bankarstvom"
+msgstr ""
+"WooCommerce modul za plaćanje putem opće uplatnice ili mobilnim bankarstvom"
 
 #. Description of the plugin
-msgid "Make it easy for your customers from Croatia to perform direct bank transfer with generated payment slip, along with barcode for mBanking."
-msgstr "Olakšajte svojim korisnicima plaćanje dodavanjem mogućnosti plaćanja općom uplatnica kao i mobilnim bankarstvom."
+msgid ""
+"Make it easy for your customers from Croatia to perform direct bank transfer "
+"with generated payment slip, along with barcode for mBanking."
+msgstr ""
+"Olakšajte svojim korisnicima plaćanje dodavanjem mogućnosti plaćanja općom "
+"uplatnica kao i mobilnim bankarstvom."
 
 #: src/WC_Gateway_Wooplatnica.php:16
 msgid "[CRO] Payment slip or mobile banking"
 msgstr "Plaćanje putem opće uplatnice ili mobilnim bankarstvom"
 
 #: src/WC_Gateway_Wooplatnica.php:17
-msgid "Make it easy for your customers from Croatia to perform direct bank transfer with generated and pre-filled payment slip, along with mobile banking by simple barcode scanning."
-msgstr "Plaćanje putem opće uplatnice (generira se popunjeni virman) ili mobilnim bankarstvom (spomenuta uplatnica ima na sebi barkod za skeniranje)."
+msgid ""
+"Make it easy for your customers from Croatia to perform direct bank transfer "
+"with generated and pre-filled payment slip, along with mobile banking by "
+"simple barcode scanning."
+msgstr ""
+"Plaćanje putem opće uplatnice (generira se popunjeni virman) ili mobilnim "
+"bankarstvom (spomenuta uplatnica ima na sebi barkod za skeniranje)."
 
 #: src/WC_Gateway_Wooplatnica.php:32
 msgid "Enable/Disable"
@@ -150,6 +160,26 @@ msgstr "Barkod za mobilno bankarstvo"
 #: src/WC_Gateway_Wooplatnica.php:340
 msgid "Generate barcode in PDF417 format"
 msgstr "Generiraj barkod u PDF417 formatu"
+
+#: src/WC_Gateway_Wooplatnica.php:346
+msgid "Main font"
+msgstr "Glavni font"
+
+#: src/WC_Gateway_Wooplatnica.php:347
+msgid ""
+"Font being used for the text that won't be displayed in fields with cells "
+"for each character"
+msgstr ""
+"Font koji će se primijeniti na tekst koji neće biti prikazan u poljima s "
+"ćelijama za svaki pojedini znak"
+
+#: src/WC_Gateway_Wooplatnica.php:352
+msgid "proportional"
+msgstr "proporcionalni"
+
+#: src/WC_Gateway_Wooplatnica.php:353
+msgid "monospaced"
+msgstr "neproporcionalni"
 
 #: src/Wooplatnica.php:137
 msgid "payment-slip"

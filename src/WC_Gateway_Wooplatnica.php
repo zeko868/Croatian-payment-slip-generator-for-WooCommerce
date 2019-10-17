@@ -281,7 +281,7 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'class'       => 'wc-enhanced-select',
                 'default'     => '',
                 'options'     => array(
-                    ''   => __( '(undefined)', $this->id ),
+                    ''     => __( '(undefined)', $this->id ),
                     'HR00' => 'HR00',
                     'HR01' => 'HR01',
                     'HR02' => 'HR02',
@@ -341,6 +341,18 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'type'    => 'checkbox',
                 'label'   => __( 'Generate barcode in PDF417 format', $this->id ),
                 'default' => 'yes'
+            ),
+            'main_font' => array(
+                'title'       => __( 'Main font', $this->id ),
+                'description' => __( 'Font being used for the text that won\'t be displayed in fields with cells for each character', $this->id ),
+                'type'        => 'select',
+                'class'       => 'wc-enhanced-select',
+                'default'     => 'proportional',
+                'options'     => array(
+                    'proportional'  => __( 'proportional', $this->id ),
+                    'monospaced'    => __( 'monospaced', $this->id )
+                ),
+                'desc_tip'    => true
             )
         );
     }

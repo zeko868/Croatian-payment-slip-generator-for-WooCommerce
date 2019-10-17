@@ -55,47 +55,49 @@ class Wooplatnica
         $payment_slip_data->description = $this->replace($this->options['payment_description'], $order);
         
         $im = imagecreatefromjpeg(dirname(__DIR__) . '/assets/payment-slip-template.jpg');
-        $font_file = dirname(__DIR__) . '/assets/times-new-roman.ttf';
+
+        $proportional_font = dirname(__DIR__) . '/assets/times-new-roman.ttf';
+        $monospaced_font = dirname(__DIR__) . '/assets/RobotoMono-Regular.ttf';
+        $main_font = $this->options['main_font'] === 'monospaced' ? $monospaced_font : $proportional_font;
+        
         $black_color = imagecolorallocate($im, 0x30, 0x30, 0x30);
         
-        imagefttext($im, 11, 0, 30, 55, $black_color, $font_file, $payment_slip_data->sender_name);
-        imagefttext($im, 11, 0, 30, 75, $black_color, $font_file, $payment_slip_data->sender_address);
-        imagefttext($im, 11, 0, 30, 95, $black_color, $font_file, $payment_slip_data->sender_city);
+        imagefttext($im, 11, 0, 30, 55, $black_color, $main_font, $payment_slip_data->sender_name);
+        imagefttext($im, 11, 0, 30, 75, $black_color, $main_font, $payment_slip_data->sender_address);
+        imagefttext($im, 11, 0, 30, 95, $black_color, $main_font, $payment_slip_data->sender_city);
         
         $recipient_name_lines = explode("\n", $payment_slip_data->recipient_name);
         $recipient_name_num_of_lines = count($recipient_name_lines);
         for ($i = 0; $i < $recipient_name_num_of_lines; $i++) {
-            imagefttext($im, 11, 0, 30, 165 + 20*$i, $black_color, $font_file, $recipient_name_lines[$i]);
+            imagefttext($im, 11, 0, 30, 165 + 20*$i, $black_color, $main_font, $recipient_name_lines[$i]);
         }
-        imagefttext($im, 11, 0, 30, 165 + 20*$recipient_name_num_of_lines, $black_color, $font_file, $payment_slip_data->recipient_address);
-        imagefttext($im, 11, 0, 30, 165 + 20*$recipient_name_num_of_lines + 20, $black_color, $font_file, $payment_slip_data->recipient_city);
-                    
-        $monospace_font = dirname(__DIR__) . '/assets/RobotoMono-Regular.ttf';
+        imagefttext($im, 11, 0, 30, 165 + 20*$recipient_name_num_of_lines, $black_color, $main_font, $payment_slip_data->recipient_address);
+        imagefttext($im, 11, 0, 30, 165 + 20*$recipient_name_num_of_lines + 20, $black_color, $main_font, $payment_slip_data->recipient_city);
         
-        $this->display_monospace_text_with_specific_spacing($im, 325, 49, $black_color, $monospace_font, $payment_slip_data->currency);
-        $this->display_monospace_text_with_specific_spacing($im, 410, 49, $black_color, $monospace_font, str_pad('=' . str_replace(array('.', ','), '', $payment_slip_data->get_price()), 15, ' ', STR_PAD_LEFT));
-        $this->display_monospace_text_with_specific_spacing($im, 325, 133, $black_color, $monospace_font, $payment_slip_data->recipient_iban);
-        $this->display_monospace_text_with_specific_spacing($im, 312, 167, $black_color, $monospace_font, $payment_slip_data->recipient_callout_number);
+        $this->display_monospace_text_with_specific_spacing($im, 325, 49, $black_color, $monospaced_font, $payment_slip_data->currency);
+        $this->display_monospace_text_with_specific_spacing($im, 410, 49, $black_color, $monospaced_font, str_pad('=' . str_replace(array('.', ','), '', $payment_slip_data->get_price()), 15, ' ', STR_PAD_LEFT));
+        $this->display_monospace_text_with_specific_spacing($im, 325, 133, $black_color, $monospaced_font, $payment_slip_data->recipient_iban);
+        $this->display_monospace_text_with_specific_spacing($im, 312, 167, $black_color, $monospaced_font, $payment_slip_data->recipient_callout_number);
         
-        $this->display_monospace_text_with_specific_spacing($im, 226, 167, $black_color, $monospace_font, $payment_slip_data->payment_model);
-        $this->display_monospace_text_with_specific_spacing($im, 226, 205, $black_color, $monospace_font, $payment_slip_data->intent_code);
+        $this->display_monospace_text_with_specific_spacing($im, 226, 167, $black_color, $monospaced_font, $payment_slip_data->payment_model);
+        $this->display_monospace_text_with_specific_spacing($im, 226, 205, $black_color, $monospaced_font, $payment_slip_data->intent_code);
 
-        $recipient_name_lines = explode("\n", $payment_slip_data->description);
-        $recipient_name_num_of_lines = count($recipient_name_lines);
-        for ($i = 0; $i < $recipient_name_num_of_lines; $i++) {
-            imagefttext($im, 11, 0, 360, 190 + 16*$i, $black_color, $font_file, $recipient_name_lines[$i]);
+        $description_lines = explode("\n", $payment_slip_data->description);
+        $description_num_of_lines = count($description_lines);
+        for ($i = 0; $i < $description_num_of_lines; $i++) {
+            imagefttext($im, 11, 0, 360, 190 + 16*$i, $black_color, $main_font, $description_lines[$i]);
         }
         
-        $this->display_right_aligned($im, 11, 870, 45, $black_color, $font_file, $payment_slip_data->currency . ' ' . str_replace('.', ',', $payment_slip_data->get_price()));
+        $this->display_right_aligned($im, 11, 870, 45, $black_color, $main_font, $payment_slip_data->currency . ' ' . str_replace('.', ',', $payment_slip_data->get_price()));
         
-        $this->display_right_aligned($im, 11, 870, 134, $black_color, $font_file, $payment_slip_data->recipient_iban);
+        $this->display_right_aligned($im, 11, 870, 134, $black_color, $main_font, $payment_slip_data->recipient_iban);
         
-        $this->display_right_aligned($im, 11, 870, 167, $black_color, $font_file, $payment_slip_data->payment_model . ' ' . $payment_slip_data->recipient_callout_number);
+        $this->display_right_aligned($im, 11, 870, 167, $black_color, $main_font, $payment_slip_data->payment_model . ' ' . $payment_slip_data->recipient_callout_number);
         
-        $recipient_name_lines = explode("\n", $payment_slip_data->description);
-        $recipient_name_num_of_lines = count($recipient_name_lines);
-        for ($i = 0; $i < $recipient_name_num_of_lines; $i++) {
-            imagefttext($im, 10, 0, 655, 200 + 13*$i, $black_color, $font_file, $recipient_name_lines[$i]);
+        $description_lines = explode("\n", $payment_slip_data->description);
+        $description_num_of_lines = count($description_lines);
+        for ($i = 0; $i < $description_num_of_lines; $i++) {
+            imagefttext($im, 10, 0, 655, 200 + 13*$i, $black_color, $main_font, $description_lines[$i]);
         }
 
         //embed_barcode($im, $payment_slip_data->encode(), 50, 250, 3, 1, $black_color);

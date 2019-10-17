@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Croatian payment slip generator for WooCommerce 1.0\n"
+"Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-28 16:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -144,6 +144,22 @@ msgstr ""
 
 #: src/WC_Gateway_Wooplatnica.php:340
 msgid "Generate barcode in PDF417 format"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:346
+msgid "Main font"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:347
+msgid "Font being used for the text that won't be displayed in fields with cells for each character"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:352
+msgid "proportional"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:353
+msgid "monospaced"
 msgstr ""
 
 #: src/Wooplatnica.php:137
