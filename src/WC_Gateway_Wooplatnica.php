@@ -333,6 +333,7 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
             'payment_description' => array(
                 'title'       => __( 'Payment description', $this->id ),
                 'type'        => 'textarea',
+                'description' => __( 'Variables such as %order%, %date%, %year%, %month% and %day% can be used.', $this->id ),
                 'default'     => ''
             ),
             'display_barcode' => array(

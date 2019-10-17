@@ -52,7 +52,7 @@ class Wooplatnica
         $payment_slip_data->recipient_callout_number = $this->replace($this->options['recipient_callout_number'], $order);
         $payment_slip_data->intent_code = $this->options['intent_code'];
         $payment_slip_data->payment_model = $this->options['payment_model'];
-        $payment_slip_data->description = $this->options['payment_description'];
+        $payment_slip_data->description = $this->replace($this->options['payment_description'], $order);
         
         $im = imagecreatefromjpeg(dirname(__DIR__) . '/assets/payment-slip-template.jpg');
         $font_file = dirname(__DIR__) . '/assets/times-new-roman.ttf';
