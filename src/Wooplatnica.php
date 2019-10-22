@@ -133,7 +133,7 @@ class Wooplatnica
         $payment_slip_blob = ob_get_contents(); //Instead, output above is saved to $contents
         ob_end_clean(); //End the output buffer.
         
-        $order_id = $order->get_id();
+        $order_id = $order->get_order_number();
         $webapp_name = get_bloginfo('name');
         $webapp_name_for_filename = mb_ereg_replace("([\.]{2,})", '', mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $webapp_name));
         $file_name = sprintf( '%s-%s-%s', __('payment-slip', $this->domain), $webapp_name_for_filename, $order_id);
@@ -225,7 +225,7 @@ EOS;
             '%month%',
             '%day%',
         ], [
-            $order->get_id(),
+            $order->get_order_number(),
             date('Y-m-d', $order->get_date_created()->getTimestamp()),
             date('Y', $order->get_date_created()->getTimestamp()),
             date('m', $order->get_date_created()->getTimestamp()),
