@@ -225,7 +225,7 @@ EOS;
             '%month%',
             '%day%',
         ], [
-            $order->get_id(),
+            $order->get_order_number(),
             date('Y-m-d', $order->get_date_created()->getTimestamp()),
             date('Y', $order->get_date_created()->getTimestamp()),
             date('m', $order->get_date_created()->getTimestamp()),
