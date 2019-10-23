@@ -273,8 +273,8 @@ EOS;
      */
     public function thankyou_page($order_id)
     {
-        if ($this->options['description']) {
-            echo wpautop(wptexturize(wp_kses_post($this->options['description'])));
+        if ($this->options['instructions']) {
+            echo wpautop(wptexturize(wp_kses_post($this->options['instructions'])));
         }
         $order = wc_get_order( $order_id );
         $this->generate_payment_slip(null, $order, false);
@@ -286,9 +286,9 @@ EOS;
 	// Get an instance of the WC_Order object
         $order = wc_get_order( $order_id );
 		
-		if( $order->get_payment_method() === 'wooplatnica-croatia' && $order->has_status('on-hold')){
-			if ($this->options['description']) {
-				echo wpautop(wptexturize(wp_kses_post($this->options['description'])));
+		if( $this->domain === $order->get_payment_method() && $order->has_status('on-hold')){
+			if ($this->options['instructions']) {
+				echo wpautop(wptexturize(wp_kses_post($this->options['instructions'])));
 			}
 			$order = wc_get_order( $order_id );
 			$this->generate_payment_slip(null, $order, false);
