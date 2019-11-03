@@ -33,13 +33,74 @@ class Wooplatnica
         if ($this->options['enabled'] === 'yes') {
             add_action("woocommerce_thankyou_{$this->domain}", array($this, 'thankyou_page'));
             add_action('woocommerce_email_after_order_table', array($this, 'email_instructions'), 10, 3);
-	    // add to my account page
+	        // add to my account page
             add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'), 10, 3);
         }
 
     }
 
-    private function generate_payment_slip($image_identifier, $order, $is_for_sending) {
+    private function display_payment_slip($order, $is_for_sending) {
+        session_start();
+        if (isset($_SESSION['payment-slip-image'])) {
+            $payment_slip_blob = $_SESSION['payment-slip-image'];
+            unset($_SESSION['payment-slip-image']);
+        }
+        else {
+            $payment_slip_blob = $this->generate_payment_slip($order);
+        }
+
+        $order_id = $order->get_order_number();
+        $webapp_name = get_bloginfo('name');
+        $webapp_name_for_filename = mb_ereg_replace("([\.]{2,})", '', mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $webapp_name));
+        $file_name = sprintf( '%s-%s-%s', __('payment-slip', $this->domain), $webapp_name_for_filename, $order_id);
+        if ($is_for_sending) {
+            $image_identifier = 'payment-slip';
+            $img_element_alt = __('Problem loading image of payment slip', $this->domain);
+            echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\"/>";
+
+            add_action( 'phpmailer_init', function() use ($payment_slip_blob, $image_identifier, $file_name) {
+                global $phpmailer;
+                $phpmailer->SMTPKeepAlive = true;
+                $phpmailer->AddStringEmbeddedImage($payment_slip_blob, $image_identifier, "$file_name.png", 'base64', 'image/png');
+            });
+
+            $_SESSION['payment-slip-image'] = $payment_slip_blob;
+        }
+        else {
+            $img_element_alt = __('Payment slip image', $this->domain);
+            $download_button_text = __('Download payment slip', $this->domain);
+            echo '<img id="payment-slip-image" src="data:image/png;base64,';
+            echo base64_encode($payment_slip_blob);
+            echo "\" alt=\"$img_element_alt\"/><br/>";
+            echo <<< EOS
+            <button type="button" id="download-payment-slip" style="margin-bottom:10px;">$download_button_text</button>
+            <script type="text/javascript">
+                var fileName = '$file_name';
+                const clearUrl = url => url.replace(/^data:image\/\w+?;base64,/, '');
+
+                const downloadImage = (name, content, type) => {
+                    var link = document.createElement('a');
+                    link.style = 'position: fixed; left: -10000px;';
+                    link.href = `data:application/octet-stream;base64,\${encodeURIComponent(content)}`;
+                    link.download = `\${name}.\${type}`;
+
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+
+                var downloadButton = document.getElementById('download-payment-slip');
+                downloadButton.addEventListener('click', function() {
+                    var img = document.getElementById('payment-slip-image');
+
+                    downloadImage(fileName, clearUrl(img.src), 'png');
+                });
+            </script>
+EOS;
+        }
+    }
+
+    private function generate_payment_slip($order) {
         $order = apply_filters("{$this->domain}_order", $order);
         $payment_slip_data = new Payment_Slip_Data();
         $payment_slip_data->currency = empty($this->options['currency']) ? $order->get_currency() : $this->options['currency'];
@@ -76,8 +137,14 @@ class Wooplatnica
         $black_color = imagecolorallocate($im, 0x30, 0x30, 0x30);
         
         imagefttext($im, 11, 0, 30, 55, $black_color, $main_font, $payment_slip_data->sender_name);
-        imagefttext($im, 11, 0, 30, 75, $black_color, $main_font, $payment_slip_data->sender_address);
-        imagefttext($im, 11, 0, 30, 95, $black_color, $main_font, $payment_slip_data->sender_city);
+        $sender_address_lines = explode("\n", $payment_slip_data->sender_address);
+        $sender_address_num_of_lines = count($sender_address_lines);
+        $sender_address_y_position = 75 - 4 * ($sender_address_num_of_lines - 1);
+        $sender_address_line_height = 20 - 4 * ($sender_address_num_of_lines - 1);
+        for ($i = 0; $i < $sender_address_num_of_lines; $i++) {
+            imagefttext($im, 11, 0, 30, $sender_address_y_position + $sender_address_line_height*$i, $black_color, $main_font, $sender_address_lines[$i]);
+        }
+        imagefttext($im, 11, 0, 30, $sender_address_y_position + $sender_address_line_height*$i, $black_color, $main_font, $payment_slip_data->sender_city);
         
         $recipient_name_lines = explode("\n", $payment_slip_data->recipient_name);
         $recipient_name_num_of_lines = count($recipient_name_lines);
@@ -146,49 +213,7 @@ class Wooplatnica
         $payment_slip_blob = ob_get_contents(); //Instead, output above is saved to $contents
         ob_end_clean(); //End the output buffer.
         
-        $order_id = $order->get_order_number();
-        $webapp_name = get_bloginfo('name');
-        $webapp_name_for_filename = mb_ereg_replace("([\.]{2,})", '', mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $webapp_name));
-        $file_name = sprintf( '%s-%s-%s', __('payment-slip', $this->domain), $webapp_name_for_filename, $order_id);
-        if ($is_for_sending) {
-            add_action( 'phpmailer_init', function() use ($payment_slip_blob, $image_identifier, $file_name) {
-                global $phpmailer;
-                $phpmailer->SMTPKeepAlive = true;
-                $phpmailer->AddStringEmbeddedImage($payment_slip_blob, $image_identifier, "$file_name.png", 'base64', 'image/png');
-            });
-        }
-        else {
-            $img_element_alt = __('Payment slip image', $this->domain);
-            $download_button_text = __('Download payment slip', $this->domain);
-            echo '<img id="payment-slip-image" src="data:image/png;base64,';
-            echo base64_encode($payment_slip_blob);
-            echo "\" alt=\"$img_element_alt\"/><br/>";
-            echo <<< EOS
-            <button type="button" id="download-payment-slip" style="margin-bottom:10px;">$download_button_text</button>
-            <script type="text/javascript">
-                var fileName = '$file_name';
-                const clearUrl = url => url.replace(/^data:image\/\w+?;base64,/, '');
-
-                const downloadImage = (name, content, type) => {
-                    var link = document.createElement('a');
-                    link.style = 'position: fixed; left: -10000px;';
-                    link.href = `data:application/octet-stream;base64,\${encodeURIComponent(content)}`;
-                    link.download = `\${name}.\${type}`;
-
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-
-                var downloadButton = document.getElementById('download-payment-slip');
-                downloadButton.addEventListener('click', function() {
-                    var img = document.getElementById('payment-slip-image');
-
-                    downloadImage(fileName, clearUrl(img.src), 'png');
-                });
-            </script>
-EOS;
-        }
+        return $payment_slip_blob;
     }
 
     private function display_monospace_text_with_specific_spacing($im, $x, $y, $color, $font, $text, $spacing=14.3) {
@@ -270,10 +295,7 @@ EOS;
             if ($this->options['instructions']) {
                 echo wpautop(wptexturize($this->options['instructions'])).PHP_EOL;
             }
-            $image_identifier = 'payment-slip';
-            $this->generate_payment_slip($image_identifier, $order, true);
-            $img_element_alt = __('Problem loading image of payment slip', $this->domain);
-            echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\"/>";
+            $this->display_payment_slip($order, true);
         }
     }
 
@@ -288,7 +310,7 @@ EOS;
             echo wpautop(wptexturize(wp_kses_post($this->options['instructions'])));
         }
         $order = wc_get_order( $order_id );
-        $this->generate_payment_slip(null, $order, false);
+        $this->display_payment_slip($order, false);
     }
      /**
      * Output for the My account -> View order page.
@@ -301,8 +323,7 @@ EOS;
 			if ($this->options['instructions']) {
 				echo wpautop(wptexturize(wp_kses_post($this->options['instructions'])));
 			}
-			$order = wc_get_order( $order_id );
-			$this->generate_payment_slip(null, $order, false);
+			$this->display_payment_slip($order, false);
 		 }
     }
 }
