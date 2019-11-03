@@ -44,9 +44,20 @@ class Wooplatnica
         $payment_slip_data = new Payment_Slip_Data();
         $payment_slip_data->currency = empty($this->options['currency']) ? $order->get_currency() : $this->options['currency'];
         $payment_slip_data->set_price(apply_filters("{$this->domain}_price", $order->get_total()));
-        $payment_slip_data->sender_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
-        $payment_slip_data->sender_address = $order->get_billing_address_1();
-        $payment_slip_data->sender_city = $order->get_billing_postcode() . ' ' . $order->get_billing_city();
+        if (empty(get_post_meta( $order->get_id(), 'R1 račun', true ))) {
+            $payment_slip_data->sender_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+            $payment_slip_data->sender_address = $order->get_billing_address_1();
+            $payment_slip_data->sender_city = $order->get_billing_postcode() . ' ' . $order->get_billing_city();
+        }
+        else {
+            $payment_slip_data->sender_name = get_post_meta( $order->get_id(), 'Ime tvrtke', true);
+            $company_address = preg_replace('/,\s*/', "\n", get_post_meta( $order->get_id(), 'Adresa tvrtke', true), 1);
+            if (strpos($company_address, "\n") === false) {
+                $company_address = preg_replace('/(.*?(?:\d+\s*(?:(?:-\s*|\/\s*)?[A-z]\b)?|(?i)b\.?\s*b\.?\s*(?-i)))\s*(?:-\s*)?/', "$1\n", $company_address, 1);
+            }
+            $payment_slip_data->sender_address = $company_address;
+            $payment_slip_data->sender_city = get_post_meta( $order->get_id(), 'OIB tvrtke', true);
+        }
         $payment_slip_data->recipient_name = $this->options['recipient_name'];
         $payment_slip_data->recipient_address = $this->options['recipient_address'];
         $payment_slip_data->recipient_city = $this->options['recipient_zip_code'] . ' ' . $this->options['recipient_city'];
