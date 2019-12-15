@@ -65,6 +65,17 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'default'     => __( 'Below you can find instructions required to make a payment:', $this->id ),
                 'desc_tip'    => true,
             ),
+            'payment_slip_type' => array(
+                'title'       => __( 'Payment slip type', $this->id ),
+                'type'        => 'select',
+                'class'       => 'wc-enhanced-select',
+                'description' => __( 'If your bank account is registered outside of Croatia, you should select \'universal\'.', $this->id ) . '<br/><strong>' . __( 'Note: ', $this->id ) . '</strong>' . __( 'Barcode can be added only to the payment slips for national payments.', $this->id ),
+                'default'     => 'national',
+                'options'     => array(
+                    'universal' => __( 'universal', $this->id ),
+                    'national'  => __( 'national', $this->id )
+                )
+            ),
             'currency' => array(
                 'title'       => __( 'Currency code', $this->id ),
                 'type'        => 'text',
@@ -97,7 +108,7 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'default'     => ''
             ),
             'recipient_callout_number' => array(
-                'title'       => __( 'Recipient\'s call-out number', $this->id ),
+                'title'       => __( 'Recipient\'s reference number', $this->id ),
                 'description' => __( 'Variables such as %order%, %date%, %year%, %month% and %day% can be used.', $this->id ),
                 'type'        => 'text',
                 'default'     => '%order%'
@@ -336,11 +347,65 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'description' => __( 'Variables such as %order%, %date%, %year%, %month% and %day% can be used.', $this->id ),
                 'default'     => ''
             ),
+            '!universal-payment-header' => array(     // dirty hack for header
+                'title'     => $this->get_nowrapped_large_text(__( 'Options for universal payment slip type', $this->id )),
+                'type'      => 'text',
+                'css'       => 'display: none;'
+            ),
+            'recipient_swift_code' => array(
+                'title'     => __( 'Recipient SWIFT/BIC code', $this->id ),
+                'type'      => 'text'
+            ),
+            'recipient_bank_name' => array(
+                'title'     => __( 'Recipient bank name', $this->id ),
+                'type'      => 'textarea'
+            ),
+            'recipient_person_type' => array(
+                'title'     => __( 'Recipient person type', $this->id ),
+                'type'      => 'select',
+                'class'     => 'wc-enhanced-select',
+                'options'   => array(
+                    ''          => __( '(undefined)', $this->id ),
+                    'natural'   => __( 'natural', $this->id ),
+                    'legal'     => __( 'legal', $this->id ),
+                ),
+                'default'   => ''
+            ),
+            'sepa_transfer_currency' => array(
+                'title'         => __( 'SEPA transfer currency code', $this->id ),
+                'type'          => 'text'
+            ),
+            'swift_charge_option' => array(
+                'title'       => __( 'SWIFT charge option', $this->id ),
+                'type'        => 'select',
+                'class'       => 'wc-enhanced-select',
+                'options'     => array(
+                    ''      => __( '(undefined)', $this->id ),
+                    'BEN'   => 'BEN',
+                    'SHA'   => 'SHA',
+                    'OUR'   => 'OUR'
+                ),
+                'description' => __( 'Which side will have to pay payment fee/costs. BEN for other side, OUR for us or SHA for cost sharing', $this->id ),
+                'default'     => '',
+                'desc_tip'    => true
+            ),
+            '!national-payment-header' => array(     // dirty hack for header
+                'title'     => $this->get_nowrapped_large_text(__( 'Options for national payment slip type', $this->id )),
+                'type'      => 'text',
+                'css'       => 'display: none;'
+            ),
             'display_barcode' => array(
-                'title'   => __( 'Barcode for mobile banking', $this->id ),
-                'type'    => 'checkbox',
-                'label'   => __( 'Generate barcode in PDF417 format', $this->id ),
-                'default' => 'yes'
+                'title'         => __( 'Barcode for mobile banking', $this->id ),
+                'type'          => 'checkbox',
+                'label'         => __( 'Generate barcode in PDF417 format', $this->id ),
+                'description'   => __('Barcode can be added only to the payment slips for national payments.', $this->id ),
+                'default'       => 'yes'
+            ),
+            'display_confirmation_part' => array(
+                'title'       => __( 'Display confirmation part', $this->id ),
+                'type'        => 'checkbox',
+                'label'       => __( 'Display confirmation part of the payment slip', $this->id ),
+                'default'     => 'yes'
             ),
             'main_font' => array(
                 'title'       => __( 'Main font', $this->id ),
@@ -353,7 +418,7 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                     'monospaced'    => __( 'monospaced', $this->id )
                 ),
                 'desc_tip'    => true
-            )
+            ),
         );
     }
 
@@ -378,4 +443,7 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
         );
     }
 
+    public function get_nowrapped_large_text($text) {
+        return '<h1>' . str_replace(array(' ', '-'), array('&nbsp;', '−'), $text) . '</h1>';
+    }
 }
