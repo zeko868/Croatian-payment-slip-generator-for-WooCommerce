@@ -40,6 +40,13 @@ class Wooplatnica
     }
 
     private function display_payment_slip($order, $is_for_sending) {
+        $default_options = array(   // add here default values of options that were introduced after initial version (a.k.a. version 1.0) of this plugin
+            'display_confirmation_part' => 'yes',
+            'payment_slip_type'         => 'national',
+            'main_font'                 => 'proportional'
+        );
+        $this->options = array_merge($default_options, $this->options); // this is useful because after updating plugin, options that didn't exist in previous version of plugin are not yet stored in the database, i.e. when those options would be fetched, their values would be null even if those newly defined options have defined default values in WC_Gateway_Wooplatnica.php, what resulted in unexcepted aad buggy behavior
+
         session_start();
         if (isset($_SESSION['payment-slip-image'])) {
             $payment_slip_blob = $_SESSION['payment-slip-image'];
@@ -69,14 +76,26 @@ class Wooplatnica
         else {
             $img_element_alt = __('Payment slip image', $this->domain);
             $download_button_text = __('Download payment slip', $this->domain);
-            echo '<img id="payment-slip-image" src="data:image/png;base64,';
+
+            if ($this->options['display_confirmation_part'] === 'yes') {
+                $payment_slip_image_width = '1578px';
+                $payment_slip_image_position_x = '52.5%';
+                $payment_slip_stretch_width = '108%';
+            }
+            else {
+                $payment_slip_image_width = '1124px';
+                $payment_slip_image_position_x = '10%';
+                $payment_slip_stretch_width = '152%';
+            }
+
+            echo '<div id="payment-slip-image" style="background: url(data:image/png;base64,';
             echo base64_encode($payment_slip_blob);
-            echo "\" alt=\"$img_element_alt\"/><br/>";
+            echo "); background-position-x: $payment_slip_image_position_x; background-position-y: 45.7%; background-size: $payment_slip_stretch_width auto;\"><img style=\"visibility: hidden\" width=\"$payment_slip_image_width\" height=\"610px\"/></div><br/>";
             echo <<< EOS
             <button type="button" id="download-payment-slip" style="margin-bottom:10px;">$download_button_text</button>
             <script type="text/javascript">
                 var fileName = '$file_name';
-                const clearUrl = url => url.replace(/^data:image\/\w+?;base64,/, '');
+                const clearUrl = url => url.match(/^url\("data:image\/\w+?;base64,(.+)"\)$/)[1];
 
                 const downloadImage = (name, content, type) => {
                     var link = document.createElement('a');
@@ -93,7 +112,7 @@ class Wooplatnica
                 downloadButton.addEventListener('click', function() {
                     var img = document.getElementById('payment-slip-image');
 
-                    downloadImage(fileName, clearUrl(img.src), 'png');
+                    downloadImage(fileName, clearUrl(img.style.backgroundImage), 'png');
                 });
             </script>
 EOS;
@@ -128,56 +147,133 @@ EOS;
         $payment_slip_data->payment_model = $this->options['payment_model'];
         $payment_slip_data->description = $this->replace($this->options['payment_description'], $order);
         
-        $im = imagecreatefromjpeg(dirname(__DIR__) . '/assets/payment-slip-template.jpg');
+        switch ($this->options['payment_slip_type']) {
+            case 'universal':
+                $input_payment_slip_image_name = 'payment-slip-template-hub-3.png';
+                $recipient_iban_x_position = 300;
+                break;
+            case 'national':
+                $input_payment_slip_image_name = 'payment-slip-template-hub-3a.png';
+                $recipient_iban_x_position = 632;
+                break;
+        }
+        $im = imagecreatefrompng(dirname(__DIR__) . "/assets/$input_payment_slip_image_name");
 
         $proportional_font = dirname(__DIR__) . '/assets/times-new-roman.ttf';
         $monospaced_font = dirname(__DIR__) . '/assets/RobotoMono-Regular.ttf';
-        $main_font = $this->options['main_font'] === 'monospaced' ? $monospaced_font : $proportional_font;
+        switch ($this->options['main_font']) {
+            case 'monospaced':
+                $main_font = $monospaced_font;
+                $font_size_left = 16;
+                $font_size_right = 16;
+                if (strlen($payment_slip_data->recipient_iban) >= 32) {
+                    $font_size_right_iban = 14;
+                }
+                else {
+                    $font_size_right_iban = $font_size_right;
+                }
+                break;
+            case 'proportional':
+                $main_font = $proportional_font;
+                $font_size_left = 20;
+                $font_size_right = 18;
+                if (strlen($payment_slip_data->recipient_iban) >= 30) {
+                    $font_size_right_iban = 15;
+                }
+                else {
+                    $font_size_right_iban = $font_size_right;
+                }
+                break;
+        }
         
         $black_color = imagecolorallocate($im, 0x30, 0x30, 0x30);
         
-        imagefttext($im, 11, 0, 30, 55, $black_color, $main_font, $payment_slip_data->sender_name);
+        imagefttext($im, $font_size_left, 0, 100, 903, $black_color, $main_font, $payment_slip_data->sender_name);
         $sender_address_lines = explode("\n", $payment_slip_data->sender_address);
         $sender_address_num_of_lines = count($sender_address_lines);
-        $sender_address_y_position = 75 - 4 * ($sender_address_num_of_lines - 1);
-        $sender_address_line_height = 20 - 4 * ($sender_address_num_of_lines - 1);
+        $sender_address_y_position = 938 - 5 * ($sender_address_num_of_lines - 1);
+        $sender_address_line_height = 35 - 5 * ($sender_address_num_of_lines - 1);
         for ($i = 0; $i < $sender_address_num_of_lines; $i++) {
-            imagefttext($im, 11, 0, 30, $sender_address_y_position + $sender_address_line_height*$i, $black_color, $main_font, $sender_address_lines[$i]);
+            imagefttext($im, $font_size_left, 0, 100, $sender_address_y_position + $sender_address_line_height*$i, $black_color, $main_font, $sender_address_lines[$i]);
         }
-        imagefttext($im, 11, 0, 30, $sender_address_y_position + $sender_address_line_height*$i, $black_color, $main_font, $payment_slip_data->sender_city);
+        imagefttext($im, $font_size_left, 0, 100, $sender_address_y_position + $sender_address_line_height*$i, $black_color, $main_font, $payment_slip_data->sender_city);
         
         $recipient_name_lines = explode("\n", $payment_slip_data->recipient_name);
         $recipient_name_num_of_lines = count($recipient_name_lines);
         for ($i = 0; $i < $recipient_name_num_of_lines; $i++) {
-            imagefttext($im, 11, 0, 30, 165 + 20*$i, $black_color, $main_font, $recipient_name_lines[$i]);
+            imagefttext($im, $font_size_left, 0, 100, 1100 + 35*$i, $black_color, $main_font, $recipient_name_lines[$i]);
         }
-        imagefttext($im, 11, 0, 30, 165 + 20*$recipient_name_num_of_lines, $black_color, $main_font, $payment_slip_data->recipient_address);
-        imagefttext($im, 11, 0, 30, 165 + 20*$recipient_name_num_of_lines + 20, $black_color, $main_font, $payment_slip_data->recipient_city);
+        imagefttext($im, $font_size_left, 0, 100, 1100 + 35*$recipient_name_num_of_lines, $black_color, $main_font, $payment_slip_data->recipient_address);
+        imagefttext($im, $font_size_left, 0, 100, 1100 + 35*$recipient_name_num_of_lines + 35, $black_color, $main_font, $payment_slip_data->recipient_city);
         
-        $this->display_monospace_text_with_specific_spacing($im, 325, 49, $black_color, $monospaced_font, $payment_slip_data->currency);
-        $this->display_monospace_text_with_specific_spacing($im, 410, 49, $black_color, $monospaced_font, str_pad('=' . str_replace(array('.', ','), '', $payment_slip_data->get_price()), 15, ' ', STR_PAD_LEFT));
-        $this->display_monospace_text_with_specific_spacing($im, 325, 133, $black_color, $monospaced_font, $payment_slip_data->recipient_iban);
-        $this->display_monospace_text_with_specific_spacing($im, 312, 167, $black_color, $monospaced_font, $payment_slip_data->recipient_callout_number);
+        $this->display_monospace_text_with_specific_spacing($im, 632, 892, $black_color, $monospaced_font, $payment_slip_data->currency);
+        $this->display_monospace_text_with_specific_spacing($im, 785, 892, $black_color, $monospaced_font, str_pad('=' . str_replace(array('.', ','), '', $payment_slip_data->get_price()), 15, ' ', STR_PAD_LEFT));
+        $this->display_monospace_text_with_specific_spacing($im, $recipient_iban_x_position, 1045, $black_color, $monospaced_font, $payment_slip_data->recipient_iban);
+        $this->display_monospace_text_with_specific_spacing($im, 606, 1105, $black_color, $monospaced_font, $payment_slip_data->recipient_callout_number);
         
-        $this->display_monospace_text_with_specific_spacing($im, 226, 167, $black_color, $monospaced_font, $payment_slip_data->payment_model);
-        $this->display_monospace_text_with_specific_spacing($im, 226, 205, $black_color, $monospaced_font, $payment_slip_data->intent_code);
+        $this->display_monospace_text_with_specific_spacing($im, 453, 1105, $black_color, $monospaced_font, $payment_slip_data->payment_model);
+        $this->display_monospace_text_with_specific_spacing($im, 453, 1173, $black_color, $monospaced_font, $payment_slip_data->intent_code);
 
         $description_lines = explode("\n", $payment_slip_data->description);
         $description_num_of_lines = count($description_lines);
         for ($i = 0; $i < $description_num_of_lines; $i++) {
-            imagefttext($im, 11, 0, 360, 190 + 16*$i, $black_color, $main_font, $description_lines[$i]);
+            imagefttext($im, $font_size_left, 0, 690, 1145 + 30*$i, $black_color, $main_font, $description_lines[$i]);
+        }
+
+        if ($this->options['payment_slip_type'] === 'universal') {
+            $this->display_monospace_text_with_specific_spacing($im, 107, 1295, $black_color, $monospaced_font, $this->options['recipient_swift_code'], 22.8);
+            if (!empty($this->options['recipient_person_type'])) {
+                switch($this->options['recipient_person_type']) {
+                    case 'natural':
+                        $recipient_person_type_position_x = 457;
+                        break;
+                    case 'legal':
+                        $recipient_person_type_position_x = 502;
+                        break;
+                }
+                $this->display_monospace_text_with_specific_spacing($im, $recipient_person_type_position_x, 1295, $black_color, $monospaced_font, 'X');
+            }
+
+            $recipient_bank_name_lines = explode("\n", $this->options['recipient_bank_name']);
+            $recipient_bank_name_num_of_lines = count($recipient_bank_name_lines);
+            for ($i = 0; $i < $recipient_bank_name_num_of_lines; $i++) {
+                imagefttext($im, $font_size_left, 0, 110, 1325 + 31*$i, $black_color, $main_font, $recipient_bank_name_lines[$i]);
+            }
+
+            $this->display_monospace_text_with_specific_spacing($im, 177, 1432, $black_color, $monospaced_font, $this->options['sepa_transfer_currency'], 24);
+            if (!empty($this->options['swift_charge_option'])) {
+                switch($this->options['swift_charge_option']) {
+                    case 'BEN':
+                        $swift_charge_option_position_x = 412;
+                        break;
+                    case 'SHA':
+                        $swift_charge_option_position_x = 457;
+                        break;
+                    case 'OUR':
+                        $swift_charge_option_position_x = 502;
+                        break;
+                }
+                $this->display_monospace_text_with_specific_spacing($im, $swift_charge_option_position_x, 1434, $black_color, $monospaced_font, 'X');
+            }
         }
         
-        $this->display_right_aligned($im, 11, 870, 45, $black_color, $main_font, $payment_slip_data->currency . ' ' . str_replace('.', ',', $payment_slip_data->get_price()));
-        
-        $this->display_right_aligned($im, 11, 870, 134, $black_color, $main_font, $payment_slip_data->recipient_iban);
-        
-        $this->display_right_aligned($im, 11, 870, 167, $black_color, $main_font, $payment_slip_data->payment_model . ' ' . $payment_slip_data->recipient_callout_number);
-        
-        $description_lines = explode("\n", $payment_slip_data->description);
-        $description_num_of_lines = count($description_lines);
-        for ($i = 0; $i < $description_num_of_lines; $i++) {
-            imagefttext($im, 10, 0, 655, 200 + 13*$i, $black_color, $main_font, $description_lines[$i]);
+        if ($this->options['display_confirmation_part'] === 'yes') {
+            $this->display_right_aligned($im, $font_size_right, 1615, 892, $black_color, $main_font, $payment_slip_data->currency . ' ' . str_replace('.', ',', $payment_slip_data->get_price()));
+            
+            $this->display_right_aligned($im, $font_size_right_iban, 1615, 1045, $black_color, $main_font, $payment_slip_data->recipient_iban);
+            
+            $this->display_right_aligned($im, $font_size_right, 1615, 1105, $black_color, $main_font, $payment_slip_data->payment_model . ' ' . $payment_slip_data->recipient_callout_number);
+            
+            $description_lines = explode("\n", $payment_slip_data->description);
+            $description_num_of_lines = count($description_lines);
+            for ($i = 0; $i < $description_num_of_lines; $i++) {
+                imagefttext($im, $font_size_right, 0, 1223, 1155 + 25*$i, $black_color, $main_font, $description_lines[$i]);
+            }
+        }
+        else {
+            // hide confirmation part of the payment slip
+            $fully_transparent_color = imagecolorallocatealpha($im, 0xff, 0xff, 0xff, 0x7f);
+            imagefilledrectangle($im, 1191, 750, 1700, 1630, $fully_transparent_color);
         }
 
         //embed_barcode($im, $payment_slip_data->encode(), 50, 250, 3, 1, $black_color);
@@ -205,8 +301,8 @@ EOS;
         //    }
         //}
 
-        if ($this->options['display_barcode'] === 'yes') {
-            $this->embed_barcode($im, $payment_slip_data->encode(), 29, 242, $black_color);
+        if ($this->options['payment_slip_type'] === 'national' && $this->options['display_barcode'] === 'yes') {
+            $this->embed_barcode($im, $payment_slip_data->encode());
         }
         ob_start(); // Let's start output buffering.
         imagepng($im); //This would normally output the image, but because of ob_start(), it won't.
@@ -216,9 +312,9 @@ EOS;
         return $payment_slip_blob;
     }
 
-    private function display_monospace_text_with_specific_spacing($im, $x, $y, $color, $font, $text, $spacing=14.3) {
+    private function display_monospace_text_with_specific_spacing($im, $x, $y, $color, $font, $text, $spacing=25.5) {
         for ($i = 0; $i < strlen($text); $i++) {
-            imagefttext($im, 15, 0, $x + $spacing*$i, $y, $color, $font, $text[$i]);
+            imagefttext($im, 28, 0, $x + $spacing*$i, $y, $color, $font, $text[$i]);
         }
     }
 
@@ -233,19 +329,36 @@ EOS;
         imagefttext($im, $font_size, 0, $this->get_coord_x_for_right_alignment($font_size, $font, $text, $x), $y, $color, $font, $text);
     }
 
-    private function embed_barcode($image, $data_to_encode, $x, $y, $color)
+    private function embed_barcode($image, $data_to_encode)
     {
         $pdf417 = new PDF417();
         $data = $pdf417->encode($data_to_encode);
     
         $renderer = new ImageRenderer([
             'format' => 'png',
-            'padding' => 50
+            'ratio' => 2
         ]);
         
         $barcode_image = $renderer->render($data)->getCore();
-        $scaled_barcode_image = imagescale($barcode_image, 290, 150);
-        imagecopy($image, $scaled_barcode_image, $x, $y, 25, 20, 243, 110);
+        $barcode_image_width = imagesx($barcode_image);
+        $barcode_image_height = imagesy($barcode_image);
+
+        $payment_slip_barcode_area_start_x = 97;
+        $payment_slip_barcode_area_end_x = 538;
+        $payment_slip_barcode_area_start_y = 1241;
+        $payment_slip_barcode_area_end_y = 1439;
+        $payment_slip_barcode_area_width = $payment_slip_barcode_area_end_x - $payment_slip_barcode_area_start_x;
+        $payment_slip_barcode_area_height = $payment_slip_barcode_area_end_y - $payment_slip_barcode_area_start_y;
+
+        if ($payment_slip_barcode_area_width < $barcode_image_width) {
+            $barcode_image = imagescale($barcode_image, $payment_slip_barcode_area_width);
+            $barcode_image_width = imagesx($barcode_image);
+            $barcode_image_height = imagesy($barcode_image);
+        }
+
+        $payment_slip_exact_location_for_centered_barcode_x = $payment_slip_barcode_area_start_x + (($payment_slip_barcode_area_width - $barcode_image_width) / 2);
+        $payment_slip_exact_location_for_centered_barcode_y = $payment_slip_barcode_area_start_y + (($payment_slip_barcode_area_height - $barcode_image_height) / 2);
+        imagecopy($image, $barcode_image, $payment_slip_exact_location_for_centered_barcode_x, $payment_slip_exact_location_for_centered_barcode_y, 0, 0, $barcode_image_width, $barcode_image_height);
     }
 
     /**
