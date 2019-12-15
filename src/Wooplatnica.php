@@ -249,7 +249,7 @@ EOS;
                     case 'SHA':
                         $swift_charge_option_position_x = 457;
                         break;
-                    case 'SHA':
+                    case 'OUR':
                         $swift_charge_option_position_x = 502;
                         break;
                 }
