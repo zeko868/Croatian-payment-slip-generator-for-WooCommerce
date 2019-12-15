@@ -133,7 +133,7 @@ EOS;
             $payment_slip_data->sender_name = get_post_meta( $order->get_id(), 'Ime tvrtke', true);
             $company_address = preg_replace('/,\s*/', "\n", get_post_meta( $order->get_id(), 'Adresa tvrtke', true), 1);
             if (strpos($company_address, "\n") === false) {
-                $company_address = preg_replace('/(.*?(?:\d+\s*(?:(?:-\s*|\/\s*)?[A-z]\b)?|(?i)b\.?\s*b\.?\s*(?-i)))\s*(?:-\s*)?/', "$1\n", $company_address, 1);
+                $company_address = preg_replace('/(.+?(?:\d+(?![\d\.])\s*(?:(?:-\s*|\/\s*)?[A-Za-z]\b)?|(?i)b\.?\s*b\.?\s*(?-i)))\s*(?:-\s*)?/', "$1\n", $company_address, 1);   // take a look at samples: https://regex101.com/r/kMmIl8/1
             }
             $payment_slip_data->sender_address = $company_address;
             $payment_slip_data->sender_city = get_post_meta( $order->get_id(), 'OIB tvrtke', true);
