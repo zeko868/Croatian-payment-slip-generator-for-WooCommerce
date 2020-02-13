@@ -291,55 +291,7 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'type'        => 'select',
                 'class'       => 'wc-enhanced-select',
                 'default'     => '',
-                'options'     => array(
-                    ''     => __( '(undefined)', $this->id ),
-                    'HR00' => 'HR00',
-                    'HR01' => 'HR01',
-                    'HR02' => 'HR02',
-                    'HR03' => 'HR03',
-                    'HR04' => 'HR04',
-                    'HR05' => 'HR05',
-                    'HR06' => 'HR06',
-                    'HR07' => 'HR07',
-                    'HR08' => 'HR08',
-                    'HR09' => 'HR09',
-                    'HR10' => 'HR10',
-                    'HR11' => 'HR11',
-                    'HR12' => 'HR12',
-                    'HR13' => 'HR13',
-                    'HR14' => 'HR14',
-                    'HR15' => 'HR15',
-                    'HR16' => 'HR16',
-                    'HR17' => 'HR17',
-                    'HR18' => 'HR18',
-                    'HR23' => 'HR23',
-                    'HR24' => 'HR24',
-                    'HR25' => 'HR25',
-                    'HR26' => 'HR26',
-                    'HR27' => 'HR27',
-                    'HR28' => 'HR28',
-                    'HR29' => 'HR29',
-                    'HR30' => 'HR30',
-                    'HR31' => 'HR31',
-                    'HR33' => 'HR33',
-                    'HR34' => 'HR34',
-                    'HR40' => 'HR40',
-                    'HR41' => 'HR41',
-                    'HR42' => 'HR42',
-                    'HR43' => 'HR43',
-                    'HR50' => 'HR50',
-                    'HR55' => 'HR55',
-                    'HR62' => 'HR62',
-                    'HR63' => 'HR63',
-                    'HR64' => 'HR64',
-                    'HR65' => 'HR65',
-                    'HR67' => 'HR67',
-                    'HR68' => 'HR68',
-                    'HR69' => 'HR69',
-                    'HR83' => 'HR83',
-                    'HR84' => 'HR84',
-                    'HR99' => 'HR99'
-                )
+                'options'     => $this->generate_payment_models()
             ),
             'payment_description' => array(
                 'title'       => __( 'Payment description', $this->id ),
@@ -445,5 +397,18 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
 
     public function get_nowrapped_large_text($text) {
         return '<h1>' . str_replace(array(' ', '-'), array('&nbsp;', '−'), $text) . '</h1>';
+    }
+
+    private function generate_payment_models() {
+        $models = array_map(function($num) {
+            $num = str_pad($num, 2, '0', STR_PAD_LEFT);
+            return "HR$num";
+        }, range(0, 99));
+        return array_merge(
+            array(
+                ''  => __( '(undefined)', $this->id )
+            ),
+            array_combine($models, $models)
+        );
     }
 }
