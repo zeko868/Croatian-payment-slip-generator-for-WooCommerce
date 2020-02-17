@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-14 13:06+0000\n"
+"POT-Creation-Date: 2020-02-17 20:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Note: "
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:71 src/WC_Gateway_Wooplatnica.php:400
+#: src/WC_Gateway_Wooplatnica.php:71 src/WC_Gateway_Wooplatnica.php:352
 msgid "Barcode can be added only to the payment slips for national payments."
 msgstr ""
 
@@ -138,7 +138,7 @@ msgstr ""
 msgid "Recipient's reference number"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:111 src/WC_Gateway_Wooplatnica.php:346
+#: src/WC_Gateway_Wooplatnica.php:111 src/WC_Gateway_Wooplatnica.php:298
 msgid ""
 "Variables such as %order%, %date%, %year%, %month% and %day% can be used."
 msgstr ""
@@ -147,8 +147,8 @@ msgstr ""
 msgid "Intent code"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:294
-#: src/WC_Gateway_Wooplatnica.php:367 src/WC_Gateway_Wooplatnica.php:382
+#: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:319 
+#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:413
 msgid "(undefined)"
 msgstr ""
 
@@ -156,99 +156,103 @@ msgstr ""
 msgid "Payment model"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:344
+#: src/WC_Gateway_Wooplatnica.php:296
 msgid "Payment description"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:350
+#: src/WC_Gateway_Wooplatnica.php:302
 msgid "Options for universal payment slip type"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:355
+#: src/WC_Gateway_Wooplatnica.php:307
 msgid "Recipient SWIFT/BIC code"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:359
+#: src/WC_Gateway_Wooplatnica.php:311
 msgid "Recipient bank name"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:363
+#: src/WC_Gateway_Wooplatnica.php:315
 msgid "Recipient person type"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:368
+#: src/WC_Gateway_Wooplatnica.php:320
 msgid "natural"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:369
+#: src/WC_Gateway_Wooplatnica.php:321
 msgid "legal"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:374
+#: src/WC_Gateway_Wooplatnica.php:326
 msgid "SEPA transfer currency code"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:378
+#: src/WC_Gateway_Wooplatnica.php:330
 msgid "SWIFT charge option"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:387
+#: src/WC_Gateway_Wooplatnica.php:339
 msgid ""
 "Which side will have to pay payment fee/costs. BEN for other side, OUR for "
 "us or SHA for cost sharing"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:392
+#: src/WC_Gateway_Wooplatnica.php:344
 msgid "Options for national payment slip type"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:397
+#: src/WC_Gateway_Wooplatnica.php:349
 msgid "Barcode for mobile banking"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:399
+#: src/WC_Gateway_Wooplatnica.php:351
 msgid "Generate barcode in PDF417 format"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:404
+#: src/WC_Gateway_Wooplatnica.php:356
+msgid "Other options"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:361
 msgid "Display confirmation part"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:406
+#: src/WC_Gateway_Wooplatnica.php:363
 msgid "Display confirmation part of the payment slip"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:410
+#: src/WC_Gateway_Wooplatnica.php:367
 msgid "Main font"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:411
+#: src/WC_Gateway_Wooplatnica.php:368
 msgid ""
 "Font being used for the text that won't be displayed in fields with cells "
 "for each character"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:416
+#: src/WC_Gateway_Wooplatnica.php:373
 msgid "proportional"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:417
+#: src/WC_Gateway_Wooplatnica.php:374
 msgid "monospaced"
 msgstr ""
 
-#: src/Wooplatnica.php:62
+#: src/Wooplatnica.php:60
 msgid "payment-slip"
 msgstr ""
 
-#: src/Wooplatnica.php:65
+#: src/Wooplatnica.php:63
 msgid "Problem loading image of payment slip"
 msgstr ""
 
-#: src/Wooplatnica.php:77
+#: src/Wooplatnica.php:75
 msgid "Payment slip image"
 msgstr ""
 
-#: src/Wooplatnica.php:78
+#: src/Wooplatnica.php:76
 msgid "Download payment slip"
 msgstr ""
 

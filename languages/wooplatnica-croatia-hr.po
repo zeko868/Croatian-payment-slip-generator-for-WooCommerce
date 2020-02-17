@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-14 13:06+0000\n"
-"PO-Revision-Date: 2019-12-14 13:07+0000\n"
+"POT-Creation-Date: 2020-02-17 20:51+0000\n"
+"PO-Revision-Date: 2020-02-17 21:00+0000\n"
 "Last-Translator: klinchanica <info.klinchanica@gmail.com>\n"
 "Language-Team: Hrvatski\n"
 "Language: hr\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.1; wp-5.2.4"
+"X-Loco-Version: 2.3.1; wp-5.2.5"
 
 #: src/WC_Gateway_Wooplatnica.php:16
 msgid "[CRO] Payment slip or mobile banking"
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Note: "
 msgstr "Napomena: "
 
-#: src/WC_Gateway_Wooplatnica.php:71 src/WC_Gateway_Wooplatnica.php:400
+#: src/WC_Gateway_Wooplatnica.php:71 src/WC_Gateway_Wooplatnica.php:352
 msgid "Barcode can be added only to the payment slips for national payments."
 msgstr "Barkod može biti dodan samo na naloge za nacionalna plaćanja."
 
@@ -147,7 +147,7 @@ msgstr "IBAN primatelja"
 msgid "Recipient's reference number"
 msgstr "Poziv na broj primatelja"
 
-#: src/WC_Gateway_Wooplatnica.php:111 src/WC_Gateway_Wooplatnica.php:346
+#: src/WC_Gateway_Wooplatnica.php:111 src/WC_Gateway_Wooplatnica.php:298
 msgid ""
 "Variables such as %order%, %date%, %year%, %month% and %day% can be used."
 msgstr "Možete koristiti %order%, %date%, %year%, %month% i %day% varijable."
@@ -156,8 +156,8 @@ msgstr "Možete koristiti %order%, %date%, %year%, %month% i %day% varijable."
 msgid "Intent code"
 msgstr "Svrha plaćanja"
 
-#: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:294
-#: src/WC_Gateway_Wooplatnica.php:367 src/WC_Gateway_Wooplatnica.php:382
+#: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:319 
+#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:413
 msgid "(undefined)"
 msgstr "(nedefinirano)"
 
@@ -165,43 +165,43 @@ msgstr "(nedefinirano)"
 msgid "Payment model"
 msgstr "Model plaćanja"
 
-#: src/WC_Gateway_Wooplatnica.php:344
+#: src/WC_Gateway_Wooplatnica.php:296
 msgid "Payment description"
 msgstr "Opis plaćanja"
 
-#: src/WC_Gateway_Wooplatnica.php:350
+#: src/WC_Gateway_Wooplatnica.php:302
 msgid "Options for universal payment slip type"
 msgstr "Postavke vezane uz univerzalni nalog za plaćanje"
 
-#: src/WC_Gateway_Wooplatnica.php:355
+#: src/WC_Gateway_Wooplatnica.php:307
 msgid "Recipient SWIFT/BIC code"
 msgstr "SWIFT/BIC kod primatelja"
 
-#: src/WC_Gateway_Wooplatnica.php:359
+#: src/WC_Gateway_Wooplatnica.php:311
 msgid "Recipient bank name"
 msgstr "Naziv banke primatelja"
 
-#: src/WC_Gateway_Wooplatnica.php:363
+#: src/WC_Gateway_Wooplatnica.php:315
 msgid "Recipient person type"
 msgstr "Tip osobe primatelja"
 
-#: src/WC_Gateway_Wooplatnica.php:368
+#: src/WC_Gateway_Wooplatnica.php:320
 msgid "natural"
 msgstr "fizička"
 
-#: src/WC_Gateway_Wooplatnica.php:369
+#: src/WC_Gateway_Wooplatnica.php:321
 msgid "legal"
 msgstr "pravna"
 
-#: src/WC_Gateway_Wooplatnica.php:374
+#: src/WC_Gateway_Wooplatnica.php:326
 msgid "SEPA transfer currency code"
 msgstr "Oznaka valute za SEPA prijenos"
 
-#: src/WC_Gateway_Wooplatnica.php:378
+#: src/WC_Gateway_Wooplatnica.php:330
 msgid "SWIFT charge option"
 msgstr "SWIFT troškovna opcija"
 
-#: src/WC_Gateway_Wooplatnica.php:387
+#: src/WC_Gateway_Wooplatnica.php:339
 msgid ""
 "Which side will have to pay payment fee/costs. BEN for other side, OUR for "
 "us or SHA for cost sharing"
@@ -209,31 +209,35 @@ msgstr ""
 "Koja strana plaća naknadu za SEPA prijenos. BEN za drugu stranu, OUR za Vas "
 "ili SHA za podjelu troškova"
 
-#: src/WC_Gateway_Wooplatnica.php:392
+#: src/WC_Gateway_Wooplatnica.php:344
 msgid "Options for national payment slip type"
 msgstr "Postavke vezane uz nalog za nacionalna plaćanja"
 
-#: src/WC_Gateway_Wooplatnica.php:397
+#: src/WC_Gateway_Wooplatnica.php:349
 msgid "Barcode for mobile banking"
 msgstr "Barkod za mobilno bankarstvo"
 
-#: src/WC_Gateway_Wooplatnica.php:399
+#: src/WC_Gateway_Wooplatnica.php:351
 msgid "Generate barcode in PDF417 format"
 msgstr "Generiraj barkod u PDF417 formatu"
 
-#: src/WC_Gateway_Wooplatnica.php:404
+#: src/WC_Gateway_Wooplatnica.php:356
+msgid "Other options"
+msgstr "Ostale opcije"
+
+#: src/WC_Gateway_Wooplatnica.php:361
 msgid "Display confirmation part"
 msgstr "Prikaži potvrdni listić"
 
-#: src/WC_Gateway_Wooplatnica.php:406
+#: src/WC_Gateway_Wooplatnica.php:363
 msgid "Display confirmation part of the payment slip"
 msgstr "Prikaži potvrdni listić (desni dio) na općoj uplatnici"
 
-#: src/WC_Gateway_Wooplatnica.php:410
+#: src/WC_Gateway_Wooplatnica.php:367
 msgid "Main font"
 msgstr "Glavni font"
 
-#: src/WC_Gateway_Wooplatnica.php:411
+#: src/WC_Gateway_Wooplatnica.php:368
 msgid ""
 "Font being used for the text that won't be displayed in fields with cells "
 "for each character"
@@ -241,27 +245,27 @@ msgstr ""
 "Font koji će se primijeniti na tekst koji neće biti prikazan u poljima s "
 "ćelijama za svaki pojedini znak"
 
-#: src/WC_Gateway_Wooplatnica.php:416
+#: src/WC_Gateway_Wooplatnica.php:373
 msgid "proportional"
 msgstr "proporcionalni"
 
-#: src/WC_Gateway_Wooplatnica.php:417
+#: src/WC_Gateway_Wooplatnica.php:374
 msgid "monospaced"
 msgstr "neproporcionalni"
 
-#: src/Wooplatnica.php:62
+#: src/Wooplatnica.php:60
 msgid "payment-slip"
 msgstr "uplatnica"
 
-#: src/Wooplatnica.php:65
+#: src/Wooplatnica.php:63
 msgid "Problem loading image of payment slip"
 msgstr "Problem kod učitavanja slike uplatnice"
 
-#: src/Wooplatnica.php:77
+#: src/Wooplatnica.php:75
 msgid "Payment slip image"
 msgstr "slika opće uplatnice"
 
-#: src/Wooplatnica.php:78
+#: src/Wooplatnica.php:76
 msgid "Download payment slip"
 msgstr "Preuzmi uplatnicu"
 

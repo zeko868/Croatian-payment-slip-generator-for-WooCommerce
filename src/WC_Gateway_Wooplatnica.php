@@ -353,6 +353,11 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'description'   => __('Barcode can be added only to the payment slips for national payments.', $this->id ),
                 'default'       => 'yes'
             ),
+            '!other' => array(     // dirty hack for header
+                'title'     => $this->get_nowrapped_large_text(__( 'Other options', $this->id )),
+                'type'      => 'text',
+                'css'       => 'display: none;'
+            ),
             'display_confirmation_part' => array(
                 'title'       => __( 'Display confirmation part', $this->id ),
                 'type'        => 'checkbox',
@@ -395,7 +400,7 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
         );
     }
 
-    public function get_nowrapped_large_text($text) {
+    private function get_nowrapped_large_text($text) {
         return '<h1>' . str_replace(array(' ', '-'), array('&nbsp;', '−'), $text) . '</h1>';
     }
     
