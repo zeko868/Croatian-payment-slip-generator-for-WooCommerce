@@ -404,7 +404,8 @@ EOS;
      */
     public function email_instructions($order, $sent_to_admin, $plain_text = false)
     {
-        if (!$sent_to_admin && $this->domain === $order->get_payment_method() && $order->has_status('on-hold')) {
+        $initial_order_status = get_option("woocommerce_{$this->domain}_settings")['order_status'];
+        if (!$sent_to_admin && $this->domain === $order->get_payment_method() && $order->has_status($initial_order_status)) {
             if ($this->options['instructions']) {
                 echo wpautop(wptexturize($this->options['instructions'])).PHP_EOL;
             }
@@ -431,8 +432,9 @@ EOS;
     public function view_order_instructions($order_id) {
 	// Get an instance of the WC_Order object
         $order = wc_get_order( $order_id );
-		
-		if( $this->domain === $order->get_payment_method() && $order->has_status('on-hold')){
+        
+        $initial_order_status = get_option("woocommerce_{$this->domain}_settings")['order_status'];
+		if( $this->domain === $order->get_payment_method() && $initial_order_status){
 			if ($this->options['instructions']) {
 				echo wpautop(wptexturize(wp_kses_post($this->options['instructions'])));
 			}
