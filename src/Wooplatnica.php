@@ -78,21 +78,40 @@ class Wooplatnica
             $download_button_text = __('Download payment slip', $this->domain);
 
             if ($this->options['display_confirmation_part'] === 'yes') {
-                $payment_slip_image_width = '1578px';
                 $payment_slip_image_position_x = '52.5%';
                 $payment_slip_stretch_width = '108%';
+                $payment_slip_image_heights = [ '320px', '265px', '27vw' ];
             }
             else {
-                $payment_slip_image_width = '1124px';
                 $payment_slip_image_position_x = '10%';
                 $payment_slip_stretch_width = '152%';
+                $payment_slip_image_heights = [ '450px', '375px', '53vw' ];
             }
 
             echo '<div id="payment-slip-image" style="background: url(data:image/png;base64,';
             echo base64_encode($payment_slip_blob);
-            echo "); background-position-x: $payment_slip_image_position_x; background-position-y: 45.7%; background-size: $payment_slip_stretch_width auto;\"><img style=\"visibility: hidden\" width=\"$payment_slip_image_width\" height=\"610px\"/></div><br/>";
+            echo "); background-position-x: $payment_slip_image_position_x; background-position-y: 45.7%; background-size: $payment_slip_stretch_width auto;\"><div style=\"visibility: hidden\"></div></div><br/>";
             echo <<< EOS
             <button type="button" id="download-payment-slip" style="margin-bottom:10px;">$download_button_text</button>
+            <style type="text/css">
+                @media (min-width: 1023px) {
+                    #payment-slip-image > div {
+                        height: $payment_slip_image_heights[0];
+                    }
+                }
+
+                @media (min-width: 767px) and (max-width: 1023px) {
+                    #payment-slip-image > div {
+                        height: $payment_slip_image_heights[1];
+                    }
+                }
+
+                @media (max-width: 767px) {
+                    #payment-slip-image > div {
+                        height: $payment_slip_image_heights[2];
+                    }
+                }
+            </style>
             <script type="text/javascript">
                 var fileName = '$file_name';
                 const clearUrl = url => url.match(/^url\("data:image\/\w+?;base64,(.+)"\)$/)[1];
