@@ -424,7 +424,7 @@ EOS;
     public function email_instructions($order, $sent_to_admin, $plain_text = false)
     {
         $initial_order_status = get_option("woocommerce_{$this->domain}_settings")['order_status'];
-        if (!$sent_to_admin && $this->domain === $order->get_payment_method() && $order->has_status($initial_order_status)) {
+        if (!$sent_to_admin && $this->domain === $order->get_payment_method() && $order->has_status(ltrim($initial_order_status, 'wc-'))) {
             if ($this->options['instructions']) {
                 echo wpautop(wptexturize($this->options['instructions'])).PHP_EOL;
             }
@@ -453,7 +453,7 @@ EOS;
         $order = wc_get_order( $order_id );
         
         $initial_order_status = get_option("woocommerce_{$this->domain}_settings")['order_status'];
-		if( $this->domain === $order->get_payment_method() && $initial_order_status){
+		if ($this->domain === $order->get_payment_method() && $order->has_status(ltrim($initial_order_status, 'wc-'))) {
 			if ($this->options['instructions']) {
 				echo wpautop(wptexturize(wp_kses_post($this->options['instructions'])));
 			}
