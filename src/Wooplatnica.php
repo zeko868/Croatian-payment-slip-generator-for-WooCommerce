@@ -34,7 +34,7 @@ class Wooplatnica
             add_action("woocommerce_thankyou_{$this->domain}", array($this, 'thankyou_page'));
             add_action('woocommerce_email_after_order_table', array($this, 'email_instructions'), 10, 3);
 	        // add to my account page
-            add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'), 10, 3);
+            add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'));
         }
 
     }
@@ -43,7 +43,8 @@ class Wooplatnica
         $default_options = array(   // add here default values of options that were introduced after initial version (a.k.a. version 1.0) of this plugin
             'display_confirmation_part' => 'yes',
             'payment_slip_type'         => 'national',
-            'main_font'                 => 'proportional'
+            'main_font'                 => 'proportional',
+            'output_image_type'         => 'png'
         );
         $this->options = array_merge($default_options, $this->options); // this is useful because after updating plugin, options that didn't exist in previous version of plugin are not yet stored in the database, i.e. when those options would be fetched, their values would be null even if those newly defined options have defined default values in WC_Gateway_Wooplatnica.php, what resulted in unexcepted aad buggy behavior
 
@@ -60,6 +61,7 @@ class Wooplatnica
         $webapp_name = get_bloginfo('name');
         $webapp_name_for_filename = mb_ereg_replace("([\.]{2,})", '', mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $webapp_name));
         $file_name = sprintf( '%s-%s-%s', __('payment-slip', $this->domain), $webapp_name_for_filename, $order_id);
+        $image_type = $this->options['output_image_type'];
         if ($is_for_sending) {
             $image_identifier = 'payment-slip';
             $img_element_alt = __('Problem loading image of payment slip', $this->domain);
@@ -68,7 +70,7 @@ class Wooplatnica
             add_action( 'phpmailer_init', function() use ($payment_slip_blob, $image_identifier, $file_name) {
                 global $phpmailer;
                 $phpmailer->SMTPKeepAlive = true;
-                $phpmailer->AddStringEmbeddedImage($payment_slip_blob, $image_identifier, "$file_name.png", 'base64', 'image/png');
+                $phpmailer->AddStringEmbeddedImage($payment_slip_blob, $image_identifier, "$file_name.$image_type", 'base64', "image/$image_type");
             });
 
             $_SESSION['payment-slip-image'] = $payment_slip_blob;
@@ -88,7 +90,7 @@ class Wooplatnica
                 $payment_slip_image_heights = [ '450px', '375px', '53vw' ];
             }
 
-            echo '<div id="payment-slip-image" style="background: url(data:image/png;base64,';
+            echo "<div id=\"payment-slip-image\" style=\"background: url(data:image/$image_type;base64,";
             echo base64_encode($payment_slip_blob);
             echo "); background-position-x: $payment_slip_image_position_x; background-position-y: 45.7%; background-size: $payment_slip_stretch_width auto;\"><div style=\"visibility: hidden\"></div></div><br/>";
             echo <<< EOS
@@ -317,8 +319,7 @@ EOS;
         }
         else {
             // hide confirmation part of the payment slip
-            $fully_transparent_color = imagecolorallocatealpha($im, 0xff, 0xff, 0xff, 0x7f);
-            imagefilledrectangle($im, 1191, 750, 1700, 1630, $fully_transparent_color);
+            imagefilledrectangle($im, 1191, 750, 1700, 1630, 0);
         }
 
         //embed_barcode($im, $payment_slip_data->encode(), 50, 250, 3, 1, $black_color);
@@ -349,8 +350,12 @@ EOS;
         if ($this->options['payment_slip_type'] === 'national' && $this->options['display_barcode'] === 'yes') {
             $this->embed_barcode($im, $payment_slip_data->encode());
         }
+        if (in_array($this->options['output_image_type'], ['jpeg', 'bmp'])) {    // image types without alpha channels
+            imagecolorset($im, 0, 255, 255, 255, 0x7f);   // otherwise the background color is somehow indigo-blue
+        }
         ob_start(); // Let's start output buffering.
-        imagepng($im); //This would normally output the image, but because of ob_start(), it won't.
+        $image_saving_method = 'image' . $this->options['output_image_type'];
+        call_user_func($image_saving_method, $im); //This would normally output the image, but because of ob_start(), it won't.
         $payment_slip_blob = ob_get_contents(); //Instead, output above is saved to $contents
         ob_end_clean(); //End the output buffer.
         

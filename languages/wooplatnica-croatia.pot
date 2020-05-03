@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-17 20:58+0000\n"
+"POT-Creation-Date: 2020-05-03 20:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -148,7 +148,7 @@ msgid "Intent code"
 msgstr ""
 
 #: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:319 
-#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:413
+#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:427
 msgid "(undefined)"
 msgstr ""
 
@@ -215,28 +215,36 @@ msgid "Other options"
 msgstr ""
 
 #: src/WC_Gateway_Wooplatnica.php:361
+msgid "Output image type"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:362
+msgid "Type of the image with the generated payment slip"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:375
 msgid "Display confirmation part"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:363
+#: src/WC_Gateway_Wooplatnica.php:377
 msgid "Display confirmation part of the payment slip"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:367
+#: src/WC_Gateway_Wooplatnica.php:381
 msgid "Main font"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:368
+#: src/WC_Gateway_Wooplatnica.php:382
 msgid ""
 "Font being used for the text that won't be displayed in fields with cells "
 "for each character"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:373
+#: src/WC_Gateway_Wooplatnica.php:387
 msgid "proportional"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:374
+#: src/WC_Gateway_Wooplatnica.php:388
 msgid "monospaced"
 msgstr ""
 
@@ -244,15 +252,15 @@ msgstr ""
 msgid "payment-slip"
 msgstr ""
 
-#: src/Wooplatnica.php:63
+#: src/Wooplatnica.php:66
 msgid "Problem loading image of payment slip"
 msgstr ""
 
-#: src/Wooplatnica.php:75
+#: src/Wooplatnica.php:78
 msgid "Payment slip image"
 msgstr ""
 
-#: src/Wooplatnica.php:76
+#: src/Wooplatnica.php:79
 msgid "Download payment slip"
 msgstr ""
 

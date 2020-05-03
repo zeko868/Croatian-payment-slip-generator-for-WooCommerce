@@ -358,6 +358,20 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'type'      => 'text',
                 'css'       => 'display: none;'
             ),
+            'output_image_type' => array(
+                'title'         => __( 'Output image type', $this->id ),
+                'description'   => __( 'Type of the image with the generated payment slip', $this->id ),
+                'type'          => 'select',
+                'class'         => 'wc-enhanced-select',
+                'default'       => 'png',
+                'options'       => array(
+                    'png'   => 'png',
+                    'jpeg'  => 'jpeg',
+                    'gif'   => 'gif',
+                    'bmp'   => 'bmp'
+                ),
+                'desc_type' => true
+            ),
             'display_confirmation_part' => array(
                 'title'       => __( 'Display confirmation part', $this->id ),
                 'type'        => 'checkbox',
