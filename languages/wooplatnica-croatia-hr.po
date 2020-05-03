@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-17 20:51+0000\n"
-"PO-Revision-Date: 2020-02-17 21:00+0000\n"
-"Last-Translator: klinchanica <info.klinchanica@gmail.com>\n"
+"POT-Creation-Date: 2020-05-03 20:39+0000\n"
+"PO-Revision-Date: 2020-05-03 20:58+0000\n"
+"Last-Translator: zeko868\n"
 "Language-Team: Hrvatski\n"
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.1; wp-5.2.5"
+"X-Loco-Version: 2.3.1; wp-5.2.6"
 
 #: src/WC_Gateway_Wooplatnica.php:16
 msgid "[CRO] Payment slip or mobile banking"
@@ -157,7 +157,7 @@ msgid "Intent code"
 msgstr "Svrha plaćanja"
 
 #: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:319 
-#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:413
+#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:427
 msgid "(undefined)"
 msgstr "(nedefinirano)"
 
@@ -226,18 +226,26 @@ msgid "Other options"
 msgstr "Ostale opcije"
 
 #: src/WC_Gateway_Wooplatnica.php:361
+msgid "Output image type"
+msgstr "Format izlazne slike"
+
+#: src/WC_Gateway_Wooplatnica.php:362
+msgid "Type of the image with the generated payment slip"
+msgstr "Format slike s generiranom općom uplatnicom"
+
+#: src/WC_Gateway_Wooplatnica.php:375
 msgid "Display confirmation part"
 msgstr "Prikaži potvrdni listić"
 
-#: src/WC_Gateway_Wooplatnica.php:363
+#: src/WC_Gateway_Wooplatnica.php:377
 msgid "Display confirmation part of the payment slip"
 msgstr "Prikaži potvrdni listić (desni dio) na općoj uplatnici"
 
-#: src/WC_Gateway_Wooplatnica.php:367
+#: src/WC_Gateway_Wooplatnica.php:381
 msgid "Main font"
 msgstr "Glavni font"
 
-#: src/WC_Gateway_Wooplatnica.php:368
+#: src/WC_Gateway_Wooplatnica.php:382
 msgid ""
 "Font being used for the text that won't be displayed in fields with cells "
 "for each character"
@@ -245,11 +253,11 @@ msgstr ""
 "Font koji će se primijeniti na tekst koji neće biti prikazan u poljima s "
 "ćelijama za svaki pojedini znak"
 
-#: src/WC_Gateway_Wooplatnica.php:373
+#: src/WC_Gateway_Wooplatnica.php:387
 msgid "proportional"
 msgstr "proporcionalni"
 
-#: src/WC_Gateway_Wooplatnica.php:374
+#: src/WC_Gateway_Wooplatnica.php:388
 msgid "monospaced"
 msgstr "neproporcionalni"
 
@@ -257,15 +265,15 @@ msgstr "neproporcionalni"
 msgid "payment-slip"
 msgstr "uplatnica"
 
-#: src/Wooplatnica.php:63
+#: src/Wooplatnica.php:66
 msgid "Problem loading image of payment slip"
 msgstr "Problem kod učitavanja slike uplatnice"
 
-#: src/Wooplatnica.php:75
+#: src/Wooplatnica.php:78
 msgid "Payment slip image"
 msgstr "slika opće uplatnice"
 
-#: src/Wooplatnica.php:76
+#: src/Wooplatnica.php:79
 msgid "Download payment slip"
 msgstr "Preuzmi uplatnicu"
 
