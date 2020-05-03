@@ -114,24 +114,50 @@ class Wooplatnica
             </style>
             <script type="text/javascript">
                 var fileName = '$file_name';
-                const clearUrl = url => url.match(/^url\("data:image\/\w+?;base64,(.+)"\)$/)[1];
+                var imageType = '$image_type';
 
-                const downloadImage = (name, content, type) => {
-                    var link = document.createElement('a');
-                    link.style = 'position: fixed; left: -10000px;';
-                    link.href = `data:application/octet-stream;base64,\${encodeURIComponent(content)}`;
-                    link.download = `\${name}.\${type}`;
-
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                function clearUrl(url) {
+                    return url.match(/^url\((['"]?)data:image\/\w+?;base64,(.+)\\1\)$/)[2];
                 }
 
-                var downloadButton = document.getElementById('download-payment-slip');
-                downloadButton.addEventListener('click', function() {
-                    var img = document.getElementById('payment-slip-image');
+                function convertBase64StringToBlob(b64Data, contentType) {
+                    const sliceSize = 512;
+                    const byteCharacters = atob(b64Data);
+                    const byteArrays = [];
+                  
+                    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                        const slice = byteCharacters.slice(offset, offset + sliceSize);
+                    
+                        const byteNumbers = new Array(slice.length);
+                        for (let i = 0; i < slice.length; i++) {
+                            byteNumbers[i] = slice.charCodeAt(i);
+                        }
+                    
+                        const byteArray = new Uint8Array(byteNumbers);
+                        byteArrays.push(byteArray);
+                    }
+                  
+                    const blob = new Blob(byteArrays, {type: contentType});
+                    return blob;
+                }
 
-                    downloadImage(fileName, clearUrl(img.style.backgroundImage), 'png');
+                function downloadImage(name, content, type) {
+                    var fullName = name + '.' + type;
+                    if (navigator.msSaveBlob) {     // Internet Explorer 10+
+                        var contentType = 'image/' + type;
+                        navigator.msSaveBlob(convertBase64StringToBlob(content, contentType), fullName); 
+                    }
+                    else {
+                        jQuery("<a/>", {
+                            "href": "data:application/octet-stream;base64," + encodeURIComponent(content),
+                            "download": fullName
+                        })[0].click();
+                    }
+                }
+
+                jQuery("#download-payment-slip").click(function() {
+                    var imageData = clearUrl(jQuery("#payment-slip-image").css("background-image"));
+                    downloadImage(fileName, imageData, imageType);
                 });
             </script>
 EOS;
