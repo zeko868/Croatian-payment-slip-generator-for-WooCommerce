@@ -90,13 +90,32 @@ class Wooplatnica
             echo <<< EOS
             <div id="payment-slip-image" style="overflow: hidden">
                 <div style="height: 100%">
-                    <div style="overflow: hidden; position: relative; right: $payment_slip_image_crop_right_length">
-                        <img src="$payment_slip_image_data_uri" alt="$img_element_alt" style="margin-top: -48.4%; margin-bottom: -58%; margin-left: -4%; position: relative; right: -$payment_slip_image_crop_right_length"/>
+                    <div>
+                        <img src="$payment_slip_image_data_uri" alt="$img_element_alt" onload="cropPaymentSlipImage(this)"/>
                     </div>
                 </div>
             </div>
             <button type="button" id="download-payment-slip" style="margin-top: 5px;">$download_button_text</button>
             <script type="text/javascript">
+                function cropPaymentSlipImage(imgElem) {
+                    if (imgElem.src !== '$payment_slip_image_data_uri') {     // instructions within 'else' block should be executed when the image of the payment slip is loaded and as this method is called on the load event of 'img' element, it seems that image should be loaded at the point when this method is performed. However, that's not the case when the images are loaded lazily (e.g. by WP Rocket's LazyLoad plugin) in Microsoft Edge (not in any Internet Explorer nor in Chromium-based Microsoft Edge), therefore it is checked whether the image source of 'img' HTML element is equal to the data URI of the image with the generated payment slip
+                        setTimeout(function() {
+                            cropPaymentSlipImage(imgElem);
+                        }, 300);
+                    }
+                    else {
+                        imgElem.style.marginTop = '-48.4%';
+                        imgElem.style.marginBottom = '-58%';
+                        imgElem.style.marginLeft = '-4%';
+                        imgElem.style.position = 'relative';
+                        imgElem.style.right = '-$payment_slip_image_crop_right_length';
+                        var divParent = imgElem.parentNode;
+                        divParent.style.overflow = 'hidden';
+                        divParent.style.position = 'relative';
+                        divParent.style.right = '$payment_slip_image_crop_right_length';
+                    }
+                }
+
                 var fileName = '$file_name';
                 var imageType = '$image_type';
 
