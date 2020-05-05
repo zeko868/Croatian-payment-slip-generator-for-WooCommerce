@@ -80,46 +80,28 @@ class Wooplatnica
             $download_button_text = __('Download payment slip', $this->domain);
 
             if ($this->options['display_confirmation_part'] === 'yes') {
-                $payment_slip_image_position_x = '52.5%';
-                $payment_slip_stretch_width = '108%';
-                $payment_slip_image_heights = [ '320px', '265px', '27vw' ];
+                $payment_slip_image_crop_right_length = '7.5%';
             }
             else {
-                $payment_slip_image_position_x = '10%';
-                $payment_slip_stretch_width = '152%';
-                $payment_slip_image_heights = [ '450px', '375px', '53vw' ];
+                $payment_slip_image_crop_right_length = '34%';
             }
 
-            echo "<div id=\"payment-slip-image\" style=\"background: url(data:image/$image_type;base64,";
-            echo base64_encode($payment_slip_blob);
-            echo "); background-position-x: $payment_slip_image_position_x; background-position-y: 45.7%; background-size: $payment_slip_stretch_width auto;\"><div style=\"visibility: hidden\"></div></div><br/>";
+            $payment_slip_image_data_uri = "data:image/$image_type;base64," . base64_encode($payment_slip_blob);
             echo <<< EOS
-            <button type="button" id="download-payment-slip" style="margin-bottom:10px;">$download_button_text</button>
-            <style type="text/css">
-                @media (min-width: 1023px) {
-                    #payment-slip-image > div {
-                        height: $payment_slip_image_heights[0];
-                    }
-                }
-
-                @media (min-width: 767px) and (max-width: 1023px) {
-                    #payment-slip-image > div {
-                        height: $payment_slip_image_heights[1];
-                    }
-                }
-
-                @media (max-width: 767px) {
-                    #payment-slip-image > div {
-                        height: $payment_slip_image_heights[2];
-                    }
-                }
-            </style>
+            <div id="payment-slip-image" style="overflow: hidden">
+                <div style="height: 100%">
+                    <div style="overflow: hidden; position: relative; right: $payment_slip_image_crop_right_length">
+                        <img src="$payment_slip_image_data_uri" alt="$img_element_alt" style="margin-top: -48.4%; margin-bottom: -58%; margin-left: -4%; position: relative; right: -$payment_slip_image_crop_right_length"/>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="download-payment-slip" style="margin-top: 5px;">$download_button_text</button>
             <script type="text/javascript">
                 var fileName = '$file_name';
                 var imageType = '$image_type';
 
                 function clearUrl(url) {
-                    return url.match(/^url\((['"]?)data:image\/\w+?;base64,(.+)\\1\)$/)[2];
+                    return url.match(/^data:image\/\w+?;base64,(.+)$/)[1];
                 }
 
                 function convertBase64StringToBlob(b64Data, contentType) {
@@ -158,7 +140,7 @@ class Wooplatnica
                 }
 
                 jQuery("#download-payment-slip").click(function() {
-                    var imageData = clearUrl(jQuery("#payment-slip-image").css("background-image"));
+                    var imageData = clearUrl(jQuery("#payment-slip-image img").prop("src"));
                     downloadImage(fileName, imageData, imageType);
                 });
             </script>
