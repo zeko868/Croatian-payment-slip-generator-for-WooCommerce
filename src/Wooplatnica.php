@@ -67,7 +67,7 @@ class Wooplatnica
             $img_element_alt = __('Problem loading image of payment slip', $this->domain);
             echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\"/>";
 
-            add_action( 'phpmailer_init', function() use ($payment_slip_blob, $image_identifier, $file_name) {
+            add_action( 'phpmailer_init', function() use ($payment_slip_blob, $image_identifier, $file_name, $image_type) {
                 global $phpmailer;
                 $phpmailer->SMTPKeepAlive = true;
                 $phpmailer->AddStringEmbeddedImage($payment_slip_blob, $image_identifier, "$file_name.$image_type", 'base64', "image/$image_type");
