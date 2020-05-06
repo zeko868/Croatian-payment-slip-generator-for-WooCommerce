@@ -88,16 +88,8 @@ class Wooplatnica
 
             $payment_slip_image_data_uri = "data:image/$image_type;base64," . base64_encode($payment_slip_blob);
             echo <<< EOS
-            <div id="payment-slip-image" style="overflow: hidden">
-                <div style="height: 100%">
-                    <div>
-                        <img src="$payment_slip_image_data_uri" alt="$img_element_alt" onload="cropPaymentSlipImage(this)"/>
-                    </div>
-                </div>
-            </div>
-            <button type="button" id="download-payment-slip" style="margin-top: 5px;">$download_button_text</button>
-            <script type="text/javascript">
-                function cropPaymentSlipImage(imgElem) {
+			<script type="text/javascript">
+			    function cropPaymentSlipImage(imgElem) {
                     if (imgElem.src !== '$payment_slip_image_data_uri') {     // instructions within 'else' block should be executed when the image of the payment slip is loaded and as this method is called on the load event of 'img' element, it seems that image should be loaded at the point when this method is performed. However, that's not the case when the images are loaded lazily (e.g. by WP Rocket's LazyLoad plugin) in Microsoft Edge (not in any Internet Explorer nor in Chromium-based Microsoft Edge), therefore it is checked whether the image source of 'img' HTML element is equal to the data URI of the image with the generated payment slip
                         setTimeout(function() {
                             cropPaymentSlipImage(imgElem);
@@ -115,7 +107,16 @@ class Wooplatnica
                         divParent.style.right = '$payment_slip_image_crop_right_length';
                     }
                 }
-
+			</script>
+            <div id="payment-slip-image" style="overflow: hidden">
+                <div style="height: 100%">
+                    <div>
+                        <img src="$payment_slip_image_data_uri" alt="$img_element_alt" onload="cropPaymentSlipImage(this)"/>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="download-payment-slip" style="margin-top: 5px;">$download_button_text</button>
+            <script type="text/javascript">
                 var fileName = '$file_name';
                 var imageType = '$image_type';
 
