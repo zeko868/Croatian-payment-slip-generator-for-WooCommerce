@@ -1,5 +1,7 @@
 <p align="center"><a href="https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/"><img src="https://raw.githubusercontent.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/master/images/banner-1544x500.png" alt="Banner of croatian payment slip generator for WooCommerce"></a></p>
 
+*Read this in other languages: [English](README.md), [Hrvatski](README.hr.md).*
+
 ## Description
 
 Make it easy for your customers from Croatia to perform direct bank transfer with generated payment slip, along with barcode for mBanking.
@@ -29,7 +31,7 @@ This plugin requires at least PHP version 5.6. Also the following PHP modules ha
 This section describes how to install the plugin and get it working.
 
 
-1. Upload [code](https://github.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/releases/latest) of this plugin (or source code of this repo along with all required dependencies fetched by calling `composer install`) to the `/wp-content/plugins/` directory or install it under WordPress admin area
+1. Install this plugin through Plugins menu of WordPress Dashboard Admin Area by using search and downloading it from its WordPress page or upload the [code](https://github.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/releases/latest) of this plugin (or source code of this repo along with all required dependencies fetched by calling `composer install`) to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 
