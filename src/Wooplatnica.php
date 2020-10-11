@@ -44,7 +44,8 @@ class Wooplatnica
             'display_confirmation_part' => 'yes',
             'payment_slip_type'         => 'national',
             'main_font'                 => 'proportional',
-            'output_image_type'         => 'png'
+            'output_image_type'         => 'png',
+			'payment_slip_email_width'	=> '640'
         );
         $this->options = array_merge($default_options, $this->options); // this is useful because after updating plugin, options that didn't exist in previous version of plugin are not yet stored in the database, i.e. when those options would be fetched, their values would be null even if those newly defined options have defined default values in WC_Gateway_Wooplatnica.php, what resulted in unexcepted aad buggy behavior
 
@@ -65,7 +66,13 @@ class Wooplatnica
         if ($is_for_sending) {
             $image_identifier = 'payment-slip';
             $img_element_alt = __('Problem loading image of payment slip', $this->domain);
-            echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\"/>";
+			if (!empty($this->options['payment_slip_email_width'])) {
+				$width_attribute = "width=\"{$this->options['payment_slip_email_width']}\"";
+			}
+			else {
+				$width_attribute = '';
+			}
+            echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\" $width_attribute/>";
 
             add_action( 'phpmailer_init', function() use ($payment_slip_blob, $image_identifier, $file_name, $image_type) {
                 global $phpmailer;

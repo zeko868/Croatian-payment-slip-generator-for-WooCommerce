@@ -370,8 +370,16 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                     'gif'   => 'gif',
                     'bmp'   => 'bmp'
                 ),
-                'desc_type' => true
+                'desc_tip'		=> true
             ),
+			'payment_slip_email_width' => array(
+				'title'			=> __( 'Width of the inline image in e-mail message', $this->id ),
+				'description'	=> __( 'Height is being scaled to width proportionally. Leave empty if you don\'t want to specify dimensions of inline image. Not recommended since in some e-mail clients like Windows 10 Mail UWP app the image would be shown in its original size instead of maximum available space thus often causing the need for using horizontal slider in order to see complete content of the e-mail message.', $this->id ),
+				'type'			=> 'text',
+				'css'			=> 'width: 3em;',
+				'default'		=> '640',
+				'desc_tip'		=> true
+			),
             'display_confirmation_part' => array(
                 'title'       => __( 'Display confirmation part', $this->id ),
                 'type'        => 'checkbox',

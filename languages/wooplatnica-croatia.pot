@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-03 20:43+0000\n"
+"POT-Creation-Date: 2020-10-11 14:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -148,7 +148,7 @@ msgid "Intent code"
 msgstr ""
 
 #: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:319 
-#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:427
+#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:435
 msgid "(undefined)"
 msgstr ""
 
@@ -223,44 +223,58 @@ msgid "Type of the image with the generated payment slip"
 msgstr ""
 
 #: src/WC_Gateway_Wooplatnica.php:375
+msgid "Width of the inline image in e-mail message"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:376
+msgid ""
+"Height is being scaled to width proportionally. Leave empty if you don't "
+"want to specify dimensions of inline image. Not recommended since in some e-"
+"mail clients like Windows 10 Mail UWP app the image would be shown in its "
+"original size instead of maximum available space thus often causing the need "
+"for using horizontal slider in order to see complete content of the e-mail "
+"message."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:383
 msgid "Display confirmation part"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:377
+#: src/WC_Gateway_Wooplatnica.php:385
 msgid "Display confirmation part of the payment slip"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:381
+#: src/WC_Gateway_Wooplatnica.php:389
 msgid "Main font"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:382
+#: src/WC_Gateway_Wooplatnica.php:390
 msgid ""
 "Font being used for the text that won't be displayed in fields with cells "
 "for each character"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:387
+#: src/WC_Gateway_Wooplatnica.php:395
 msgid "proportional"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:388
+#: src/WC_Gateway_Wooplatnica.php:396
 msgid "monospaced"
 msgstr ""
 
-#: src/Wooplatnica.php:60
+#: src/Wooplatnica.php:64
 msgid "payment-slip"
 msgstr ""
 
-#: src/Wooplatnica.php:66
+#: src/Wooplatnica.php:68
 msgid "Problem loading image of payment slip"
 msgstr ""
 
-#: src/Wooplatnica.php:78
+#: src/Wooplatnica.php:86
 msgid "Payment slip image"
 msgstr ""
 
-#: src/Wooplatnica.php:79
+#: src/Wooplatnica.php:87
 msgid "Download payment slip"
 msgstr ""
 

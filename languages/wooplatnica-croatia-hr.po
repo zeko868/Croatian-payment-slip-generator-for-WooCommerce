@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-03 20:39+0000\n"
-"PO-Revision-Date: 2020-05-03 20:58+0000\n"
+"POT-Creation-Date: 2020-10-11 14:41+0000\n"
+"PO-Revision-Date: 2020-10-11 14:48+0000\n"
 "Last-Translator: zeko868\n"
 "Language-Team: Hrvatski\n"
 "Language: hr\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.1; wp-5.2.6"
+"X-Loco-Version: 2.3.1; wp-5.4.2"
 
 #: src/WC_Gateway_Wooplatnica.php:16
 msgid "[CRO] Payment slip or mobile banking"
@@ -157,7 +157,7 @@ msgid "Intent code"
 msgstr "Svrha plaćanja"
 
 #: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:319 
-#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:427
+#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:435
 msgid "(undefined)"
 msgstr "(nedefinirano)"
 
@@ -234,18 +234,39 @@ msgid "Type of the image with the generated payment slip"
 msgstr "Format slike s generiranom općom uplatnicom"
 
 #: src/WC_Gateway_Wooplatnica.php:375
+msgid "Width of the inline image in e-mail message"
+msgstr "Širina slike u tijelu e-mail poruke"
+
+#: src/WC_Gateway_Wooplatnica.php:376
+msgid ""
+"Height is being scaled to width proportionally. Leave empty if you don't "
+"want to specify dimensions of inline image. Not recommended since in some e-"
+"mail clients like Windows 10 Mail UWP app the image would be shown in its "
+"original size instead of maximum available space thus often causing the need "
+"for using horizontal slider in order to see complete content of the e-mail "
+"message."
+msgstr ""
+"Visina slike se proporcionalno prilagođava navedenoj širini. Ostavite ovo "
+"polje praznim ukoliko ne želite specificirati dimenzije ugrađene slike. No "
+"to se baš ne preporuča budući neki e-mail klijenti poput aplikacije Pošta iz "
+"Windows 10 bi prikazali sliku u originalnim dimenzijama umjesto da ju "
+"prilagode raspoloživom prostoru zbog čega bi korisnik trebao koristiti "
+"horizontalne klizače kako bi bio u mogućnosti vidjeti sav sadržaj e-mail "
+"poruke."
+
+#: src/WC_Gateway_Wooplatnica.php:383
 msgid "Display confirmation part"
 msgstr "Prikaži potvrdni listić"
 
-#: src/WC_Gateway_Wooplatnica.php:377
+#: src/WC_Gateway_Wooplatnica.php:385
 msgid "Display confirmation part of the payment slip"
 msgstr "Prikaži potvrdni listić (desni dio) na općoj uplatnici"
 
-#: src/WC_Gateway_Wooplatnica.php:381
+#: src/WC_Gateway_Wooplatnica.php:389
 msgid "Main font"
 msgstr "Glavni font"
 
-#: src/WC_Gateway_Wooplatnica.php:382
+#: src/WC_Gateway_Wooplatnica.php:390
 msgid ""
 "Font being used for the text that won't be displayed in fields with cells "
 "for each character"
@@ -253,27 +274,27 @@ msgstr ""
 "Font koji će se primijeniti na tekst koji neće biti prikazan u poljima s "
 "ćelijama za svaki pojedini znak"
 
-#: src/WC_Gateway_Wooplatnica.php:387
+#: src/WC_Gateway_Wooplatnica.php:395
 msgid "proportional"
 msgstr "proporcionalni"
 
-#: src/WC_Gateway_Wooplatnica.php:388
+#: src/WC_Gateway_Wooplatnica.php:396
 msgid "monospaced"
 msgstr "neproporcionalni"
 
-#: src/Wooplatnica.php:60
+#: src/Wooplatnica.php:64
 msgid "payment-slip"
 msgstr "uplatnica"
 
-#: src/Wooplatnica.php:66
+#: src/Wooplatnica.php:68
 msgid "Problem loading image of payment slip"
 msgstr "Problem kod učitavanja slike uplatnice"
 
-#: src/Wooplatnica.php:78
+#: src/Wooplatnica.php:86
 msgid "Payment slip image"
 msgstr "slika opće uplatnice"
 
-#: src/Wooplatnica.php:79
+#: src/Wooplatnica.php:87
 msgid "Download payment slip"
 msgstr "Preuzmi uplatnicu"
 
