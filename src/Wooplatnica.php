@@ -50,18 +50,20 @@ class Wooplatnica
         $this->options = array_merge($default_options, $this->options); // this is useful because after updating plugin, options that didn't exist in previous version of plugin are not yet stored in the database, i.e. when those options would be fetched, their values would be null even if those newly defined options have defined default values in WC_Gateway_Wooplatnica.php, what resulted in unexcepted aad buggy behavior
 
         session_start();
-        if (isset($_SESSION['payment-slip-image'])) {
-            $payment_slip_blob = $_SESSION['payment-slip-image'];
-            unset($_SESSION['payment-slip-image']);
+        $order_id = $order->get_id();
+        $payment_slip_image_session_key = "payment-slip-image-$order_id";
+        if (isset($_SESSION[$payment_slip_image_session_key])) {
+            $payment_slip_blob = $_SESSION[$payment_slip_image_session_key];
+            unset($_SESSION[$payment_slip_image_session_key]);
         }
         else {
             $payment_slip_blob = $this->generate_payment_slip($order);
         }
 
-        $order_id = $order->get_order_number();
+        $order_number = $order->get_order_number();
         $webapp_name = get_bloginfo('name');
         $webapp_name_for_filename = mb_ereg_replace("([\.]{2,})", '', mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $webapp_name));
-        $file_name = sprintf( '%s-%s-%s', __('payment-slip', $this->domain), $webapp_name_for_filename, $order_id);
+        $file_name = sprintf( '%s-%s-%s', __('payment-slip', $this->domain), $webapp_name_for_filename, $order_number);
         $image_type = $this->options['output_image_type'];
         if ($is_for_sending) {
             $image_identifier = 'payment-slip';
@@ -80,7 +82,7 @@ class Wooplatnica
                 $phpmailer->AddStringEmbeddedImage($payment_slip_blob, $image_identifier, "$file_name.$image_type", 'base64', "image/$image_type");
             });
 
-            $_SESSION['payment-slip-image'] = $payment_slip_blob;
+            $_SESSION[$payment_slip_image_session_key] = $payment_slip_blob;
         }
         else {
             $img_element_alt = __('Payment slip image', $this->domain);
