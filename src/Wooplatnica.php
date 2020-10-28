@@ -51,12 +51,19 @@ class Wooplatnica
 
         session_start();
         $order_id = $order->get_id();
-        $payment_slip_image_session_key = "payment-slip-image-$order_id";
-        if (isset($_SESSION[$payment_slip_image_session_key])) {
-            $payment_slip_blob = $_SESSION[$payment_slip_image_session_key];
-            unset($_SESSION[$payment_slip_image_session_key]);
+        $payment_slip_image_session_key_prefix = 'payment-slip-image-';
+        $current_payment_slip_image_session_key = $payment_slip_image_session_key_prefix . $order_id;
+        if (isset($_SESSION[$current_payment_slip_image_session_key])) {
+            $payment_slip_blob = $_SESSION[$current_payment_slip_image_session_key];
+            unset($_SESSION[$current_payment_slip_image_session_key]);
         }
         else {
+            $session_keys_of_previous_images = array_filter(array_keys($_SESSION), function($key) use ($payment_slip_image_session_key_prefix) {
+                return strpos($key, $payment_slip_image_session_key_prefix) === 0;
+            });
+            foreach ($session_keys_of_previous_images as $key) {
+                unset($_SESSION[$key]);
+            }
             $payment_slip_blob = $this->generate_payment_slip($order);
         }
 
@@ -82,7 +89,7 @@ class Wooplatnica
                 $phpmailer->AddStringEmbeddedImage($payment_slip_blob, $image_identifier, "$file_name.$image_type", 'base64', "image/$image_type");
             });
 
-            $_SESSION[$payment_slip_image_session_key] = $payment_slip_blob;
+            $_SESSION[$current_payment_slip_image_session_key] = $payment_slip_blob;
         }
         else {
             $img_element_alt = __('Payment slip image', $this->domain);
