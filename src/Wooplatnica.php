@@ -272,7 +272,7 @@ EOS;
         imagefttext($im, $font_size_left, 0, 100, 1100 + 35*$recipient_name_num_of_lines + 35, $black_color, $main_font, $payment_slip_data->recipient_city);
         
         $this->display_monospace_text_with_specific_spacing($im, 632, 892, $black_color, $monospaced_font, $payment_slip_data->currency);
-        $this->display_monospace_text_with_specific_spacing($im, 785, 892, $black_color, $monospaced_font, str_pad('=' . str_replace(array('.', ','), '', $payment_slip_data->get_price()), 15, ' ', STR_PAD_LEFT));
+        $this->display_monospace_text_with_specific_spacing($im, 785, 892, $black_color, $monospaced_font, str_pad('=' . str_replace('.', '', $payment_slip_data->get_price()), 15, ' ', STR_PAD_LEFT));
         $this->display_monospace_text_with_specific_spacing($im, $recipient_iban_x_position, 1045, $black_color, $monospaced_font, $payment_slip_data->recipient_iban);
         $this->display_monospace_text_with_specific_spacing($im, 606, 1105, $black_color, $monospaced_font, $payment_slip_data->recipient_callout_number);
         

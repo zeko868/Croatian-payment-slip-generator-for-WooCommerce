@@ -22,7 +22,7 @@ class Payment_Slip_Data {
 
     public function set_price($price) {
         $full_length = 15;
-        $this->price = str_pad(str_replace(array('.', ','), '', $price), $full_length, '0', STR_PAD_LEFT);
+        $this->price = str_pad(round($price * 100), $full_length, '0', STR_PAD_LEFT);
     }
 
     private function get_delimiter() {
