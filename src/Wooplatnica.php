@@ -222,10 +222,10 @@ EOS;
                 $recipient_iban_x_position = 632;
                 break;
         }
-        $im = imagecreatefrompng(dirname(__DIR__) . "/assets/$input_payment_slip_image_name");
+        $im = imagecreatefrompng(dirname(__DIR__) . "/assets/images/$input_payment_slip_image_name");
 
-        $proportional_font = dirname(__DIR__) . '/assets/times-new-roman.ttf';
-        $monospaced_font = dirname(__DIR__) . '/assets/RobotoMono-Regular.ttf';
+        $proportional_font = dirname(__DIR__) . '/assets/fonts/times-new-roman.ttf';
+        $monospaced_font = dirname(__DIR__) . '/assets/fonts/RobotoMono-Regular.ttf';
         switch ($this->options['main_font']) {
             case 'monospaced':
                 $main_font = $monospaced_font;
