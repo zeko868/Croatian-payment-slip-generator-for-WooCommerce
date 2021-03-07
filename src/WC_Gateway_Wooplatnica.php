@@ -364,15 +364,17 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'type'          => 'select',
                 'class'         => 'wc-enhanced-select',
                 'default'       => 'png',
-                'options'       => array(
+                'options'       => array_filter(array(
                     'png'   => 'png',
                     'jpeg'  => 'jpeg',
                     'gif'   => 'gif',
                     'bmp'   => 'bmp'
-                ),
+                ), function ($image_type) {
+                    return function_exists('image' . $image_type);
+                }, ARRAY_FILTER_USE_KEY),
                 'desc_tip'		=> true
             ),
-			'payment_slip_email_width' => array(
+            'payment_slip_email_width' => array(
 				'title'			=> __( 'Width of the inline image in e-mail message', $this->id ),
 				'description'	=> __( 'Height is being scaled to width proportionally. Leave empty if you don\'t want to specify dimensions of inline image. Not recommended since in some e-mail clients like Windows 10 Mail UWP app the image would be shown in its original size instead of maximum available space thus often causing the need for using horizontal slider in order to see complete content of the e-mail message.', $this->id ),
 				'type'			=> 'text',
