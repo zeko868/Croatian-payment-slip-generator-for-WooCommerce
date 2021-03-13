@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-11 14:41+0000\n"
-"PO-Revision-Date: 2020-10-11 14:48+0000\n"
-"Last-Translator: zeko868\n"
-"Language-Team: Hrvatski\n"
+"PO-Revision-Date: 2021-03-07 20:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: Croatian\n"
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
 "n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2;\n"
@@ -13,231 +13,96 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.1; wp-5.4.2"
+"X-Loco-Version: 2.5.1; wp-5.6.2"
 
-#: src/WC_Gateway_Wooplatnica.php:16
+#: src/WC_Gateway_Wooplatnica.php:122 src/WC_Gateway_Wooplatnica.php:320
+#: src/WC_Gateway_Wooplatnica.php:335 src/WC_Gateway_Wooplatnica.php:466
+msgid "(undefined)"
+msgstr "(nedefinirano)"
+
+#: src/WC_Gateway_Wooplatnica.php:17
 msgid "[CRO] Payment slip or mobile banking"
 msgstr "Plaćanje putem opće uplatnice ili mobilnim bankarstvom"
 
-#: src/WC_Gateway_Wooplatnica.php:17
-msgid ""
-"Make it easy for your customers from Croatia to perform direct bank transfer "
-"with generated and pre-filled payment slip, along with mobile banking by "
-"simple barcode scanning."
-msgstr ""
-"Plaćanje putem opće uplatnice (generira se popunjeni virman) ili mobilnim "
-"bankarstvom (spomenuta uplatnica ima na sebi barkod za skeniranje)."
+#: src/Wooplatnica.php:170
+msgid "as image"
+msgstr "kao sliku"
 
-#: src/WC_Gateway_Wooplatnica.php:32
-msgid "Enable/Disable"
-msgstr "Omogući"
+#: src/Wooplatnica.php:169
+msgid "as PDF"
+msgstr "kao PDF dokument"
 
-#: src/WC_Gateway_Wooplatnica.php:34
-msgid "Enable payment slip generator for Croatia"
-msgstr "Omogući plaćanje općom uplatnicom"
+#: src/WC_Gateway_Wooplatnica.php:378
+msgid "Attached file(s) of payment slip in e-mail message"
+msgstr "Datoteke s uplatnicom priložene u e-mail poruci"
 
-#: src/WC_Gateway_Wooplatnica.php:38
-msgid "Title"
-msgstr "Naslov"
+#: src/WC_Gateway_Wooplatnica.php:72 src/WC_Gateway_Wooplatnica.php:353
+msgid "Barcode can be added only to the payment slips for national payments."
+msgstr "Barkod može biti dodan samo na naloge za nacionalna plaćanja."
 
-#: src/WC_Gateway_Wooplatnica.php:39
-msgid "Payment gateway title on checkout."
-msgstr "Naziv metode plaćanja za prikaz prilikom plaćanja"
+#: src/WC_Gateway_Wooplatnica.php:350
+msgid "Barcode for mobile banking"
+msgstr "Barkod za mobilno bankarstvo"
 
-#: src/WC_Gateway_Wooplatnica.php:41
-msgid "Pay using payment slip or mobile banking"
-msgstr "Plaćanje općom uplatnicom ili mobilnim bankarstvom"
+#: src/WC_Gateway_Wooplatnica.php:65
+msgid "Below you can find instructions required to make a payment:"
+msgstr "U nastavku slijede upute za plaćanje Vaše narudžbe:"
 
-#: src/WC_Gateway_Wooplatnica.php:45
-msgid "Order Status"
-msgstr "Status narudžbe"
-
-#: src/WC_Gateway_Wooplatnica.php:48
+#: src/WC_Gateway_Wooplatnica.php:49
 msgid "Choose whether status you wish after checkout."
 msgstr ""
 "Odaberite status narudžbe nakon korisnikovog naručivanja robe ovom opcijom."
 
-#: src/WC_Gateway_Wooplatnica.php:54
-msgid "Description"
-msgstr "Opis"
-
-#: src/WC_Gateway_Wooplatnica.php:55
-msgid "Payment gateway description on checkout."
-msgstr "Opis metode plaćanja za prikaz prilikom plaćanja"
-
-#: src/WC_Gateway_Wooplatnica.php:57
-msgid ""
-"Pay using generated and pre-filled payment slip or by scanning a barcode "
-"through your mobile banking app"
-msgstr "Plaćanje općom uplatnicom (virman) ili mobilnim bankarstvom (bar kod)"
-
-#: src/WC_Gateway_Wooplatnica.php:61
-msgid "Instructions"
-msgstr "Upute za plaćanje"
-
-#: src/WC_Gateway_Wooplatnica.php:63
-msgid "Instructions that will be added to the thank you page and emails."
+#. Name of the plugin
+msgid "Croatian payment slip generator for WooCommerce"
 msgstr ""
-"Upute za plaćanje koje će biti nadodane na stranicu sa zahvalom o kupovini "
-"kao i u e-mail poruku."
+"WooCommerce modul za plaćanje putem opće uplatnice ili mobilnim bankarstvom"
 
-#: src/WC_Gateway_Wooplatnica.php:64
-msgid "Below you can find instructions required to make a payment:"
-msgstr "U nastavku slijede upute za plaćanje Vaše narudžbe:"
-
-#: src/WC_Gateway_Wooplatnica.php:68
-msgid "Payment slip type"
-msgstr "Tip opće uplatnice"
-
-#: src/WC_Gateway_Wooplatnica.php:71
-msgid ""
-"If your bank account is registered outside of Croatia, you should select "
-"'universal'."
-msgstr ""
-"Ako je Vaš bankovni račun izvan Republike Hrvatske, odaberite 'univerzalni' "
-"kao tip naloga/opće uplatnice"
-
-#: src/WC_Gateway_Wooplatnica.php:71
-msgid "Note: "
-msgstr "Napomena: "
-
-#: src/WC_Gateway_Wooplatnica.php:71 src/WC_Gateway_Wooplatnica.php:352
-msgid "Barcode can be added only to the payment slips for national payments."
-msgstr "Barkod može biti dodan samo na naloge za nacionalna plaćanja."
-
-#: src/WC_Gateway_Wooplatnica.php:74
-msgid "universal"
-msgstr "univerzalni"
-
-#: src/WC_Gateway_Wooplatnica.php:75
-msgid "national"
-msgstr "nacionalni"
-
-#: src/WC_Gateway_Wooplatnica.php:79
+#: src/WC_Gateway_Wooplatnica.php:80
 msgid "Currency code"
 msgstr "Šifra valute"
 
-#: src/WC_Gateway_Wooplatnica.php:81
-msgid "If none specified, the one from the order information will be used"
-msgstr ""
-"Ako se ništa ne navede, koristit će se ona koja je navedena u podacima o "
-"provedenoj narudžbi"
+#: src/WC_Gateway_Wooplatnica.php:55
+msgid "Description"
+msgstr "Opis"
 
-#: src/WC_Gateway_Wooplatnica.php:85
-msgid "Recipient name"
-msgstr "Naziv primatelja"
+#: src/WC_Gateway_Wooplatnica.php:414
+msgid "Display confirmation part"
+msgstr "Prikaži potvrdni listić"
 
-#: src/WC_Gateway_Wooplatnica.php:90
-msgid "Recipient address"
-msgstr "Adresa primatelja"
+#: src/WC_Gateway_Wooplatnica.php:416
+msgid "Display confirmation part of the payment slip"
+msgstr "Prikaži potvrdni listić (desni dio) na općoj uplatnici"
 
-#: src/WC_Gateway_Wooplatnica.php:95
-msgid "Recipient postal code"
-msgstr "Poštanski broj primatelja"
+#: src/Wooplatnica.php:161
+msgid "Download payment slip"
+msgstr "Preuzmi uplatnicu"
 
-#: src/WC_Gateway_Wooplatnica.php:100
-msgid "Recipient city"
-msgstr "Naziv mjesta poštanskog ureda primatelja"
+#: src/WC_Gateway_Wooplatnica.php:392
+msgid "Downloadable file(s) of payment slip on website"
+msgstr "Datoteke s uplatnicom raspoložive za preuzimanje na web-stranici"
 
-#: src/WC_Gateway_Wooplatnica.php:105
-msgid "Recipient's IBAN"
-msgstr "IBAN primatelja"
+#: src/WC_Gateway_Wooplatnica.php:35
+msgid "Enable payment slip generator for Croatia"
+msgstr "Omogući plaćanje općom uplatnicom"
 
-#: src/WC_Gateway_Wooplatnica.php:110
-msgid "Recipient's reference number"
-msgstr "Poziv na broj primatelja"
+#: src/WC_Gateway_Wooplatnica.php:33
+msgid "Enable/Disable"
+msgstr "Omogući"
 
-#: src/WC_Gateway_Wooplatnica.php:111 src/WC_Gateway_Wooplatnica.php:298
+#: src/WC_Gateway_Wooplatnica.php:421
 msgid ""
-"Variables such as %order%, %date%, %year%, %month% and %day% can be used."
-msgstr "Možete koristiti %order%, %date%, %year%, %month% i %day% varijable."
-
-#: src/WC_Gateway_Wooplatnica.php:116
-msgid "Intent code"
-msgstr "Svrha plaćanja"
-
-#: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:319 
-#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:435
-msgid "(undefined)"
-msgstr "(nedefinirano)"
-
-#: src/WC_Gateway_Wooplatnica.php:289
-msgid "Payment model"
-msgstr "Model plaćanja"
-
-#: src/WC_Gateway_Wooplatnica.php:296
-msgid "Payment description"
-msgstr "Opis plaćanja"
-
-#: src/WC_Gateway_Wooplatnica.php:302
-msgid "Options for universal payment slip type"
-msgstr "Postavke vezane uz univerzalni nalog za plaćanje"
-
-#: src/WC_Gateway_Wooplatnica.php:307
-msgid "Recipient SWIFT/BIC code"
-msgstr "SWIFT/BIC kod primatelja"
-
-#: src/WC_Gateway_Wooplatnica.php:311
-msgid "Recipient bank name"
-msgstr "Naziv banke primatelja"
-
-#: src/WC_Gateway_Wooplatnica.php:315
-msgid "Recipient person type"
-msgstr "Tip osobe primatelja"
-
-#: src/WC_Gateway_Wooplatnica.php:320
-msgid "natural"
-msgstr "fizička"
-
-#: src/WC_Gateway_Wooplatnica.php:321
-msgid "legal"
-msgstr "pravna"
-
-#: src/WC_Gateway_Wooplatnica.php:326
-msgid "SEPA transfer currency code"
-msgstr "Oznaka valute za SEPA prijenos"
-
-#: src/WC_Gateway_Wooplatnica.php:330
-msgid "SWIFT charge option"
-msgstr "SWIFT troškovna opcija"
-
-#: src/WC_Gateway_Wooplatnica.php:339
-msgid ""
-"Which side will have to pay payment fee/costs. BEN for other side, OUR for "
-"us or SHA for cost sharing"
+"Font being used for the text that won't be displayed in fields with cells "
+"for each character"
 msgstr ""
-"Koja strana plaća naknadu za SEPA prijenos. BEN za drugu stranu, OUR za Vas "
-"ili SHA za podjelu troškova"
+"Font koji će se primijeniti na tekst koji neće biti prikazan u poljima s "
+"ćelijama za svaki pojedini znak"
 
-#: src/WC_Gateway_Wooplatnica.php:344
-msgid "Options for national payment slip type"
-msgstr "Postavke vezane uz nalog za nacionalna plaćanja"
-
-#: src/WC_Gateway_Wooplatnica.php:349
-msgid "Barcode for mobile banking"
-msgstr "Barkod za mobilno bankarstvo"
-
-#: src/WC_Gateway_Wooplatnica.php:351
+#: src/WC_Gateway_Wooplatnica.php:352
 msgid "Generate barcode in PDF417 format"
 msgstr "Generiraj barkod u PDF417 formatu"
 
-#: src/WC_Gateway_Wooplatnica.php:356
-msgid "Other options"
-msgstr "Ostale opcije"
-
-#: src/WC_Gateway_Wooplatnica.php:361
-msgid "Output image type"
-msgstr "Format izlazne slike"
-
-#: src/WC_Gateway_Wooplatnica.php:362
-msgid "Type of the image with the generated payment slip"
-msgstr "Format slike s generiranom općom uplatnicom"
-
-#: src/WC_Gateway_Wooplatnica.php:375
-msgid "Width of the inline image in e-mail message"
-msgstr "Širina slike u tijelu e-mail poruke"
-
-#: src/WC_Gateway_Wooplatnica.php:376
+#: src/WC_Gateway_Wooplatnica.php:407
 msgid ""
 "Height is being scaled to width proportionally. Leave empty if you don't "
 "want to specify dimensions of inline image. Not recommended since in some e-"
@@ -254,62 +119,9 @@ msgstr ""
 "horizontalne klizače kako bi bio u mogućnosti vidjeti sav sadržaj e-mail "
 "poruke."
 
-#: src/WC_Gateway_Wooplatnica.php:383
-msgid "Display confirmation part"
-msgstr "Prikaži potvrdni listić"
-
-#: src/WC_Gateway_Wooplatnica.php:385
-msgid "Display confirmation part of the payment slip"
-msgstr "Prikaži potvrdni listić (desni dio) na općoj uplatnici"
-
-#: src/WC_Gateway_Wooplatnica.php:389
-msgid "Main font"
-msgstr "Glavni font"
-
-#: src/WC_Gateway_Wooplatnica.php:390
-msgid ""
-"Font being used for the text that won't be displayed in fields with cells "
-"for each character"
-msgstr ""
-"Font koji će se primijeniti na tekst koji neće biti prikazan u poljima s "
-"ćelijama za svaki pojedini znak"
-
-#: src/WC_Gateway_Wooplatnica.php:395
-msgid "proportional"
-msgstr "proporcionalni"
-
-#: src/WC_Gateway_Wooplatnica.php:396
-msgid "monospaced"
-msgstr "neproporcionalni"
-
-#: src/Wooplatnica.php:64
-msgid "payment-slip"
-msgstr "uplatnica"
-
-#: src/Wooplatnica.php:68
-msgid "Problem loading image of payment slip"
-msgstr "Problem kod učitavanja slike uplatnice"
-
-#: src/Wooplatnica.php:86
-msgid "Payment slip image"
-msgstr "slika opće uplatnice"
-
-#: src/Wooplatnica.php:87
-msgid "Download payment slip"
-msgstr "Preuzmi uplatnicu"
-
-#. Name of the plugin
-msgid "Croatian payment slip generator for WooCommerce"
-msgstr ""
-"WooCommerce modul za plaćanje putem opće uplatnice ili mobilnim bankarstvom"
-
-#. Description of the plugin
-msgid ""
-"Make it easy for your customers from Croatia to perform direct bank transfer "
-"with generated payment slip, along with barcode for mBanking."
-msgstr ""
-"Olakšajte svojim korisnicima plaćanje dodavanjem mogućnosti plaćanja općom "
-"uplatnica kao i mobilnim bankarstvom."
+#. Author URI of the plugin
+msgid "https://github.com/marlevak"
+msgstr "https://github.com/marlevak"
 
 #. URI of the plugin
 msgid ""
@@ -319,10 +131,259 @@ msgstr ""
 "https://hr.wordpress.org/plugins/croatian-payment-slip-generator-for-"
 "woocommerce/"
 
+#: src/WC_Gateway_Wooplatnica.php:82
+msgid "If none specified, the one from the order information will be used"
+msgstr ""
+"Ako se ništa ne navede, koristit će se ona koja je navedena u podacima o "
+"provedenoj narudžbi"
+
+#: src/WC_Gateway_Wooplatnica.php:72
+msgid ""
+"If your bank account is registered outside of Croatia, you should select "
+"'universal'."
+msgstr ""
+"Ako je Vaš bankovni račun izvan Republike Hrvatske, odaberite 'univerzalni' "
+"kao tip naloga/opće uplatnice"
+
+#: src/WC_Gateway_Wooplatnica.php:62
+msgid "Instructions"
+msgstr "Upute za plaćanje"
+
+#: src/WC_Gateway_Wooplatnica.php:64
+msgid "Instructions that will be added to the thank you page and emails."
+msgstr ""
+"Upute za plaćanje koje će biti nadodane na stranicu sa zahvalom o kupovini "
+"kao i u e-mail poruku."
+
+#: src/WC_Gateway_Wooplatnica.php:117
+msgid "Intent code"
+msgstr "Svrha plaćanja"
+
+#: src/WC_Gateway_Wooplatnica.php:322
+msgid "legal"
+msgstr "pravna"
+
+#: src/WC_Gateway_Wooplatnica.php:420
+msgid "Main font"
+msgstr "Glavni font"
+
+#: src/WC_Gateway_Wooplatnica.php:18
+msgid ""
+"Make it easy for your customers from Croatia to perform direct bank transfer "
+"with generated and pre-filled payment slip, along with mobile banking by "
+"simple barcode scanning."
+msgstr ""
+"Plaćanje putem opće uplatnice (generira se popunjeni virman) ili mobilnim "
+"bankarstvom (spomenuta uplatnica ima na sebi barkod za skeniranje)."
+
+#. Description of the plugin
+msgid ""
+"Make it easy for your customers from Croatia to perform direct bank transfer "
+"with generated payment slip, along with barcode for mBanking."
+msgstr ""
+"Olakšajte svojim korisnicima plaćanje dodavanjem mogućnosti plaćanja općom "
+"uplatnica kao i mobilnim bankarstvom."
+
 #. Author of the plugin
 msgid "Marinela Levak"
 msgstr "Marinela Levak"
 
-#. Author URI of the plugin
-msgid "https://github.com/marlevak"
-msgstr "https://github.com/marlevak"
+#: src/WC_Gateway_Wooplatnica.php:427
+msgid "monospaced"
+msgstr "neproporcionalni"
+
+#: src/WC_Gateway_Wooplatnica.php:76
+msgid "national"
+msgstr "nacionalni"
+
+#: src/WC_Gateway_Wooplatnica.php:321
+msgid "natural"
+msgstr "fizička"
+
+#: src/Wooplatnica.php:164
+msgid "normal version"
+msgstr "normalna verzija"
+
+#: src/WC_Gateway_Wooplatnica.php:72
+msgid "Note: "
+msgstr "Napomena: "
+
+#: src/WC_Gateway_Wooplatnica.php:345
+msgid "Options for national payment slip type"
+msgstr "Postavke vezane uz nalog za nacionalna plaćanja"
+
+#: src/WC_Gateway_Wooplatnica.php:303
+msgid "Options for universal payment slip type"
+msgstr "Postavke vezane uz univerzalni nalog za plaćanje"
+
+#: src/WC_Gateway_Wooplatnica.php:46
+msgid "Order Status"
+msgstr "Status narudžbe"
+
+#: src/WC_Gateway_Wooplatnica.php:357
+msgid "Other options"
+msgstr "Ostale opcije"
+
+#: src/WC_Gateway_Wooplatnica.php:362
+msgid "Output image type"
+msgstr "Format izlazne slike"
+
+#: src/WC_Gateway_Wooplatnica.php:58
+msgid ""
+"Pay using generated and pre-filled payment slip or by scanning a barcode "
+"through your mobile banking app"
+msgstr "Plaćanje općom uplatnicom (virman) ili mobilnim bankarstvom (bar kod)"
+
+#: src/WC_Gateway_Wooplatnica.php:42
+msgid "Pay using payment slip or mobile banking"
+msgstr "Plaćanje općom uplatnicom ili mobilnim bankarstvom"
+
+#: src/WC_Gateway_Wooplatnica.php:297
+msgid "Payment description"
+msgstr "Opis plaćanja"
+
+#: src/WC_Gateway_Wooplatnica.php:56
+msgid "Payment gateway description on checkout."
+msgstr "Opis metode plaćanja za prikaz prilikom plaćanja"
+
+#: src/WC_Gateway_Wooplatnica.php:40
+msgid "Payment gateway title on checkout."
+msgstr "Naziv metode plaćanja za prikaz prilikom plaćanja"
+
+#: src/WC_Gateway_Wooplatnica.php:290
+msgid "Payment model"
+msgstr "Model plaćanja"
+
+#: src/Wooplatnica.php:155
+msgid "Payment slip image"
+msgstr "slika opće uplatnice"
+
+#: src/WC_Gateway_Wooplatnica.php:69
+msgid "Payment slip type"
+msgstr "Tip opće uplatnice"
+
+#: src/Wooplatnica.php:88
+msgid "payment-slip"
+msgstr "uplatnica"
+
+#: src/Wooplatnica.php:89
+msgid "print"
+msgstr "tisak"
+
+#: src/Wooplatnica.php:165
+msgid "print version"
+msgstr "verzija za tisak"
+
+#: src/Wooplatnica.php:101
+msgid "Problem loading image of payment slip"
+msgstr "Problem kod učitavanja slike uplatnice"
+
+#: src/WC_Gateway_Wooplatnica.php:426
+msgid "proportional"
+msgstr "proporcionalni"
+
+#: src/WC_Gateway_Wooplatnica.php:91
+msgid "Recipient address"
+msgstr "Adresa primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:312
+msgid "Recipient bank name"
+msgstr "Naziv banke primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:101
+msgid "Recipient city"
+msgstr "Naziv mjesta poštanskog ureda primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:86
+msgid "Recipient name"
+msgstr "Naziv primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:316
+msgid "Recipient person type"
+msgstr "Tip osobe primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:96
+msgid "Recipient postal code"
+msgstr "Poštanski broj primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:308
+msgid "Recipient SWIFT/BIC code"
+msgstr "SWIFT/BIC kod primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:106
+msgid "Recipient's IBAN"
+msgstr "IBAN primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:111
+msgid "Recipient's reference number"
+msgstr "Poziv na broj primatelja"
+
+#: src/WC_Gateway_Wooplatnica.php:327
+msgid "SEPA transfer currency code"
+msgstr "Oznaka valute za SEPA prijenos"
+
+#: src/WC_Gateway_Wooplatnica.php:331
+msgid "SWIFT charge option"
+msgstr "SWIFT troškovna opcija"
+
+#: src/WC_Gateway_Wooplatnica.php:39
+msgid "Title"
+msgstr "Naslov"
+
+#: src/WC_Gateway_Wooplatnica.php:363
+msgid "Type of the image with the generated payment slip"
+msgstr "Format slike s generiranom općom uplatnicom"
+
+#: src/WC_Gateway_Wooplatnica.php:75
+msgid "universal"
+msgstr "univerzalni"
+
+#: src/WC_Gateway_Wooplatnica.php:112 src/WC_Gateway_Wooplatnica.php:299
+msgid ""
+"Variables such as %order%, %date%, %year%, %month% and %day% can be used."
+msgstr "Možete koristiti %order%, %date%, %year%, %month% i %day% varijable."
+
+#: src/WC_Gateway_Wooplatnica.php:340
+msgid ""
+"Which side will have to pay payment fee/costs. BEN for other side, OUR for "
+"us or SHA for cost sharing"
+msgstr ""
+"Koja strana plaća naknadu za SEPA prijenos. BEN za drugu stranu, OUR za Vas "
+"ili SHA za podjelu troškova"
+
+#: src/WC_Gateway_Wooplatnica.php:406
+msgid "Width of the inline image in e-mail message"
+msgstr "Širina slike u tijelu e-mail poruke"
+
+#: src/WC_Gateway_Wooplatnica.php:379
+msgid ""
+"Zero or more files of generated payment slip to be included as attachments "
+"of order completion e-mail message. Note that images will be embedded inside "
+"of e-mail message body if selected and if supported by user e-mail client"
+msgstr ""
+"Nula ili više datoteka s generiranom slikom opće uplatnice koje će biti "
+"priložene u e-mail poruci za kupca o uspješno-kreiranoj narudžbi. Napomena "
+"da odabirom slikovnih datoteka će one ujedno biti ugrađene unutar samog "
+"sadržaja e-mail poruke, ukoliko je takav način prikaza slika podržan od "
+"strane korisnikove klijentske aplikacije za rad s e-poštom"
+
+#: src/WC_Gateway_Wooplatnica.php:393
+#| msgid ""
+#| "Zero or more files of generated payments slip to be available for "
+#| "download on the thank you page that is shown after order completion. If "
+#| "no options are selected, download button isn\\t shown. If multiple "
+#| "options are selected, then click on the download button displays dropdown "
+#| "for selection of file type with payment slip to download"
+msgid ""
+"Zero or more files of generated payments slip to be available for download "
+"on the thank you page that is shown after order completion. If no options "
+"are selected, download button isn't shown. If multiple options are selected, "
+"then click on the download button displays dropdown for selection of file "
+"type with payment slip to download"
+msgstr ""
+"Nula ili više datoteka s generiranom slikom opće uplatnice koje će biti "
+"raspoložive za preuzimanje na web-stranici s detaljima o kreiranoj narudžbi. "
+"Ukoliko nijedna od opcija nije označena, tipka za preuzimanje neće biti "
+"prikazana. Ako je pak označeno više opcija, tada će se klikom na tipku za "
+"preuzimanje prikazati padajući izbornik za odabir željenog tipa datoteke s "
+"općom uplatnicom za preuzimanje"

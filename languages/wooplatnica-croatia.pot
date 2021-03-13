@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Croatian payment slip generator for WooCommerce 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-11 14:49+0000\n"
+"POT-Creation-Date: 2021-03-07 20:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,218 +15,90 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.3.0; wp-5.1.2"
 
-#: src/WC_Gateway_Wooplatnica.php:16
-msgid "[CRO] Payment slip or mobile banking"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:17
-msgid ""
-"Make it easy for your customers from Croatia to perform direct bank transfer "
-"with generated and pre-filled payment slip, along with mobile banking by "
-"simple barcode scanning."
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:32
-msgid "Enable/Disable"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:34
-msgid "Enable payment slip generator for Croatia"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:38
-msgid "Title"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:39
-msgid "Payment gateway title on checkout."
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:41
-msgid "Pay using payment slip or mobile banking"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:45
-msgid "Order Status"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:48
-msgid "Choose whether status you wish after checkout."
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:54
-msgid "Description"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:55
-msgid "Payment gateway description on checkout."
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:57
-msgid ""
-"Pay using generated and pre-filled payment slip or by scanning a barcode "
-"through your mobile banking app"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:61
-msgid "Instructions"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:63
-msgid "Instructions that will be added to the thank you page and emails."
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:64
-msgid "Below you can find instructions required to make a payment:"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:68
-msgid "Payment slip type"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:71
-msgid ""
-"If your bank account is registered outside of Croatia, you should select "
-"'universal'."
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:71
-msgid "Note: "
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:71 src/WC_Gateway_Wooplatnica.php:352
-msgid "Barcode can be added only to the payment slips for national payments."
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:74
-msgid "universal"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:75
-msgid "national"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:79
-msgid "Currency code"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:81
-msgid "If none specified, the one from the order information will be used"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:85
-msgid "Recipient name"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:90
-msgid "Recipient address"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:95
-msgid "Recipient postal code"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:100
-msgid "Recipient city"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:105
-msgid "Recipient's IBAN"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:110
-msgid "Recipient's reference number"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:111 src/WC_Gateway_Wooplatnica.php:298
-msgid ""
-"Variables such as %order%, %date%, %year%, %month% and %day% can be used."
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:116
-msgid "Intent code"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:121 src/WC_Gateway_Wooplatnica.php:319 
-#: src/WC_Gateway_Wooplatnica.php:334 src/WC_Gateway_Wooplatnica.php:435
+#: src/WC_Gateway_Wooplatnica.php:122 src/WC_Gateway_Wooplatnica.php:320
+#: src/WC_Gateway_Wooplatnica.php:335 src/WC_Gateway_Wooplatnica.php:466
 msgid "(undefined)"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:289
-msgid "Payment model"
+#: src/WC_Gateway_Wooplatnica.php:17
+msgid "[CRO] Payment slip or mobile banking"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:296
-msgid "Payment description"
+#: src/Wooplatnica.php:170
+msgid "as image"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:302
-msgid "Options for universal payment slip type"
+#: src/Wooplatnica.php:169
+msgid "as PDF"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:307
-msgid "Recipient SWIFT/BIC code"
+#: src/WC_Gateway_Wooplatnica.php:378
+msgid "Attached file(s) of payment slip in e-mail message"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:311
-msgid "Recipient bank name"
+#: src/WC_Gateway_Wooplatnica.php:72 src/WC_Gateway_Wooplatnica.php:353
+msgid "Barcode can be added only to the payment slips for national payments."
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:315
-msgid "Recipient person type"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:320
-msgid "natural"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:321
-msgid "legal"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:326
-msgid "SEPA transfer currency code"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:330
-msgid "SWIFT charge option"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:339
-msgid ""
-"Which side will have to pay payment fee/costs. BEN for other side, OUR for "
-"us or SHA for cost sharing"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:344
-msgid "Options for national payment slip type"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:349
+#: src/WC_Gateway_Wooplatnica.php:350
 msgid "Barcode for mobile banking"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:351
+#: src/WC_Gateway_Wooplatnica.php:65
+msgid "Below you can find instructions required to make a payment:"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:49
+msgid "Choose whether status you wish after checkout."
+msgstr ""
+
+#. Name of the plugin
+msgid "Croatian payment slip generator for WooCommerce"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:80
+msgid "Currency code"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:55
+msgid "Description"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:414
+msgid "Display confirmation part"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:416
+msgid "Display confirmation part of the payment slip"
+msgstr ""
+
+#: src/Wooplatnica.php:161
+msgid "Download payment slip"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:392
+msgid "Downloadable file(s) of payment slip on website"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:35
+msgid "Enable payment slip generator for Croatia"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:33
+msgid "Enable/Disable"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:421
+msgid ""
+"Font being used for the text that won't be displayed in fields with cells "
+"for each character"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:352
 msgid "Generate barcode in PDF417 format"
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:356
-msgid "Other options"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:361
-msgid "Output image type"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:362
-msgid "Type of the image with the generated payment slip"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:375
-msgid "Width of the inline image in e-mail message"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:376
+#: src/WC_Gateway_Wooplatnica.php:407
 msgid ""
 "Height is being scaled to width proportionally. Leave empty if you don't "
 "want to specify dimensions of inline image. Not recommended since in some e-"
@@ -236,56 +108,8 @@ msgid ""
 "message."
 msgstr ""
 
-#: src/WC_Gateway_Wooplatnica.php:383
-msgid "Display confirmation part"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:385
-msgid "Display confirmation part of the payment slip"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:389
-msgid "Main font"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:390
-msgid ""
-"Font being used for the text that won't be displayed in fields with cells "
-"for each character"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:395
-msgid "proportional"
-msgstr ""
-
-#: src/WC_Gateway_Wooplatnica.php:396
-msgid "monospaced"
-msgstr ""
-
-#: src/Wooplatnica.php:64
-msgid "payment-slip"
-msgstr ""
-
-#: src/Wooplatnica.php:68
-msgid "Problem loading image of payment slip"
-msgstr ""
-
-#: src/Wooplatnica.php:86
-msgid "Payment slip image"
-msgstr ""
-
-#: src/Wooplatnica.php:87
-msgid "Download payment slip"
-msgstr ""
-
-#. Name of the plugin
-msgid "Croatian payment slip generator for WooCommerce"
-msgstr ""
-
-#. Description of the plugin
-msgid ""
-"Make it easy for your customers from Croatia to perform direct bank transfer "
-"with generated payment slip, along with barcode for mBanking."
+#. Author URI of the plugin
+msgid "https://github.com/marlevak"
 msgstr ""
 
 #. URI of the plugin
@@ -294,10 +118,230 @@ msgid ""
 "woocommerce/"
 msgstr ""
 
+#: src/WC_Gateway_Wooplatnica.php:82
+msgid "If none specified, the one from the order information will be used"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:72
+msgid ""
+"If your bank account is registered outside of Croatia, you should select "
+"'universal'."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:62
+msgid "Instructions"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:64
+msgid "Instructions that will be added to the thank you page and emails."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:117
+msgid "Intent code"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:322
+msgid "legal"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:420
+msgid "Main font"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:18
+msgid ""
+"Make it easy for your customers from Croatia to perform direct bank transfer "
+"with generated and pre-filled payment slip, along with mobile banking by "
+"simple barcode scanning."
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Make it easy for your customers from Croatia to perform direct bank transfer "
+"with generated payment slip, along with barcode for mBanking."
+msgstr ""
+
 #. Author of the plugin
 msgid "Marinela Levak"
 msgstr ""
 
-#. Author URI of the plugin
-msgid "https://github.com/marlevak"
+#: src/WC_Gateway_Wooplatnica.php:427
+msgid "monospaced"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:76
+msgid "national"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:321
+msgid "natural"
+msgstr ""
+
+#: src/Wooplatnica.php:164
+msgid "normal version"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:72
+msgid "Note: "
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:345
+msgid "Options for national payment slip type"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:303
+msgid "Options for universal payment slip type"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:46
+msgid "Order Status"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:357
+msgid "Other options"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:362
+msgid "Output image type"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:58
+msgid ""
+"Pay using generated and pre-filled payment slip or by scanning a barcode "
+"through your mobile banking app"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:42
+msgid "Pay using payment slip or mobile banking"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:297
+msgid "Payment description"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:56
+msgid "Payment gateway description on checkout."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:40
+msgid "Payment gateway title on checkout."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:290
+msgid "Payment model"
+msgstr ""
+
+#: src/Wooplatnica.php:155
+msgid "Payment slip image"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:69
+msgid "Payment slip type"
+msgstr ""
+
+#: src/Wooplatnica.php:88
+msgid "payment-slip"
+msgstr ""
+
+#: src/Wooplatnica.php:89
+msgid "print"
+msgstr ""
+
+#: src/Wooplatnica.php:165
+msgid "print version"
+msgstr ""
+
+#: src/Wooplatnica.php:101
+msgid "Problem loading image of payment slip"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:426
+msgid "proportional"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:91
+msgid "Recipient address"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:312
+msgid "Recipient bank name"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:101
+msgid "Recipient city"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:86
+msgid "Recipient name"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:316
+msgid "Recipient person type"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:96
+msgid "Recipient postal code"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:308
+msgid "Recipient SWIFT/BIC code"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:106
+msgid "Recipient's IBAN"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:111
+msgid "Recipient's reference number"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:327
+msgid "SEPA transfer currency code"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:331
+msgid "SWIFT charge option"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:39
+msgid "Title"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:363
+msgid "Type of the image with the generated payment slip"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:75
+msgid "universal"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:112 src/WC_Gateway_Wooplatnica.php:299
+msgid ""
+"Variables such as %order%, %date%, %year%, %month% and %day% can be used."
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:340
+msgid ""
+"Which side will have to pay payment fee/costs. BEN for other side, OUR for "
+"us or SHA for cost sharing"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:406
+msgid "Width of the inline image in e-mail message"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:379
+msgid ""
+"Zero or more files of generated payment slip to be included as attachments "
+"of order completion e-mail message. Note that images will be embedded inside "
+"of e-mail message body if selected and if supported by user e-mail client"
+msgstr ""
+
+#: src/WC_Gateway_Wooplatnica.php:393
+msgid ""
+"Zero or more files of generated payments slip to be available for download "
+"on the thank you page that is shown after order completion. If no options "
+"are selected, download button isn't shown. If multiple options are selected, "
+"then click on the download button displays dropdown for selection of file "
+"type with payment slip to download"
 msgstr ""

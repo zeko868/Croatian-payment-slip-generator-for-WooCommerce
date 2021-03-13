@@ -374,6 +374,34 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 }, ARRAY_FILTER_USE_KEY),
                 'desc_tip'		=> true
             ),
+            'payment_slip_files_email' => array(
+                'title'         => __( 'Attached file(s) of payment slip in e-mail message', $this->id ),
+                'description'   => __( 'Zero or more files of generated payment slip to be included as attachments of order completion e-mail message. Note that images will be embedded inside of e-mail message body if selected and if supported by user e-mail client', $this->id ),
+                'type'          => 'multiselect',
+                'class'         => 'wc-enhanced-select',
+                'default'       => array('image-print'),
+                'options'       => array(
+                    'image-print'   => 'image print',
+                    'image-normal'  => 'image normal',
+                    'pdf-print'     => 'PDF print',
+                    'pdf-normal'    => 'PDF normal'
+                ),
+                'desc_tip'		=> true
+            ),
+            'payment_slip_files_website' => array(
+                'title'         => __( 'Downloadable file(s) of payment slip on website', $this->id ),
+                'description'   => __( 'Zero or more files of generated payments slip to be available for download on the thank you page that is shown after order completion. If no options are selected, download button isn\'t shown. If multiple options are selected, then click on the download button displays dropdown for selection of file type with payment slip to download', $this->id ),
+                'type'          => 'multiselect',
+                'class'         => 'wc-enhanced-select',
+                'default'       => array('pdf-print'),
+                'options'       => array(
+                    'image-print'   => 'image print',
+                    'image-normal'  => 'image normal',
+                    'pdf-print'     => 'PDF print',
+                    'pdf-normal'    => 'PDF normal'
+                ),
+                'desc_tip'		=> true
+            ),
             'payment_slip_email_width' => array(
 				'title'			=> __( 'Width of the inline image in e-mail message', $this->id ),
 				'description'	=> __( 'Height is being scaled to width proportionally. Leave empty if you don\'t want to specify dimensions of inline image. Not recommended since in some e-mail clients like Windows 10 Mail UWP app the image would be shown in its original size instead of maximum available space thus often causing the need for using horizontal slider in order to see complete content of the e-mail message.', $this->id ),

@@ -35,8 +35,17 @@ class Wooplatnica
             add_action('woocommerce_email_after_order_table', array($this, 'email_instructions'), 10, 3);
 	        // add to my account page
             add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'));
+            add_action( 'wp_enqueue_scripts', array($this, 'callback_for_setting_up_scripts'));
         }
+    }
 
+    public function callback_for_setting_up_scripts() {
+        $plugin_directory = dirname(plugin_dir_url(__FILE__));
+        wp_register_style( 'bootstrap-dropdown-button', $plugin_directory . '/assets/css/bootstrap-dropdown-button/bootstrap.css' );
+        wp_register_script( 'popper-js', $plugin_directory . '/assets/js/Popper.js/popper.min.js', array(), false, true);
+        wp_register_script( 'polyfills', $plugin_directory . '/assets/js/polyfills/polyfills.umd.min.js', array(), false, true);
+        wp_register_script( 'jspdf', $plugin_directory . '/assets/js/jsPDF/jspdf.umd.min.js', array('polyfills'), false, true);
+        wp_register_script( 'bootstrap-dropdown-button', $plugin_directory . '/assets/js/bootstrap-dropdown-button/bootstrap.min.js', array( 'jquery', 'popper-js' ), false, true );
     }
 
     private function display_payment_slip($order, $is_for_sending) {
@@ -45,7 +54,9 @@ class Wooplatnica
             'payment_slip_type'         => 'national',
             'main_font'                 => 'proportional',
             'output_image_type'         => 'png',
-			'payment_slip_email_width'	=> '640'
+            'payment_slip_email_width'  => '640',
+            'payment_slip_files_email'  => array('image-normal'),
+            'payment_slip_files_website'=> array('pdf-print')
         );
         $this->options = array_merge($default_options, $this->options); // this is useful because after updating plugin, options that didn't exist in previous version of plugin are not yet stored in the database, i.e. when those options would be fetched, their values would be null even if those newly defined options have defined default values in WC_Gateway_Wooplatnica.php, what resulted in unexcepted aad buggy behavior
 
@@ -53,6 +64,8 @@ class Wooplatnica
         $order_id = $order->get_id();
         $payment_slip_image_session_key_prefix = 'payment-slip-image-';
         $current_payment_slip_image_session_key = $payment_slip_image_session_key_prefix . $order_id;
+        $image_type = $this->options['output_image_type'];
+
         if (isset($_SESSION[$current_payment_slip_image_session_key])) {
             $payment_slip_blob = $_SESSION[$current_payment_slip_image_session_key];
             unset($_SESSION[$current_payment_slip_image_session_key]);
@@ -64,16 +77,26 @@ class Wooplatnica
             foreach ($session_keys_of_previous_images as $key) {
                 unset($_SESSION[$key]);
             }
-            $payment_slip_blob = $this->generate_payment_slip($order);
+            $im = $this->generate_payment_slip($order);
+            $payment_slip_blob = $this->get_image_blob_from_image_resource($im, $image_type);
         }
-
+        
         $order_number = $order->get_order_number();
         $webapp_name = get_bloginfo('name');
         $webapp_name_for_filename = mb_ereg_replace("([\.]{2,})", '', mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $webapp_name));
         $file_name = sprintf( '%s-%s-%s', __('payment-slip', $this->domain), $webapp_name_for_filename, $order_number);
-        $image_type = $this->options['output_image_type'];
+        $print_version_file_name_suffix = __('print', $this->domain);
+        $display_confirmation_part = $this->options['display_confirmation_part'] === 'yes';
+        $payment_slip_width = $display_confirmation_part ? 1580 : 1125;
+        $image_cropping_dimensions = ['x' => 60, 'y' => 823, 'width' => $payment_slip_width, 'height' => 620];
+        $location_for_cropped_image_on_pdf = ['x' => 10, 'y' => 10, 'width' => 0, 'height' => 75];  // width 0 means that the width is being calculated proportionally based on specified height
         if ($is_for_sending) {
-            $image_identifier = 'payment-slip';
+            if (in_array('image-normal', $this->options['payment_slip_files_email']) || in_array('pdf-normal', $this->options['payment_slip_files_email'])) {
+                $cropped_im = imagecrop($im, $image_cropping_dimensions);
+                $cropped_payment_slip_blob = $this->get_image_blob_from_image_resource($cropped_im, $image_type);
+                unset($cropped_im);
+            }
+
             $img_element_alt = __('Problem loading image of payment slip', $this->domain);
 			if (!empty($this->options['payment_slip_email_width'])) {
 				$width_attribute = "width=\"{$this->options['payment_slip_email_width']}\"";
@@ -81,26 +104,125 @@ class Wooplatnica
 			else {
 				$width_attribute = '';
 			}
-            echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\" $width_attribute/>";
 
-            add_action( 'phpmailer_init', function() use ($payment_slip_blob, $image_identifier, $file_name, $image_type) {
-                global $phpmailer;
-                $phpmailer->SMTPKeepAlive = true;
-                $phpmailer->AddStringEmbeddedImage($payment_slip_blob, $image_identifier, "$file_name.$image_type", 'base64', "image/$image_type");
-            });
-
+            foreach ($this->options['payment_slip_files_email'] as $preferred_type) {
+                if (strrpos($preferred_type, '-normal') === false) {
+                    $current_payment_slip_blob = &$payment_slip_blob;
+                    $actual_file_name = $file_name;
+                }
+                else {
+                    $current_payment_slip_blob = &$cropped_payment_slip_blob;
+                    $actual_image_type = "$file_name-$print_version_file_name_suffix";
+                }
+                if (strpos($preferred_type, 'image-') === 0) {
+                    $image_identifier = "payment-slip-$preferred_type";
+                    echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\" $width_attribute/>";
+                    add_action( 'phpmailer_init', function() use ($current_payment_slip_blob, $image_identifier, $actual_file_name, $image_type) {
+                        global $phpmailer;
+                        $phpmailer->SMTPKeepAlive = true;
+                        $phpmailer->AddStringEmbeddedImage($current_payment_slip_blob, $image_identifier, "$actual_file_name.$image_type", 'base64', "image/$image_type");
+                    });
+                }
+                else {
+                    if ($image_type === 'bmp') { // FPDF library does not support importing BMP images into PDF documents, so image is converted to PNG format as the format is widely supported (if not even more) and the image quality remains the same since it is format using lossless compression
+                        $current_payment_slip_blob = $this->get_image_blob_from_image_resource(imagecreatefromstring($current_payment_slip_blob), 'png');
+                        $actual_image_type = 'png';
+                    }
+                    else {
+                        $actual_image_type = $image_type;
+                    }
+                    $pdf = new FPDF();
+                    $pic = 'data://text/plain;base64,' . base64_encode($current_payment_slip_blob);
+                    $pdf->AddPage();
+                    if ($preferred_type === 'pdf-print') {
+                        $pdf->Image($pic, 0, 0, 210, 297, $actual_image_type);  // 210x297 are dimenions of A4 paper in millimeters
+                    }
+                    else {
+                        $pdf->Image($pic, $location_for_cropped_image_on_pdf['x'], $location_for_cropped_image_on_pdf['y'], $location_for_cropped_image_on_pdf['width'], $location_for_cropped_image_on_pdf['height'], $actual_image_type);
+                    }
+                    $payment_slip_pdf_blob = $pdf->Output('S');
+                    add_action( 'phpmailer_init', function() use ($payment_slip_pdf_blob, $actual_file_name) {
+                        global $phpmailer;
+                        $phpmailer->SMTPKeepAlive = true;
+                        $phpmailer->AddStringAttachment($payment_slip_pdf_blob, "$actual_file_name.pdf");
+                    });
+                }
+            }
             $_SESSION[$current_payment_slip_image_session_key] = $payment_slip_blob;
         }
         else {
             $img_element_alt = __('Payment slip image', $this->domain);
-            $download_button_text = __('Download payment slip', $this->domain);
 
-            if ($this->options['display_confirmation_part'] === 'yes') {
+            if (empty($this->options['payment_slip_files_website'])) {
+                $dropdown_button_code = '';
+            }
+            else {
+                $download_button_text = __('Download payment slip', $this->domain);
+
+                $download_option_names = array(
+                    'normal' => __('normal version', $this->domain),
+                    'print' => __('print version', $this->domain)
+                );
+
+                $download_category_names = array(
+                    'pdf' => __('as PDF', $this->domain),
+                    'image' => __('as image', $this->domain)
+                );
+                
+                $dropdown_button_code = '<button class="btn btn-default dropdown-toggle" type="button" id="download-payment-slip" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">';
+                $dropdown_button_code .= $download_button_text;
+                $dropdown_required = count($this->options['payment_slip_files_website']) > 1;
+                if ($dropdown_required) {
+                    wp_enqueue_style( 'bootstrap-dropdown-button' );
+                    wp_enqueue_script( 'bootstrap-dropdown-button' );
+                    $dropdown_button_code .= '<span class="caret" style="margin-left: 5px"></span>';
+                }
+                $dropdown_button_code .= '</button>';
+
+                $preffered_types_per_categories = array();
+                foreach ($this->options['payment_slip_files_website'] as $preffered_type) {
+                    list($category, $type) = explode('-', $preffered_type, 2);
+                    $preffered_types_per_categories[$category][$type] = $preffered_type;
+                }
+
+                if (array_key_exists('pdf', $preffered_types_per_categories)) {
+                    wp_enqueue_script( 'jspdf' );
+                }
+
+                $grouping_required = count($preffered_types_per_categories) > 1 && !empty(array_filter(array_values($preffered_types_per_categories), function ($types) {
+                    return count($types) > 1;
+                }));
+
+                $dropdown_style = $dropdown_required ? '' : 'display: none';
+
+                $dropdown_button_code .= "<ul class=\"dropdown-menu\" aria-labelledby=\"download-payment-slip\" style=\"$dropdown_style\">";
+                $first_elem = true;
+                foreach ($preffered_types_per_categories as $category => $types) {
+                    if ($grouping_required && !$first_elem) {
+                        $dropdown_button_code .= '<li role="separator" class="divider"></li>';
+                    }
+                    foreach ($types as $type => $full_type) {
+                        if (count($types) === 1) {
+                            $download_type_name = $download_category_names[$category];
+                        }
+                        else {
+                            $download_type_name = "$download_category_names[$category] ($download_option_names[$type])";
+                        }
+                        $dropdown_button_code .= "<li><a data-id='$full_type'>$download_type_name</a></li>";
+                    }
+                    $first_elem = false;
+                }
+                $dropdown_button_code .= '</ul>';
+            }
+
+            if ($display_confirmation_part) {
                 $payment_slip_image_crop_right_length = '7.5%';
             }
             else {
                 $payment_slip_image_crop_right_length = '34%';
             }
+            $image_cropping_dimensions_json = json_encode($image_cropping_dimensions);
+            $location_for_cropped_image_on_pdf_json = json_encode($location_for_cropped_image_on_pdf);
 
             $payment_slip_image_data_uri = "data:image/$image_type;base64," . base64_encode($payment_slip_blob);
             echo <<< EOS
@@ -124,17 +246,82 @@ class Wooplatnica
                     }
                 }
 			</script>
-            <div id="payment-slip-image" style="overflow: hidden">
-                <div style="height: 100%">
-                    <div>
-                        <img src="$payment_slip_image_data_uri" alt="$img_element_alt" onload="cropPaymentSlipImage(this)"/>
+            <div id="payment-slip">
+                <div id="payment-slip-image" style="overflow: hidden">
+                    <div style="height: 100%">
+                        <div>
+                            <img src="$payment_slip_image_data_uri" alt="$img_element_alt" onload="cropPaymentSlipImage(this)"/>
+                        </div>
                     </div>
                 </div>
+                <div class="dropdown" style="margin-top: 5px">
+                    $dropdown_button_code
+                </div>
             </div>
-            <button type="button" id="download-payment-slip" style="margin-top: 5px;">$download_button_text</button>
             <script type="text/javascript">
                 var fileName = '$file_name';
                 var imageType = '$image_type';
+                var imageCroppingDimensions = JSON.parse('$image_cropping_dimensions_json');
+                var locationForCroppedImageOnPdf = JSON.parse('$location_for_cropped_image_on_pdf_json');
+
+                jQuery("button#download-payment-slip").click(function() {
+                    var options = jQuery('button#download-payment-slip + ul.dropdown-menu > li > a');
+                    if (options.length === 1) {
+                        var selectedOption = options.attr('data-id');
+                        downloadPaymentSlip(selectedOption);
+                    }
+                });
+
+                jQuery("button#download-payment-slip + ul.dropdown-menu > li > a").click(function() {
+                    var selectedOption = this.getAttribute('data-id');
+                    downloadPaymentSlip(selectedOption);
+                });
+
+                function downloadPaymentSlip(selectedOption) {
+                    switch (selectedOption) {
+                        case 'pdf-print':
+                            downloadPrintVersionAsPdf();
+                            break;
+                        case 'pdf-normal':
+                            downloadNormalVersionAsPdf();
+                            break;
+                        case 'image-print':
+                            downloadPrintVersionAsImage();
+                            break;
+                        case 'image-normal':
+                            downloadNormalVersionAsImage();
+                            break;
+                    }
+                }
+
+                function downloadPrintVersionAsPdf() {
+                    var fullName = fileName + '-$print_version_file_name_suffix.pdf';
+
+                    //var imageData = jQuery("#payment-slip-image img").prop("src");    // this would usually be sufficient, but causes problems with images inside of PDF documents are of GIF or BMP format (they either have green background instead of transparent/white background or they are über stretched)
+
+                    var canvas = document.createElement("canvas");
+                    var imgElement = jQuery("#payment-slip-image img")[0];
+                    var height = imgElement.naturalHeight;
+                    var width = imgElement.naturalWidth;
+                    canvas.height = height;
+                    canvas.width = width;
+                    canvas.getContext("2d").drawImage(imgElement, 0, 0, width, height, 0, 0, width, height);
+                    
+                    var imageData = canvas.toDataURL();
+                    var doc = new jspdf.jsPDF("p", "mm", "a4");
+                    
+                    doc.addImage(imageData, imageType, 0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), "", "FAST");
+                    doc.save(fullName);
+                }
+
+                function downloadNormalVersionAsPdf() {
+                    var fullName = fileName + '.pdf';
+                    var imageData = clearUrl(cropImage(jQuery("#payment-slip-image img")[0], imageCroppingDimensions).toDataURL());
+                    var doc = new jspdf.jsPDF("p", "mm", "a4");
+
+                    doc.addImage(imageData, imageType, locationForCroppedImageOnPdf.x, locationForCroppedImageOnPdf.y, locationForCroppedImageOnPdf.width, locationForCroppedImageOnPdf.height, "", "FAST");
+                    doc.save(fullName);
+                }
 
                 function clearUrl(url) {
                     return url.match(/^data:image\/\w+?;base64,(.+)$/)[1];
@@ -161,27 +348,50 @@ class Wooplatnica
                     return blob;
                 }
 
-                function downloadImage(name, content, type) {
-                    var fullName = name + '.' + type;
+                function downloadPrintVersionAsImage() {
+                    downloadImage(jQuery("#payment-slip-image img").prop("src"), '-$print_version_file_name_suffix');
+                }
+
+                function downloadNormalVersionAsImage() {
+                    downloadImage(cropImage(jQuery("#payment-slip-image img")[0], imageCroppingDimensions).toDataURL(), '');
+                }
+
+                function downloadImage(dataUri, fileNameSuffix) {
+                    var imageData = clearUrl(dataUri);
+                    var fullName = fileName + fileNameSuffix + '.' + imageType;
                     if (navigator.msSaveBlob) {     // Internet Explorer 10+
-                        var contentType = 'image/' + type;
-                        navigator.msSaveBlob(convertBase64StringToBlob(content, contentType), fullName); 
+                        var contentType = 'image/' + imageType;
+                        navigator.msSaveBlob(convertBase64StringToBlob(imageData, contentType), fullName); 
                     }
                     else {
                         jQuery("<a/>", {
-                            "href": "data:application/octet-stream;base64," + encodeURIComponent(content),
+                            "href": "data:application/octet-stream;base64," + encodeURIComponent(imageData),
                             "download": fullName
                         })[0].click();
                     }
                 }
 
-                jQuery("#download-payment-slip").click(function() {
-                    var imageData = clearUrl(jQuery("#payment-slip-image img").prop("src"));
-                    downloadImage(fileName, imageData, imageType);
-                });
+                function cropImage(imageElement, imageCroppingDimensions) {
+                    var width = imageCroppingDimensions.width;
+                    var height = imageCroppingDimensions.height;
+                    var canvas = document.createElement("canvas");
+                    canvas.height = height;
+                    canvas.width = width;
+                    canvas.getContext("2d").drawImage(imageElement, imageCroppingDimensions.x, imageCroppingDimensions.y, width, height, 0, 0, width, height);
+                    return canvas;
+                }
             </script>
 EOS;
         }
+    }
+
+    private function get_image_blob_from_image_resource($im, $image_type) {
+        ob_start(); // Let's start output buffering.
+        $image_saving_method = 'image' . $image_type;
+        call_user_func($image_saving_method, $im); //This would normally output the image, but because of ob_start(), it won't.
+        $image_blob = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        return $image_blob;
     }
 
     private function generate_payment_slip($order) {
@@ -371,13 +581,7 @@ EOS;
         if (in_array($this->options['output_image_type'], ['jpeg', 'bmp'])) {    // image types without alpha channels
             imagecolorset($im, 0, 255, 255, 255, 0x7f);   // otherwise the background color is somehow indigo-blue
         }
-        ob_start(); // Let's start output buffering.
-        $image_saving_method = 'image' . $this->options['output_image_type'];
-        call_user_func($image_saving_method, $im); //This would normally output the image, but because of ob_start(), it won't.
-        $payment_slip_blob = ob_get_contents(); //Instead, output above is saved to $contents
-        ob_end_clean(); //End the output buffer.
-        
-        return $payment_slip_blob;
+        return $im;
     }
 
     private function display_monospace_text_with_specific_spacing($im, $x, $y, $color, $font, $text, $spacing=25.5) {
@@ -474,10 +678,12 @@ EOS;
     {
         $initial_order_status = get_option("woocommerce_{$this->domain}_settings")['order_status'];
         if (!$sent_to_admin && $this->domain === $order->get_payment_method() && $order->has_status(ltrim($initial_order_status, 'wc-'))) {
-            if ($this->options['instructions']) {
-                echo wpautop(wptexturize($this->options['instructions'])).PHP_EOL;
+            if (!(isset($this->options['payment_slip_files_email']) && empty($this->options['payment_slip_files_email']))) {
+                if ($this->options['instructions']) {
+                    echo wpautop(wptexturize($this->options['instructions'])).PHP_EOL;
+                }
+                $this->display_payment_slip($order, true);
             }
-            $this->display_payment_slip($order, true);
         }
     }
 

@@ -1,5 +1,6 @@
 {
     "require": {
-        "bigfish/pdf417": "^0.3.0"
+        "bigfish/pdf417": "^0.3",
+        "setasign/fpdf": "^1.8"
     }
 }
