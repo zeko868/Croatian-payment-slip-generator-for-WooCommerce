@@ -112,7 +112,7 @@ class Wooplatnica
                 }
                 else {
                     $current_payment_slip_blob = &$cropped_payment_slip_blob;
-                    $actual_image_type = "$file_name-$print_version_file_name_suffix";
+                    $actual_file_name = "$file_name-$print_version_file_name_suffix";
                 }
                 if (strpos($preferred_type, 'image-') === 0) {
                     $image_identifier = "payment-slip-$preferred_type";
