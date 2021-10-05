@@ -16,7 +16,15 @@
 $plugin = new Wooplatnica_Initializer();
 
 class Wooplatnica_Initializer {
+
+    /**
+     * @var string
+     */
+    protected $plugin_id;
+
+
     public function __construct() {
+        $this->plugin_id = 'wooplatnica-croatia';
         add_action('plugins_loaded', [$this, 'init'], 0);
     }
 
@@ -31,6 +39,7 @@ class Wooplatnica_Initializer {
         ];
 
         add_action( 'woocommerce_loaded', array( $this, 'load_plugin' ) );
+        add_filter( 'plugin_action_links', array( $this, 'add_settings_link' ), 10, 2 );
 
         foreach ($module_classes as $module_class => $init) {
             require path_join(dirname(__FILE__), "src/$module_class.php");
@@ -38,5 +47,12 @@ class Wooplatnica_Initializer {
                 $$module_class = new $module_class();
             }
         }
+    }
+
+    function add_settings_link($links, $file) {
+        if ($file === plugin_basename(__FILE__)) {
+            $links[] = '<a href="' . get_admin_url( null, 'admin.php?page=wc-settings&tab=checkout&section=' . $this->plugin_id ) . '">' . __( 'Settings' ) . '</a>';
+        }
+        return $links;
     }
 }
