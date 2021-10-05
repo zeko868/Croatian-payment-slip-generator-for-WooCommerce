@@ -14,6 +14,11 @@ class Wooplatnica
     protected $domain;
 
     /**
+     * @var string
+     */
+    protected $plugin_id;
+
+    /**
      * @var array
      */
     protected $options;
@@ -23,15 +28,16 @@ class Wooplatnica
      */
     public function __construct()
     {
-        $this->domain = 'wooplatnica-croatia';
+        $this->domain = 'croatian-payment-slip-generator-for-woocommerce';
+        $this->plugin_id = 'wooplatnica-croatia';
 
         load_plugin_textdomain($this->domain, false, path_join(basename(dirname(__DIR__)), 'languages'));
 
-        $this->options = get_option("woocommerce_{$this->domain}_settings");
+        $this->options = get_option("woocommerce_{$this->plugin_id}_settings");
 
         add_filter('woocommerce_payment_gateways', array($this, 'add_wooplatnica_gateway_class'));
         if ($this->options['enabled'] === 'yes') {
-            add_action("woocommerce_thankyou_{$this->domain}", array($this, 'thankyou_page'));
+            add_action("woocommerce_thankyou_{$this->plugin_id}", array($this, 'thankyou_page'));
             add_action('woocommerce_email_after_order_table', array($this, 'email_instructions'), 10, 3);
 	        // add to my account page
             add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'));
@@ -395,10 +401,10 @@ EOS;
     }
 
     private function generate_payment_slip($order) {
-        $order = apply_filters("{$this->domain}_order", $order);
+        $order = apply_filters("{$this->plugin_id}_order", $order);
         $payment_slip_data = new Payment_Slip_Data();
         $payment_slip_data->currency = empty($this->options['currency']) ? $order->get_currency() : $this->options['currency'];
-        $payment_slip_data->set_price(apply_filters("{$this->domain}_price", $order->get_total()));
+        $payment_slip_data->set_price(apply_filters("{$this->plugin_id}_price", $order->get_total()));
         if (empty(get_post_meta( $order->get_id(), 'R1 račun', true ))) {
             $payment_slip_data->sender_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
             $payment_slip_data->sender_address = $order->get_billing_address_1();

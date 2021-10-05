@@ -6,7 +6,7 @@
  * Description: Make it easy for your customers from Croatia to perform direct bank transfer with generated payment slip, along with barcode for mBanking.
  * Requires PHP: 5.6
  * Version: 1.0
- * Text Domain: wooplatnica-croatia
+ * Text Domain: croatian-payment-slip-generator-for-woocommerce
  * Author: Marinela Levak
  * Author URI: https://github.com/marlevak
  * License: GPL2 or later

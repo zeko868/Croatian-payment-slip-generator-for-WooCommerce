@@ -4,18 +4,24 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
 {
 
     /**
+     * @var string
+     */
+    protected $domain;
+
+    /**
      * WC_Gateway_Wooplatnica constructor.
      */
     public function __construct()
     {
         $this->id = 'wooplatnica-croatia';
+        $this->domain = 'croatian-payment-slip-generator-for-woocommerce';
 
         $this->init_settings();
         $this->init_form_fields();
 
         $this->has_fields         = false;
-        $this->method_title       = __( '[CRO] Payment slip or mobile banking', $this->id );
-        $this->method_description = __( 'Make it easy for your customers from Croatia to perform direct bank transfer with generated and pre-filled payment slip, along with mobile banking by simple barcode scanning.', $this->id );
+        $this->method_title       = __( '[CRO] Payment slip or mobile banking', $this->domain );
+        $this->method_description = __( 'Make it easy for your customers from Croatia to perform direct bank transfer with generated and pre-filled payment slip, along with mobile banking by simple barcode scanning.', $this->domain );
         $this->title              = $this->get_option('title');
         $this->description        = $this->get_option('description');
 
@@ -30,96 +36,96 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
     {
         $this->form_fields = array(
             'enabled' => array(
-                'title'   => __( 'Enable/Disable', $this->id ),
+                'title'   => __( 'Enable/Disable', $this->domain ),
                 'type'    => 'checkbox',
-                'label'   => __( 'Enable payment slip generator for Croatia', $this->id ),
+                'label'   => __( 'Enable payment slip generator for Croatia', $this->domain ),
                 'default' => 'yes'
             ),
             'title' => array(
-                'title'       => __( 'Title', $this->id ),
-                'description' => __( 'Payment gateway title on checkout.', $this->id ),
+                'title'       => __( 'Title', $this->domain ),
+                'description' => __( 'Payment gateway title on checkout.', $this->domain ),
                 'type'        => 'text',
-                'default'     => __( 'Pay using payment slip or mobile banking', $this->id ),
+                'default'     => __( 'Pay using payment slip or mobile banking', $this->domain ),
                 'desc_tip'    => true,
             ),
             'order_status' => array(
-                'title'       => __( 'Order Status', $this->id ),
+                'title'       => __( 'Order Status', $this->domain ),
                 'type'        => 'select',
                 'class'       => 'wc-enhanced-select',
-                'description' => __( 'Choose whether status you wish after checkout.', $this->id ),
+                'description' => __( 'Choose whether status you wish after checkout.', $this->domain ),
                 'default'     => 'wc-on-hold',
                 'desc_tip'    => true,
                 'options'     => wc_get_order_statuses()
             ),
             'description' => array(
-                'title'       => __( 'Description', $this->id ),
-                'description' => __( 'Payment gateway description on checkout.', $this->id ),
+                'title'       => __( 'Description', $this->domain ),
+                'description' => __( 'Payment gateway description on checkout.', $this->domain ),
                 'type'        => 'textarea',
-                'default'     => __('Pay using generated and pre-filled payment slip or by scanning a barcode through your mobile banking app', $this->id),
+                'default'     => __('Pay using generated and pre-filled payment slip or by scanning a barcode through your mobile banking app', $this->domain),
                 'desc_tip'    => true,
             ),
             'instructions' => array(
-                'title'       => __( 'Instructions', $this->id ),
+                'title'       => __( 'Instructions', $this->domain ),
                 'type'        => 'textarea',
-                'description' => __( 'Instructions that will be added to the thank you page and emails.', $this->id ),
-                'default'     => __( 'Below you can find instructions required to make a payment:', $this->id ),
+                'description' => __( 'Instructions that will be added to the thank you page and emails.', $this->domain ),
+                'default'     => __( 'Below you can find instructions required to make a payment:', $this->domain ),
                 'desc_tip'    => true,
             ),
             'payment_slip_type' => array(
-                'title'       => __( 'Payment slip type', $this->id ),
+                'title'       => __( 'Payment slip type', $this->domain ),
                 'type'        => 'select',
                 'class'       => 'wc-enhanced-select',
-                'description' => __( 'If your bank account is registered outside of Croatia, you should select \'universal\'.', $this->id ) . '<br/><strong>' . __( 'Note: ', $this->id ) . '</strong>' . __( 'Barcode can be added only to the payment slips for national payments.', $this->id ),
+                'description' => __( 'If your bank account is registered outside of Croatia, you should select \'universal\'.', $this->domain ) . '<br/><strong>' . __( 'Note: ', $this->domain ) . '</strong>' . __( 'Barcode can be added only to the payment slips for national payments.', $this->domain ),
                 'default'     => 'national',
                 'options'     => array(
-                    'universal' => __( 'universal', $this->id ),
-                    'national'  => __( 'national', $this->id )
+                    'universal' => __( 'universal', $this->domain ),
+                    'national'  => __( 'national', $this->domain )
                 )
             ),
             'currency' => array(
-                'title'       => __( 'Currency code', $this->id ),
+                'title'       => __( 'Currency code', $this->domain ),
                 'type'        => 'text',
-                'description' => __( 'If none specified, the one from the order information will be used', $this->id ),
+                'description' => __( 'If none specified, the one from the order information will be used', $this->domain ),
                 'default'     => 'HRK'
             ),
             'recipient_name' => array(
-                'title'       => __( 'Recipient name', $this->id ),
+                'title'       => __( 'Recipient name', $this->domain ),
                 'type'        => 'textarea',
                 'default'     => ''
             ),
             'recipient_address' => array(
-                'title'       => __( 'Recipient address', $this->id ),
+                'title'       => __( 'Recipient address', $this->domain ),
                 'type'        => 'text',
                 'default'     => ''
             ),
             'recipient_zip_code' => array(
-                'title'       => __( 'Recipient postal code', $this->id ),
+                'title'       => __( 'Recipient postal code', $this->domain ),
                 'type'        => 'text',
                 'default'     => ''
             ),
             'recipient_city' => array(
-                'title'       => __( 'Recipient city', $this->id ),
+                'title'       => __( 'Recipient city', $this->domain ),
                 'type'        => 'text',
                 'default'     => ''
             ),
             'recipient_bank_account_id' => array(
-                'title'       => __( 'Recipient\'s IBAN', $this->id ),
+                'title'       => __( 'Recipient\'s IBAN', $this->domain ),
                 'type'        => 'text',
                 'default'     => ''
             ),
             'recipient_callout_number' => array(
-                'title'       => __( 'Recipient\'s reference number', $this->id ),
-                'description' => __( 'Variables such as %order%, %date%, %year%, %month% and %day% can be used.', $this->id ),
+                'title'       => __( 'Recipient\'s reference number', $this->domain ),
+                'description' => __( 'Variables such as %order%, %date%, %year%, %month% and %day% can be used.', $this->domain ),
                 'type'        => 'text',
                 'default'     => '%order%'
             ),
             'intent_code' => array(
-                'title'       => __( 'Intent code', $this->id ),
+                'title'       => __( 'Intent code', $this->domain ),
                 'type'        => 'select',
                 'class'       => 'wc-enhanced-select',
                 'default'     => '',
                 'options'     => array(
-                    ''     => __( '(undefined)', $this->id ),
+                    ''     => __( '(undefined)', $this->domain ),
                     'ADMG' => 'ADMG - Administracija',
                     'GVEA' => 'GVEA - Austrijski državni zaposlenici, Kategorija A',
                     'GVEB' => 'GVEB - Austrijski državni zaposlenici, Kategorija B',
@@ -287,80 +293,80 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 )
             ),
             'payment_model' => array(
-                'title'       => __( 'Payment model', $this->id ),
+                'title'       => __( 'Payment model', $this->domain ),
                 'type'        => 'select',
                 'class'       => 'wc-enhanced-select',
                 'default'     => '',
                 'options'     => $this->generate_payment_models()
             ),
             'payment_description' => array(
-                'title'       => __( 'Payment description', $this->id ),
+                'title'       => __( 'Payment description', $this->domain ),
                 'type'        => 'textarea',
-                'description' => __( 'Variables such as %order%, %date%, %year%, %month% and %day% can be used.', $this->id ),
+                'description' => __( 'Variables such as %order%, %date%, %year%, %month% and %day% can be used.', $this->domain ),
                 'default'     => ''
             ),
             '!universal-payment-header' => array(     // dirty hack for header
-                'title'     => $this->get_nowrapped_large_text(__( 'Options for universal payment slip type', $this->id )),
+                'title'     => $this->get_nowrapped_large_text(__( 'Options for universal payment slip type', $this->domain )),
                 'type'      => 'text',
                 'css'       => 'display: none;'
             ),
             'recipient_swift_code' => array(
-                'title'     => __( 'Recipient SWIFT/BIC code', $this->id ),
+                'title'     => __( 'Recipient SWIFT/BIC code', $this->domain ),
                 'type'      => 'text'
             ),
             'recipient_bank_name' => array(
-                'title'     => __( 'Recipient bank name', $this->id ),
+                'title'     => __( 'Recipient bank name', $this->domain ),
                 'type'      => 'textarea'
             ),
             'recipient_person_type' => array(
-                'title'     => __( 'Recipient person type', $this->id ),
+                'title'     => __( 'Recipient person type', $this->domain ),
                 'type'      => 'select',
                 'class'     => 'wc-enhanced-select',
                 'options'   => array(
-                    ''          => __( '(undefined)', $this->id ),
-                    'natural'   => __( 'natural', $this->id ),
-                    'legal'     => __( 'legal', $this->id ),
+                    ''          => __( '(undefined)', $this->domain ),
+                    'natural'   => __( 'natural', $this->domain ),
+                    'legal'     => __( 'legal', $this->domain ),
                 ),
                 'default'   => ''
             ),
             'sepa_transfer_currency' => array(
-                'title'         => __( 'SEPA transfer currency code', $this->id ),
+                'title'         => __( 'SEPA transfer currency code', $this->domain ),
                 'type'          => 'text'
             ),
             'swift_charge_option' => array(
-                'title'       => __( 'SWIFT charge option', $this->id ),
+                'title'       => __( 'SWIFT charge option', $this->domain ),
                 'type'        => 'select',
                 'class'       => 'wc-enhanced-select',
                 'options'     => array(
-                    ''      => __( '(undefined)', $this->id ),
+                    ''      => __( '(undefined)', $this->domain ),
                     'BEN'   => 'BEN',
                     'SHA'   => 'SHA',
                     'OUR'   => 'OUR'
                 ),
-                'description' => __( 'Which side will have to pay payment fee/costs. BEN for other side, OUR for us or SHA for cost sharing', $this->id ),
+                'description' => __( 'Which side will have to pay payment fee/costs. BEN for other side, OUR for us or SHA for cost sharing', $this->domain ),
                 'default'     => '',
                 'desc_tip'    => true
             ),
             '!national-payment-header' => array(     // dirty hack for header
-                'title'     => $this->get_nowrapped_large_text(__( 'Options for national payment slip type', $this->id )),
+                'title'     => $this->get_nowrapped_large_text(__( 'Options for national payment slip type', $this->domain )),
                 'type'      => 'text',
                 'css'       => 'display: none;'
             ),
             'display_barcode' => array(
-                'title'         => __( 'Barcode for mobile banking', $this->id ),
+                'title'         => __( 'Barcode for mobile banking', $this->domain ),
                 'type'          => 'checkbox',
-                'label'         => __( 'Generate barcode in PDF417 format', $this->id ),
-                'description'   => __('Barcode can be added only to the payment slips for national payments.', $this->id ),
+                'label'         => __( 'Generate barcode in PDF417 format', $this->domain ),
+                'description'   => __('Barcode can be added only to the payment slips for national payments.', $this->domain ),
                 'default'       => 'yes'
             ),
             '!other' => array(     // dirty hack for header
-                'title'     => $this->get_nowrapped_large_text(__( 'Other options', $this->id )),
+                'title'     => $this->get_nowrapped_large_text(__( 'Other options', $this->domain )),
                 'type'      => 'text',
                 'css'       => 'display: none;'
             ),
             'output_image_type' => array(
-                'title'         => __( 'Output image type', $this->id ),
-                'description'   => __( 'Type of the image with the generated payment slip', $this->id ),
+                'title'         => __( 'Output image type', $this->domain ),
+                'description'   => __( 'Type of the image with the generated payment slip', $this->domain ),
                 'type'          => 'select',
                 'class'         => 'wc-enhanced-select',
                 'default'       => 'png',
@@ -375,8 +381,8 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'desc_tip'		=> true
             ),
             'payment_slip_files_email' => array(
-                'title'         => __( 'Attached file(s) of payment slip in e-mail message', $this->id ),
-                'description'   => __( 'Zero or more files of generated payment slip to be included as attachments of order completion e-mail message. Note that images will be embedded inside of e-mail message body if selected and if supported by user e-mail client', $this->id ),
+                'title'         => __( 'Attached file(s) of payment slip in e-mail message', $this->domain ),
+                'description'   => __( 'Zero or more files of generated payment slip to be included as attachments of order completion e-mail message. Note that images will be embedded inside of e-mail message body if selected and if supported by user e-mail client', $this->domain ),
                 'type'          => 'multiselect',
                 'class'         => 'wc-enhanced-select',
                 'default'       => array('image-print'),
@@ -389,8 +395,8 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'desc_tip'		=> true
             ),
             'payment_slip_files_website' => array(
-                'title'         => __( 'Downloadable file(s) of payment slip on website', $this->id ),
-                'description'   => __( 'Zero or more files of generated payments slip to be available for download on the thank you page that is shown after order completion. If no options are selected, download button isn\'t shown. If multiple options are selected, then click on the download button displays dropdown for selection of file type with payment slip to download', $this->id ),
+                'title'         => __( 'Downloadable file(s) of payment slip on website', $this->domain ),
+                'description'   => __( 'Zero or more files of generated payments slip to be available for download on the thank you page that is shown after order completion. If no options are selected, download button isn\'t shown. If multiple options are selected, then click on the download button displays dropdown for selection of file type with payment slip to download', $this->domain ),
                 'type'          => 'multiselect',
                 'class'         => 'wc-enhanced-select',
                 'default'       => array('pdf-print'),
@@ -403,28 +409,28 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 'desc_tip'		=> true
             ),
             'payment_slip_email_width' => array(
-				'title'			=> __( 'Width of the inline image in e-mail message', $this->id ),
-				'description'	=> __( 'Height is being scaled to width proportionally. Leave empty if you don\'t want to specify dimensions of inline image. Not recommended since in some e-mail clients like Windows 10 Mail UWP app the image would be shown in its original size instead of maximum available space thus often causing the need for using horizontal slider in order to see complete content of the e-mail message.', $this->id ),
+				'title'			=> __( 'Width of the inline image in e-mail message', $this->domain ),
+				'description'	=> __( 'Height is being scaled to width proportionally. Leave empty if you don\'t want to specify dimensions of inline image. Not recommended since in some e-mail clients like Windows 10 Mail UWP app the image would be shown in its original size instead of maximum available space thus often causing the need for using horizontal slider in order to see complete content of the e-mail message.', $this->domain ),
 				'type'			=> 'text',
 				'css'			=> 'width: 3em;',
 				'default'		=> '640',
 				'desc_tip'		=> true
 			),
             'display_confirmation_part' => array(
-                'title'       => __( 'Display confirmation part', $this->id ),
+                'title'       => __( 'Display confirmation part', $this->domain ),
                 'type'        => 'checkbox',
-                'label'       => __( 'Display confirmation part of the payment slip', $this->id ),
+                'label'       => __( 'Display confirmation part of the payment slip', $this->domain ),
                 'default'     => 'yes'
             ),
             'main_font' => array(
-                'title'       => __( 'Main font', $this->id ),
-                'description' => __( 'Font being used for the text that won\'t be displayed in fields with cells for each character', $this->id ),
+                'title'       => __( 'Main font', $this->domain ),
+                'description' => __( 'Font being used for the text that won\'t be displayed in fields with cells for each character', $this->domain ),
                 'type'        => 'select',
                 'class'       => 'wc-enhanced-select',
                 'default'     => 'proportional',
                 'options'     => array(
-                    'proportional'  => __( 'proportional', $this->id ),
-                    'monospaced'    => __( 'monospaced', $this->id )
+                    'proportional'  => __( 'proportional', $this->domain ),
+                    'monospaced'    => __( 'monospaced', $this->domain )
                 ),
                 'desc_tip'    => true
             ),
@@ -463,7 +469,7 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
         }, range(0, 99));
         return array_merge(
             array(
-                ''  => __( '(undefined)', $this->id )
+                ''  => __( '(undefined)', $this->domain )
             ),
             array_combine($models, $models)
         );
