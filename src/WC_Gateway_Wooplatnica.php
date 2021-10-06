@@ -408,6 +408,14 @@ class WC_Gateway_Wooplatnica extends WC_Payment_Gateway
                 ),
                 'desc_tip'		=> true
             ),
+            'inline_image_in_email_body' => array(
+                'title'       => __( 'Display image(s) inline in e-mail message body', $this->domain ),
+                'description' => __( 'This feature might not work if you are using dedicated SMTP service provider causing e-mails about order completion not being delivered, even if you aren\'t actually attaching images. In case you are using it and you\'ve noticed that customers are not receiving e-mail confirmation on order creation, disabling this feature should help - images will be then treated as regular attachment, but at least the e-mails will be delivered to the customers!', $this->domain ),
+                'type'        => 'checkbox',
+                'label'       => __( 'Display image(s) of payment slip inline in e-mail message body (deselect if you encounter an issue where customers are not receiving e-mails about order completion)', $this->domain ),
+                'default'     => 'yes',
+                'desc_tip'    => true
+            ),
             'payment_slip_email_width' => array(
 				'title'			=> __( 'Width of the inline image in e-mail message', $this->domain ),
 				'description'	=> __( 'Height is being scaled to width proportionally. Leave empty if you don\'t want to specify dimensions of inline image. Not recommended since in some e-mail clients like Windows 10 Mail UWP app the image would be shown in its original size instead of maximum available space thus often causing the need for using horizontal slider in order to see complete content of the e-mail message.', $this->domain ),

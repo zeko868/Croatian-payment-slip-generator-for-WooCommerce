@@ -24,12 +24,18 @@ class Wooplatnica
     protected $options;
 
     /**
+     * @var string
+     */
+    protected $stored_payment_slips_tmp_directory;
+
+    /**
      * Initialize plugin and hooks
      */
     public function __construct()
     {
         $this->domain = 'croatian-payment-slip-generator-for-woocommerce';
         $this->plugin_id = 'wooplatnica-croatia';
+        $this->stored_payment_slips_tmp_directory = path_join(sys_get_temp_dir(), "{$this->plugin_id}-data");
 
         load_plugin_textdomain($this->domain, false, path_join(basename(dirname(__DIR__)), 'languages'));
 
@@ -42,6 +48,9 @@ class Wooplatnica
 	        // add to my account page
             add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'));
             add_action( 'wp_enqueue_scripts', array($this, 'callback_for_setting_up_scripts'));
+            if (isset($this->options['inline_image_in_email_body']) && $this->options['inline_image_in_email_body'] === 'no') {
+                add_filter( 'woocommerce_email_attachments', array($this, 'add_order_attachments_to_email'), 10, 3);
+            }
         }
     }
 
@@ -62,7 +71,8 @@ class Wooplatnica
             'output_image_type'         => 'png',
             'payment_slip_email_width'  => '640',
             'payment_slip_files_email'  => array('image-normal'),
-            'payment_slip_files_website'=> array('pdf-print')
+            'payment_slip_files_website'=> array('pdf-print'),
+            'inline_image_in_email_body'=> 'yes',
         );
         $this->options = array_merge($default_options, $this->options); // this is useful because after updating plugin, options that didn't exist in previous version of plugin are not yet stored in the database, i.e. when those options would be fetched, their values would be null even if those newly defined options have defined default values in WC_Gateway_Wooplatnica.php, what resulted in unexcepted aad buggy behavior
 
@@ -103,14 +113,19 @@ class Wooplatnica
                 unset($cropped_im);
             }
 
-            $img_element_alt = __('Problem loading image of payment slip', $this->domain);
-			if (!empty($this->options['payment_slip_email_width'])) {
-				$width_attribute = "width=\"{$this->options['payment_slip_email_width']}\"";
-			}
-			else {
-				$width_attribute = '';
-			}
-
+            if ($this->options['inline_image_in_email_body'] === 'yes') {
+                $img_element_alt = __('Problem loading image of payment slip', $this->domain);
+                if (!empty($this->options['payment_slip_email_width'])) {
+                    $width_attribute = "width=\"{$this->options['payment_slip_email_width']}\"";
+                }
+                else {
+                    $width_attribute = '';
+                }
+            }
+            else {
+                $tmpDirectoryForStoringPaymentSlip = path_join($this->stored_payment_slips_tmp_directory, $order_id);
+                mkdir($tmpDirectoryForStoringPaymentSlip, 0755, true);
+            }
             foreach ($this->options['payment_slip_files_email'] as $preferred_type) {
                 if (strrpos($preferred_type, '-normal') === false) {
                     $current_payment_slip_blob = &$payment_slip_blob;
@@ -121,18 +136,23 @@ class Wooplatnica
                     $actual_file_name = "$file_name-$print_version_file_name_suffix";
                 }
                 if (strpos($preferred_type, 'image-') === 0) {
-                    $image_identifier = "payment-slip-$preferred_type";
-                    echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\" $width_attribute/>";
-                    add_action( 'phpmailer_init', function() use ($current_payment_slip_blob, $image_identifier, $actual_file_name, $image_type) {
-                        global $phpmailer;
-                        $phpmailer->SMTPKeepAlive = true;
-                        $phpmailer->AddStringEmbeddedImage($current_payment_slip_blob, $image_identifier, "$actual_file_name.$image_type", 'base64', "image/$image_type");
-                    });
+                    if ($this->options['inline_image_in_email_body'] === 'yes') {
+                        $image_identifier = "payment-slip-$preferred_type";
+                        echo "<img src=\"cid:$image_identifier\" alt=\"$img_element_alt\" $width_attribute/>";
+                        add_action( 'phpmailer_init', function() use ($current_payment_slip_blob, $image_identifier, $actual_file_name, $image_type) {
+                            global $phpmailer;
+                            $phpmailer->SMTPKeepAlive = true;
+                            $phpmailer->AddStringEmbeddedImage($current_payment_slip_blob, $image_identifier, "$actual_file_name.$image_type", 'base64', "image/$image_type");
+                        });
+                    }
+                    else {
+                        file_put_contents("$tmpDirectoryForStoringPaymentSlip/$actual_file_name.$image_type", $current_payment_slip_blob);
+                    }
                 }
                 else {
                     if ($image_type === 'bmp') { // FPDF library does not support importing BMP images into PDF documents, so image is converted to PNG format as the format is widely supported (if not even more) and the image quality remains the same since it is format using lossless compression
-                        $current_payment_slip_blob = $this->get_image_blob_from_image_resource(imagecreatefromstring($current_payment_slip_blob), 'png');
                         $actual_image_type = 'png';
+                        $current_payment_slip_blob = $this->get_image_blob_from_image_resource(imagecreatefromstring($current_payment_slip_blob), $actual_image_type);
                     }
                     else {
                         $actual_image_type = $image_type;
@@ -147,11 +167,16 @@ class Wooplatnica
                         $pdf->Image($pic, $location_for_cropped_image_on_pdf['x'], $location_for_cropped_image_on_pdf['y'], $location_for_cropped_image_on_pdf['width'], $location_for_cropped_image_on_pdf['height'], $actual_image_type);
                     }
                     $payment_slip_pdf_blob = $pdf->Output('S');
-                    add_action( 'phpmailer_init', function() use ($payment_slip_pdf_blob, $actual_file_name) {
-                        global $phpmailer;
-                        $phpmailer->SMTPKeepAlive = true;
-                        $phpmailer->AddStringAttachment($payment_slip_pdf_blob, "$actual_file_name.pdf");
-                    });
+                    if ($this->options['inline_image_in_email_body'] === 'yes') {
+                        add_action( 'phpmailer_init', function() use ($payment_slip_pdf_blob, $actual_file_name) {
+                            global $phpmailer;
+                            $phpmailer->SMTPKeepAlive = true;
+                            $phpmailer->AddStringAttachment($payment_slip_pdf_blob, "$actual_file_name.pdf");
+                        });
+                    }
+                    else {
+                        file_put_contents("$tmpDirectoryForStoringPaymentSlip/$actual_file_name.pdf", $payment_slip_pdf_blob);
+                    }
                 }
             }
             $_SESSION[$current_payment_slip_image_session_key] = $payment_slip_blob;
@@ -682,9 +707,8 @@ EOS;
      */
     public function email_instructions($order, $sent_to_admin, $plain_text = false)
     {
-        $initial_order_status = get_option("woocommerce_{$this->domain}_settings")['order_status'];
-        if (!$sent_to_admin && $this->domain === $order->get_payment_method() && $order->has_status(ltrim($initial_order_status, 'wc-'))) {
-            if (!(isset($this->options['payment_slip_files_email']) && empty($this->options['payment_slip_files_email']))) {
+        if ($this->should_attach_payment_slip_in_email($order)) {
+            if ($sent_to_admin) {
                 if ($this->options['instructions']) {
                     echo wpautop(wptexturize($this->options['instructions'])).PHP_EOL;
                 }
@@ -710,15 +734,37 @@ EOS;
      * Output for the My account -> View order page.
      */
     public function view_order_instructions($order_id) {
-	// Get an instance of the WC_Order object
+	    // Get an instance of the WC_Order object
         $order = wc_get_order( $order_id );
         
-        $initial_order_status = get_option("woocommerce_{$this->domain}_settings")['order_status'];
-		if ($this->domain === $order->get_payment_method() && $order->has_status(ltrim($initial_order_status, 'wc-'))) {
+		if ($this->has_order_expected_status($order)) {
 			if ($this->options['instructions']) {
 				echo wpautop(wptexturize(wp_kses_post($this->options['instructions'])));
 			}
 			$this->display_payment_slip($order, false);
 		 }
+    }
+
+    public function add_order_attachments_to_email($attachments, $status, $order) {
+        if ($this->should_attach_payment_slip_in_email($order)) {
+            $order_id = $order->get_id();
+            $current_order_payment_slips_directory = path_join($this->stored_payment_slips_tmp_directory, $order_id);
+            if (file_exists($current_order_payment_slips_directory)) {
+                $file_iterator = new FilesystemIterator($current_order_payment_slips_directory);
+                foreach ($file_iterator as $file_info) {
+                    $attachments[] = $file_info->getPathname();
+                }
+            }
+        }
+        return $attachments; 
+    }
+
+    private function should_attach_payment_slip_in_email($order) {
+        return $this->has_order_expected_status($order) && !(isset($this->options['payment_slip_files_email']) && empty($this->options['payment_slip_files_email']));
+    }
+
+    private function has_order_expected_status($order) {
+        $initial_order_status = $this->options['order_status'];
+        return $this->plugin_id === $order->get_payment_method() && $order->has_status(ltrim($initial_order_status, 'wc-'));
     }
 }
