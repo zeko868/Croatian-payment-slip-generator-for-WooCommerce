@@ -40,10 +40,11 @@ Ovo poglavlje opisuje kako instalirati ovaj modul te ga osposobiti za korištenj
 Novi način plaćanja se prikazuje na stranici za plaćanje te ga je tako ujedno moguće i odabrati<br/>
 ![opcije plaćanja na stranici za plaćanje](/images/screenshot-1.png)<br/>
 Nakon što korisnik odabere ovaj način plaćanja te nastavi dalje na plaćanje, prikazuje mu se popunjena opća uplatnica - kako s podacima o platitelju, tako i o njemu samome i o samoj narudžbi. Slika te iste uplatnice se ujedno šalje i na korisnikovu e-mail adresu<br/>
-![prikaz opće uplatnice s barkodom](/images/screenshot-2.png)<br/>
+![prikaz opće uplatnice s barkodom](/images/screenshot-2.gif)<br/>
 Sva polja opće uplatnice (kao i razne druge postavke modula) se mogu podesiti na stranici za upravljanje/postavke ovog načina plaćanja, a koji se nalazi unutar WooCommerce upravljačke ploče
 ![mogućnosti konfiguracije opcije plaćanja ovog dodatka 1. dio](/images/screenshot-3.png)<br/>
 ![mogućnosti konfiguracije opcije plaćanja ovog dodatka 2. dio](/images/screenshot-4.png)<br/>
+![mogućnosti konfiguracije opcije plaćanja ovog dodatka 3. dio](/images/screenshot-5.png)<br/>
 
 
 ## Najčešće postavljena pitanja

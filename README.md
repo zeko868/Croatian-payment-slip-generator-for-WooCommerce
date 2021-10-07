@@ -40,10 +40,11 @@ This section describes how to install the plugin and get it working.
 Additional payment option is displayed on the checkout page and can be selected<br/>
 ![payment option on checkout page](/images/screenshot-1.png)<br/>
 After user selects that option and proceeds to the payment, image of the payment slip, filled with previously-entered customer's data, is being shown. The same image is also sent to the customer via Email<br/>
-![payment slip and barcode preview](/images/screenshot-2.png)<br/>
+![payment slip and barcode preview](/images/screenshot-2.gif)<br/>
 All fields (along with various other properties) can be set through settings page of this payment gateway that is located within WooCommerce Admin Dashboard
 ![payment option settings part 1](/images/screenshot-3.png)<br/>
 ![payment option settings part 2](/images/screenshot-4.png)<br/>
+![payment option settings part 3](/images/screenshot-5.png)<br/>
 
 
 ## Frequently Asked Questions
