@@ -53,6 +53,10 @@ Sva polja opće uplatnice (kao i razne druge postavke modula) se mogu podesiti n
 
 **A:** Pogreške i prijedloge možete objaviti u [issue sekciji](https://github.com/zeko868/croatian-payment-slip-generator-for-woocommerce/issues) GitHub repozitorija ovog plugina, kao i na forumu za podršku [ovdje na WordPressu](https://wordpress.org/support/plugin/croatian-payment-slip-generator-for-woocommerce).
 ___
+**Q:** Zašto mi e-mail poruka s detaljima o kreiranoj narudžbi ne pristiže kupcu?
+
+**A:** Ukoliko imate navedeni problem, mogući razlog je što koristite kakav dodatak koji mijenja standardno ponašanje SMTP klijenta. Ako ne želite žrtvovati taj dodatak, opcija jest da u postavkama ovog dodatka odznačite opciju "Integracija priloženih slika u samom tijelu e-mail poruka" čime se e-mail poruke neće slati korištenjem _PHPMailer_ modula, već na alternativni način. Tim pristupom slike neće biti ugrađene u tijelo e-mail poruke, već će biti tretirane kao uobičajeni privici, ali će e-mail poruke barem biti dostavljene kupcima.
+___
 **Q:** Kako izvršiti pretvorbu cijene narudžbe iz originalne valute narudžbe u onu koja se navodi na općoj uplatnici?
 
 **A:** Unutar `functions.php` datoteke je potrebno dodati funkciju na filter 'wooplatnica-croatia_order' koja bi vršila željenu konverziju izvorne cijene narudžbe (pri čemu se iznos cijene može izvući iz objekta klase WC_Order kojeg spomenuta funkcija prima kao prvi/jedini argument) te bi kao rezultat varila instancu klase WC_Order s ažuriranim vrijednostima polja.

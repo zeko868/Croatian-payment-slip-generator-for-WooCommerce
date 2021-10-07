@@ -53,6 +53,10 @@ All fields (along with various other properties) can be set through settings pag
 
 **A:** You can report bugs on [issue section of this repo](https://github.com/zeko868/croatian-payment-slip-generator-for-woocommerce/issues) or in [WordPress plugin support forum](https://wordpress.org/support/plugin/croatian-payment-slip-generator-for-woocommerce).
 ___
+**Q:** Why aren't customers receiving e-mail messages with order details?
+
+**A:** In case you are encountering this issue, potential cause could be because you are using some plugin that is changing default behaviour of SMTP client. If you don't want to sacrifice that plugin, the solution is to deselect the option "Display image(s) inline in e-mail message body" in the settings page of this plugin which will be cause that e-mail messages won't be sent using _PHPMailer_ module, but using alternative way. By using this approach the images won't be displayed inline in e-mail message body, yet they will be treated as regular attachments, although at least the e-mail messages will be delivered to the customers.
+___
 **Q:** How to handle order prices in different currency, so they could be converted to the prices corresponding to the currency on the payment slip?
 
 **A:** In your `functions.php` file you should add function to the filter 'wooplatnica-croatia_order' that would perform conversion of the order price (which could be extracted from the object of class WC_Order passed as a first/only function argument) and would return instance of WC_Order class with updated field values.
