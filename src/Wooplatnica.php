@@ -708,7 +708,7 @@ EOS;
     public function email_instructions($order, $sent_to_admin, $plain_text = false)
     {
         if ($this->should_attach_payment_slip_in_email($order)) {
-            if ($sent_to_admin) {
+            if (!$sent_to_admin) {
                 if ($this->options['instructions']) {
                     echo wpautop(wptexturize($this->options['instructions'])).PHP_EOL;
                 }
