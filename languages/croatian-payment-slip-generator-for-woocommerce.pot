@@ -97,7 +97,7 @@ msgid ""
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://github.com/marlevak"
+msgid "https://github.com/zeko868"
 msgstr ""
 
 #. URI of the plugin
@@ -142,7 +142,7 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin
-msgid "Marinela Levak"
+msgid "Petar Šestak"
 msgstr ""
 
 msgid "monospaced"

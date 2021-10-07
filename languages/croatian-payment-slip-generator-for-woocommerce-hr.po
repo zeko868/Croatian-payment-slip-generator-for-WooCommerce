@@ -110,8 +110,8 @@ msgstr ""
 "poruke."
 
 #. Author URI of the plugin
-msgid "https://github.com/marlevak"
-msgstr "https://github.com/marlevak"
+msgid "https://github.com/zeko868"
+msgstr "https://github.com/zeko868"
 
 #. URI of the plugin
 msgid ""
@@ -167,8 +167,8 @@ msgstr ""
 "uplatnica kao i mobilnim bankarstvom."
 
 #. Author of the plugin
-msgid "Marinela Levak"
-msgstr "Marinela Levak"
+msgid "Petar Šestak"
+msgstr "Petar Šestak"
 
 msgid "monospaced"
 msgstr "neproporcionalni"

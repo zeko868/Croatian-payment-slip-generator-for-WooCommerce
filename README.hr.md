@@ -1,4 +1,4 @@
-<p align="center"><a href="https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/"><img src="https://raw.githubusercontent.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/master/images/banner-1544x500.png" alt="Banner WooCommerce modula za plaćanje putem opće uplatnice ili mobilnim bankarstvom"></a></p>
+<p align="center"><a href="https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/"><img src="https://raw.githubusercontent.com/zeko868/Croatian-payment-slip-generator-for-WooCommerce/master/images/banner-1544x500.png" alt="Banner WooCommerce modula za plaćanje putem opće uplatnice ili mobilnim bankarstvom"></a></p>
 
 *Read this in other languages: [English](README.md), [Hrvatski](README.hr.md).*
 
@@ -31,7 +31,7 @@ Kako bi ovaj dodatak normalno radio, sljedeći PHP moduli moraju biti instaliran
 Ovo poglavlje opisuje kako instalirati ovaj modul te ga osposobiti za korištenje.
 
 
-1. Instalirajte ovaj plugin kroz upravljač dodataka iz WordPress administratorske upravljačke ploče koristeći tražilicu dodataka i instalacijom pronađenog rezultata ili pak prenesite [programski kôd](https://github.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/releases/latest) ovog plugina (ili izvorni kôd repozitorija zajedno sa svim zavisnim modulima pozivom `composer install` naredbe) u `/wp-content/plugins/` direktorij
+1. Instalirajte ovaj plugin kroz upravljač dodataka iz WordPress administratorske upravljačke ploče koristeći tražilicu dodataka i instalacijom pronađenog rezultata ili pak prenesite [programski kôd](https://github.com/zeko868/Croatian-payment-slip-generator-for-WooCommerce/releases/latest) ovog plugina (ili izvorni kôd repozitorija zajedno sa svim zavisnim modulima pozivom `composer install` naredbe) u `/wp-content/plugins/` direktorij
 2. Aktivirajte ovaj plugin kroz izbornik 'Dodaci' u WordPress administratorskoj upravljačkoj ploči
 
 
@@ -50,7 +50,7 @@ Sva polja opće uplatnice (kao i razne druge postavke modula) se mogu podesiti n
 
 **Q:** Gdje se mogu prijaviti uočene pogreške u radu ili kako je pak moguće pridonijeti ovom projektu?
 
-**A:** Pogreške i prijedloge možete objaviti u [issue sekciji](https://github.com/marlevak/croatian-payment-slip-generator-for-woocommerce/issues) GitHub repozitorija ovog plugina, kao i na forumu za podršku [ovdje na WordPressu](https://wordpress.org/support/plugin/croatian-payment-slip-generator-for-woocommerce).
+**A:** Pogreške i prijedloge možete objaviti u [issue sekciji](https://github.com/zeko868/croatian-payment-slip-generator-for-woocommerce/issues) GitHub repozitorija ovog plugina, kao i na forumu za podršku [ovdje na WordPressu](https://wordpress.org/support/plugin/croatian-payment-slip-generator-for-woocommerce).
 ___
 **Q:** Kako izvršiti pretvorbu cijene narudžbe iz originalne valute narudžbe u onu koja se navodi na općoj uplatnici?
 

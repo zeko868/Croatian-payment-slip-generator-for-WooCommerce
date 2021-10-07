@@ -1,4 +1,4 @@
-<p align="center"><a href="https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/"><img src="https://raw.githubusercontent.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/master/images/banner-1544x500.png" alt="Banner of croatian payment slip generator for WooCommerce"></a></p>
+<p align="center"><a href="https://wordpress.org/plugins/croatian-payment-slip-generator-for-woocommerce/"><img src="https://raw.githubusercontent.com/zeko868/Croatian-payment-slip-generator-for-WooCommerce/master/images/banner-1544x500.png" alt="Banner of croatian payment slip generator for WooCommerce"></a></p>
 
 *Read this in other languages: [English](README.md), [Hrvatski](README.hr.md).*
 
@@ -31,7 +31,7 @@ This plugin requires at least PHP version 5.6. Also the following PHP modules ha
 This section describes how to install the plugin and get it working.
 
 
-1. Install this plugin through Plugins menu of WordPress Dashboard Admin Area by using search and downloading it from its WordPress page or upload the [code](https://github.com/marlevak/Croatian-payment-slip-generator-for-WooCommerce/releases/latest) of this plugin (or source code of this repo along with all required dependencies fetched by calling `composer install`) to the `/wp-content/plugins/` directory
+1. Install this plugin through Plugins menu of WordPress Dashboard Admin Area by using search and downloading it from its WordPress page or upload the [code](https://github.com/zeko868/Croatian-payment-slip-generator-for-WooCommerce/releases/latest) of this plugin (or source code of this repo along with all required dependencies fetched by calling `composer install`) to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 
@@ -50,7 +50,7 @@ All fields (along with various other properties) can be set through settings pag
 
 **Q:** Where can I report bugs or contribute to the project?
 
-**A:** You can report bugs on [issue section of this repo](https://github.com/marlevak/croatian-payment-slip-generator-for-woocommerce/issues) or in [WordPress plugin support forum](https://wordpress.org/support/plugin/croatian-payment-slip-generator-for-woocommerce).
+**A:** You can report bugs on [issue section of this repo](https://github.com/zeko868/croatian-payment-slip-generator-for-woocommerce/issues) or in [WordPress plugin support forum](https://wordpress.org/support/plugin/croatian-payment-slip-generator-for-woocommerce).
 ___
 **Q:** How to handle order prices in different currency, so they could be converted to the prices corresponding to the currency on the payment slip?
 

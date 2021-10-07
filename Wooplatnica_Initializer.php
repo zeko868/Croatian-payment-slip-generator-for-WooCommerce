@@ -7,8 +7,8 @@
  * Requires PHP: 5.6
  * Version: 1.0
  * Text Domain: croatian-payment-slip-generator-for-woocommerce
- * Author: Marinela Levak
- * Author URI: https://github.com/marlevak
+ * Author: Petar Šestak
+ * Author URI: https://github.com/zeko868
  * License: GPL2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
